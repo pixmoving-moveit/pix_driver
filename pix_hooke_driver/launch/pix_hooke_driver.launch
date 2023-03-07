@@ -1,0 +1,13 @@
+<launch>
+    <arg name="aeb_en" default="1" />
+    <!-- <arg name="remote_mode" default="true" doc="remote mode" /> -->
+    <arg name="use_pedal" default="true" />
+
+    <node pkg="pix_hooke_driver" name="pix_hooke_driver_report_node" type="pix_hooke_driver_report_node" output="screen"/>
+    <node pkg="pix_hooke_driver" name="pix_hooke_driver_command_node" type="pix_hooke_driver_command_node" output="screen"/>
+    <include file="$(find pix_hooke_driver)/launch/report_converter.launch" />
+
+    <include file="$(find pix_hooke_driver)/launch/control_converter.launch" if="$(eval use_pedal==true)" />
+    <node pkg="pix_hooke_driver" name="control_converter_speed" type="control_converter_speed.py" if="$(eval use_pedal==false)" output="screen"/>
+    <!-- <param name="aeb_en_ctrl" value="$(arg aeb_en)" />  -->
+</launch>

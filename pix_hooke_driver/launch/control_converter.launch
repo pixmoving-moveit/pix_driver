@@ -1,0 +1,18 @@
+<launch>
+    <arg name="control_period" default="50.0"/>
+    <arg name="sub_raw_command_topic" default="/vehicle/raw_vehicle_cmd"/>
+    <arg name="sub_gear_report_topic" default="/pix_hooke/v2a_drivestafb"/>
+    <arg name="pub_drive_topic" default="/pix_hooke/a2v_drivectrl_130"/>
+    <arg name="pub_steer_topic" default="/pix_hooke/a2v_steerctrl_132"/>
+    <arg name="pub_brake_topic" default="/pix_hooke/a2v_brakectrl_131"/>
+
+    <node pkg="pix_hooke_driver" name="control_converter_node" type="control_converter_node" output="screen">
+        <param name="control_period" value="$(arg control_period)" /> 
+        <param name="sub_raw_command_topic" value="$(arg sub_raw_command_topic)" /> 
+        <param name="sub_gear_report_topic" value="$(arg sub_gear_report_topic)" /> 
+        <param name="pub_drive_topic" value="$(arg pub_drive_topic)" /> 
+        <param name="pub_steer_topic" value="$(arg pub_steer_topic)" /> 
+        <param name="pub_brake_topic" value="$(arg pub_brake_topic)" /> 
+    </node>
+
+</launch>

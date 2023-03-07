@@ -1,0 +1,28 @@
+<launch>
+    <arg name="report_period" default="50.0"/>
+    <arg name="sub_steer_topic" default="/pix_hooke/v2a_steerstafb"/>
+    <arg name="sub_drive_topic" default="/pix_hooke/v2a_drivestafb"/>
+    <arg name="sub_vehicle_topic" default="/pix_hooke/v2a_vehiclestafb"/>
+    <arg name="sub_vehicle_work_topic" default="/pix_hooke/v2a_vehicleworkstafb"/>
+    <arg name="pub_twist_topic" default="/vehicle/status/twist"/>
+    <arg name="pub_shift_topic" default="/vehicle/status/shift"/>
+    <arg name="pub_steer_topic" default="/vehicle/status/steering"/>
+    <arg name="pub_turn_signal_topic" default="/vehicle/status/turn_signal"/>
+    <arg name="pub_control_mode_topic" default="/vehicle/status/control_mode"/>
+    <arg name="pub_velocity_topic" default="/vehicle/status/velocity"/>
+
+    <node pkg="pix_hooke_driver" name="report_converter_node" type="report_converter_node" output="screen">
+        <param name="report_period" value="$(arg report_period)" /> 
+        <param name="sub_steer_topic" value="$(arg sub_steer_topic)" /> 
+        <param name="sub_drive_topic" value="$(arg sub_drive_topic)" /> 
+        <param name="sub_vehicle_topic" value="$(arg sub_vehicle_topic)" /> 
+        <param name="sub_vehicle_work_topic" value="$(arg sub_vehicle_work_topic)" /> 
+        <param name="pub_twist_topic" value="$(arg pub_twist_topic)" /> 
+        <param name="pub_shift_topic" value="$(arg pub_shift_topic)" /> 
+        <param name="pub_steer_topic" value="$(arg pub_steer_topic)" /> 
+        <param name="pub_turn_signal_topic" value="$(arg pub_turn_signal_topic)" /> 
+        <param name="pub_control_mode_topic" value="$(arg pub_control_mode_topic)" /> 
+        <param name="pub_velocity_topic" value="$(arg pub_velocity_topic)" /> 
+    </node>
+
+</launch>
