@@ -33,7 +33,7 @@ ControlCommand::ControlCommand() : Node("control_command")
   {
     // from pix driver autoware interface
     a2v_brake_ctrl_sub_ = create_subscription<A2vBrakeCtrl>(
-      "/pix_hooke/a2v_brakectrl_130", 1, std::bind(&ControlCommand::callbackBrakeCtrl, this, _1));
+      "/pix_hooke/a2v_brakectrl_131", 1, std::bind(&ControlCommand::callbackBrakeCtrl, this, _1));
     a2v_drive_ctrl_sub_ = create_subscription<A2vDriveCtrl>(
       "/pix_hooke/a2v_drivectrl_130", 1, std::bind(&ControlCommand::callbackDriveCtrl, this, _1));
     a2v_steer_ctrl_sub_ = create_subscription<A2vSteerCtrl>(
