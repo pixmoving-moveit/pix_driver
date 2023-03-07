@@ -5,7 +5,7 @@
 
 class V2avehicleworkstafb534 {
 public:
-    static const uint32_t ID = 0x543;
+    static const uint32_t ID = 0x534;
     V2avehicleworkstafb534();
     void Parse();
     void update_bytes(uint8_t bytes_data[8]);

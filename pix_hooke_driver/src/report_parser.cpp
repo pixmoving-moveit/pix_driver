@@ -172,7 +172,7 @@ void ReportParser::callbackCan(const can_msgs::msg::Frame::ConstSharedPtr & msg)
 		vehicle_work_sta_fb_msg.vcu_crash_right_sta = v2a_vehicleworkstafb_534_entity_.vcu_crashrightsta;
 		vehicle_work_sta_fb_msg.vcu_life = v2a_vehicleworkstafb_534_entity_.vcu_life;
 		vehicle_work_sta_fb_msg.vcu_check_sum = v2a_vehicleworkstafb_534_entity_.vcu_checksum;
-    steer_sta_fb_ptr_ = std::make_shared<V2aSteerStaFb>(steer_sta_fb_msg);
+    vehicle_work_sta_fb_ptr_ = std::make_shared<V2aVehicleWorkStaFb>(vehicle_work_sta_fb_msg);
     break;
   case V2apowerstafb535::ID:
     power_sta_fb_received_time_ = this->now();
@@ -382,7 +382,7 @@ void ReportParser::timerCallback()
   {
     RCLCPP_ERROR_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
-      "vehicle_ lt stat report timeout = %f ms.", vehicle_flt_sta_report_delta_time_ms);
+      "vehicle flt stat report timeout = %f ms.", vehicle_flt_sta_report_delta_time_ms);
   }else{
     vehicle_flt_sta_pub_->publish(*vehicle_flt_sta_ptr_);
   }
