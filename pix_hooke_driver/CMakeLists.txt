@@ -47,6 +47,11 @@ ament_auto_add_executable(${PROJECT_NAME}_control_converter_node
   src/control_converter_node.cpp
 )
 
+ament_auto_add_executable(${PROJECT_NAME}_report_converter_node
+  src/report_converter.cpp
+  src/report_converter_node.cpp
+)
+
 # install
 ament_auto_package(
   INSTALL_TO_SHARE
