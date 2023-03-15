@@ -93,11 +93,12 @@ void ReportConverter::vehicleStaFbCallback(const pix_hooke_driver_msgs::msg::V2a
 void ReportConverter::vehicleWorkStaFbCallback(const pix_hooke_driver_msgs::msg::V2aVehicleWorkStaFb::ConstSharedPtr & msg)
 {
   vehicle_work_sta_fb_received_timestamp_ = this->now();
+  vehicle_work_sta_fb_ptr_ = msg;
 }
 
 void ReportConverter::timerCallback()
 {
-  rclcpp::Time current_time;
+  const rclcpp::Time current_time = this->now();
   const double steer_sta_fb_delta_time_ms =
     (current_time - steer_sta_fb_received_timestamp_).seconds() * 1000.0;
   const double brake_sta_fb_delta_time_ms =
