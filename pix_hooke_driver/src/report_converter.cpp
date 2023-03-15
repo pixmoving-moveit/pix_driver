@@ -168,6 +168,7 @@ void ReportConverter::timerCallback()
   // make steering angle
   steer_report_msg.stamp = current_time;
   steer_report_msg.steering_tire_angle = -1.0 * steer_sta_fb_ptr_->vcu_chassis_steer_angle_fb * steering_factor_;
+  steering_status_pub_->publish(steer_report_msg);
 
   // make control mode
   control_mode_report_msg.stamp = current_time;
