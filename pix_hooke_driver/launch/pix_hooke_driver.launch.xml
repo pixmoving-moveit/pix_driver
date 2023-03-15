@@ -16,6 +16,7 @@
     <param name="base_frame_id" value="$(var base_frame_id)"/>
     <param name="report_timeout_ms" value="$(var report_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
+    <remap from="input/can_rx" to="/from_can_bus" />
   </node>
 
 </launch>
