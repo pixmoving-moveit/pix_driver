@@ -6,7 +6,7 @@
 int main(int argc, char ** argv)
 { 
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<pix_hooke_driver::ControlCommand>();
+  auto node = std::make_shared<pix_hooke_driver::control_command::ControlCommand>();
   rclcpp::spin(node);
   rclcpp::shutdown();
   return 0;

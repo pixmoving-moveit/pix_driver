@@ -36,6 +36,8 @@
 
 namespace pix_hooke_driver
 {
+namespace report_parser
+{
 using V2aBrakeStaFb = pix_hooke_driver_msgs::msg::V2aBrakeStaFb;
 using V2aChassisWheelAngleFb = pix_hooke_driver_msgs::msg::V2aChassisWheelAngleFb;
 using V2aChassisWheelRpmFb = pix_hooke_driver_msgs::msg::V2aChassisWheelRpmFb;
@@ -47,6 +49,12 @@ using V2aVehicleFltSta = pix_hooke_driver_msgs::msg::V2aVehicleFltSta;
 using V2aVehicleStaFb = pix_hooke_driver_msgs::msg::V2aVehicleStaFb;
 using V2aVehicleWorkStaFb = pix_hooke_driver_msgs::msg::V2aVehicleWorkStaFb;
 
+/**
+ * @brief param structure of report parser node
+ * @param base_frame_id frame id of vehicle
+ * @param loop_rate loop rate of publishers in hz
+ * @param report_timeout_ms timeout threshold of report can Frame msg from canbus driver
+ */
 struct Param
 {
   std::string base_frame_id;
@@ -131,11 +139,25 @@ public:
   ReportParser(/* args */);
 
   // callback
+  /**
+   * @brief callback function of can Frame msgs, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackCan(const can_msgs::msg::Frame::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of Bool msg, to store the data to member variable, decide publish report msgs or not
+   * 
+   * @param msg 
+   */
   void callbackIsPublish(const std_msgs::msg::Bool::ConstSharedPtr & msg);
+  /**
+   * @brief parser can frames, convert can frames to pix_hooke_driver_msgs
+   * 
+   */
   void timerCallback();
 };
-
+} // namespace report_parser
 } // namespace pix_hooke_driver
 
 #endif // PIX_HOOKE_DRIVER__REPORT_PARSER_HPP_
