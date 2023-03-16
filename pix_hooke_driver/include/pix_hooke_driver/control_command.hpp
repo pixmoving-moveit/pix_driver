@@ -31,8 +31,10 @@ using A2vWheelCtrl = pix_hooke_driver_msgs::msg::A2vWheelCtrl;
 using A2vVehicleCtrl = pix_hooke_driver_msgs::msg::A2vVehicleCtrl;
 
 /**
- * @brief parameters structure
- * 
+ * @brief param structure of control command node
+ * @param base_frame_id frame id of vehicle
+ * @param loop_rate loop rate of publishers in hz
+ * @param command_timeout_ms timeout threshold of control command msg from control converter in ms
  */
 struct Param
 {
@@ -67,6 +69,7 @@ private:
   A2vvehiclectrl133 a2v_vehiclectrl_133_entity_;
   A2vwheelctrl135 a2v_wheelctrl_135_entity_;
 
+  // msg received timestamp
   rclcpp::Time brake_command_received_time_;
   rclcpp::Time drive_command_received_time_;
   rclcpp::Time steer_command_received_time_;
@@ -92,15 +95,46 @@ private:
 
 public:
   ControlCommand();
-
+  /**
+   * @brief callback function of A2vBrakeCtrl msg, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of A2vDriveCtrl msg, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackDriveCtrl(const A2vDriveCtrl::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of A2vSteerCtrl msg, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackSteerCtrl(const A2vSteerCtrl::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of A2vWheelCtrl msg, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackWheelCtrl(const A2vWheelCtrl::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of A2vVehicleCtrl msg, to store the data to member variable
+   * 
+   * @param msg 
+   */
   void callbackVehicleCtrl(const A2vVehicleCtrl::ConstSharedPtr & msg);
-
+  /**
+   * @brief callback function of Bool msg, to decide publish can frame or not
+   * 
+   * @param msg 
+   */
   void callbackEngage(const std_msgs::msg::Bool::ConstSharedPtr & msg);
-
+  /**
+   * @brief timer callback function, convert pix_hooke_driver msgs to canbus Frames, than publish them
+   * 
+   */
   void timerCallback();
 };
 
