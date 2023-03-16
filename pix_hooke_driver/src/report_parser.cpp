@@ -4,6 +4,8 @@
 
 namespace pix_hooke_driver
 {
+namespace report_parser
+{
 ReportParser::ReportParser(): Node("report_parser")
 {
   // ros params
@@ -423,5 +425,5 @@ void ReportParser::timerCallback()
     chassis_wheel_angle_fb_pub_->publish(*chassis_wheel_angle_fb_ptr_);
   }
 }
-
+} // namespace report_parser
 } // namespace pix_hooke_driver

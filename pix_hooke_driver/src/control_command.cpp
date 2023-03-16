@@ -4,6 +4,8 @@
 
 namespace pix_hooke_driver
 {
+namespace control_command
+{
 ControlCommand::ControlCommand() : Node("control_command")
 {
   // ros params
@@ -241,4 +243,5 @@ void ControlCommand::timerCallback()
     can_frame_pub_->publish(*vehicle_ctrl_can_ptr_);
   }
 }
-} // pix_hooke_driver
+} // namespace control_command
+} // namespace pix_hooke_driver

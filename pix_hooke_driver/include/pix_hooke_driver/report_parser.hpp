@@ -36,6 +36,8 @@
 
 namespace pix_hooke_driver
 {
+namespace report_parser
+{
 using V2aBrakeStaFb = pix_hooke_driver_msgs::msg::V2aBrakeStaFb;
 using V2aChassisWheelAngleFb = pix_hooke_driver_msgs::msg::V2aChassisWheelAngleFb;
 using V2aChassisWheelRpmFb = pix_hooke_driver_msgs::msg::V2aChassisWheelRpmFb;
@@ -155,7 +157,7 @@ public:
    */
   void timerCallback();
 };
-
+} // namespace report_parser
 } // namespace pix_hooke_driver
 
 #endif // PIX_HOOKE_DRIVER__REPORT_PARSER_HPP_

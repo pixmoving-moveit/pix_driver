@@ -24,6 +24,8 @@
 
 namespace pix_hooke_driver
 {
+namespace control_command
+{
 using A2vBrakeCtrl = pix_hooke_driver_msgs::msg::A2vBrakeCtrl;
 using A2vDriveCtrl = pix_hooke_driver_msgs::msg::A2vDriveCtrl;
 using A2vSteerCtrl = pix_hooke_driver_msgs::msg::A2vSteerCtrl;
@@ -137,6 +139,6 @@ public:
    */
   void timerCallback();
 };
-
+} // namespace control_command
 } // namespace pix_hooke_driver
 #endif // PIX_HOOKE_DRIVER__CONTROL_COMMAND_HPP_
