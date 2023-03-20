@@ -81,6 +81,27 @@ void ControlConverter::callbackDriveStatusFeedback(const V2aDriveStaFb::ConstSha
   drive_sta_fb_ptr_ = msg;
 }
 
+void ControlConverter::onControlModeRequest(
+  const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::SharedPtr request,
+  const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Response::SharedPtr response)
+{
+  if (request->mode == autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::AUTONOMOUS) {
+    engage_cmd_ = true;
+    response->success = true;
+    return;
+  }
+
+  if (request->mode == autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::MANUAL) {
+    engage_cmd_ = false;
+    response->success = true;
+    return;
+  }
+
+  RCLCPP_ERROR(get_logger(), "unsupported control_mode!!");
+  response->success = false;
+  return;
+}
+
 void ControlConverter::timerCallback()
 {
   const rclcpp::Time current_time = this->now();
@@ -151,7 +172,12 @@ void ControlConverter::timerCallback()
   }
 
   // throttle
-  a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
+  if(engage_cmd_)
+  {
+    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
+  }else{
+    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_DISABLE;
+  }
   a2v_drive_ctrl_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
   a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
 
