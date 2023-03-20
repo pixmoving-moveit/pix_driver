@@ -21,7 +21,7 @@
 #include <rclcpp/rclcpp.hpp>
 // autoware
 #include <autoware_auto_vehicle_msgs/msg/gear_command.hpp>
-#include <tier4_vehicle_msgs/msg/actuation_command.hpp>
+#include <tier4_vehicle_msgs/msg/actuation_command_stamped.hpp>
 // pix control
 #include <pix_hooke_driver_msgs/msg/a2v_brake_ctrl.hpp>
 #include <pix_hooke_driver_msgs/msg/a2v_drive_ctrl.hpp>
@@ -93,7 +93,7 @@ private:
   // shared msgs
   V2aDriveStaFb::ConstSharedPtr drive_sta_fb_ptr_;
   autoware_auto_vehicle_msgs::msg::GearCommand::ConstSharedPtr gear_command_ptr_;
-  tier4_vehicle_msgs::msg::ActuationCommand::ConstSharedPtr actuation_command_ptr_;
+  tier4_vehicle_msgs::msg::ActuationCommandStamped::ConstSharedPtr actuation_command_ptr_;
 
   // timestamps
   rclcpp::Time drive_sta_fb_received_time_;
@@ -101,7 +101,7 @@ private:
   rclcpp::Time actuation_command_received_time_;
 
   // subscribers
-  rclcpp::Subscription<tier4_vehicle_msgs::msg::ActuationCommand>::ConstSharedPtr
+  rclcpp::Subscription<tier4_vehicle_msgs::msg::ActuationCommandStamped>::ConstSharedPtr
     actuation_command_sub_;
   rclcpp::Subscription<autoware_auto_vehicle_msgs::msg::GearCommand>::ConstSharedPtr
     gear_command_sub_;
@@ -133,7 +133,7 @@ public:
    * @param msg input message
    */
   void callbackActuationCommand(
-    const tier4_vehicle_msgs::msg::ActuationCommand::ConstSharedPtr & msg);
+    const tier4_vehicle_msgs::msg::ActuationCommandStamped::ConstSharedPtr & msg);
   /**
    * @brief callback function of actuation command, in order to get the gear command
    * 

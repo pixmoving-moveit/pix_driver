@@ -47,7 +47,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
 
   // subscribers
   actuation_command_sub_ =
-    create_subscription<tier4_vehicle_msgs::msg::ActuationCommand>(
+    create_subscription<tier4_vehicle_msgs::msg::ActuationCommandStamped>(
       "/control/command/actuation_cmd", 1,
       std::bind(&ControlConverter::callbackActuationCommand, this, std::placeholders::_1));
   gear_command_sub_ = create_subscription<autoware_auto_vehicle_msgs::msg::GearCommand>(
@@ -62,7 +62,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
 }
 
 void ControlConverter::callbackActuationCommand(
-  const tier4_vehicle_msgs::msg::ActuationCommand::ConstSharedPtr & msg)
+  const tier4_vehicle_msgs::msg::ActuationCommandStamped::ConstSharedPtr & msg)
 {
   actuation_command_received_time_ = this->now();
   actuation_command_ptr_ = msg;
@@ -118,14 +118,14 @@ void ControlConverter::timerCallback()
 
   // brake
   a2v_brake_ctrl_msg.header.stamp = current_time;
-  a2v_brake_ctrl_msg.acu_chassis_brake_pdl_target = actuation_command_ptr_->brake_cmd * 100.0;
+  a2v_brake_ctrl_msg.acu_chassis_brake_pdl_target = actuation_command_ptr_->actuation.brake_cmd * 100.0;
   a2v_brake_ctrl_msg.acu_chassis_brake_en = 1;
 
   // steer
   a2v_steer_ctrl_msg.header.stamp = current_time;
   a2v_steer_ctrl_msg.acu_chassis_steer_angle_speed_ctrl = 250;
   a2v_steer_ctrl_msg.acu_chassis_steer_angle_target =
-    -actuation_command_ptr_->steer_cmd * steering_factor_;
+    -actuation_command_ptr_->actuation.steer_cmd * steering_factor_;
   a2v_steer_ctrl_msg.acu_chassis_steer_en_ctrl = 1;
   a2v_steer_ctrl_msg.acu_chassis_steer_mode_ctrl =
     static_cast<int8_t>(ACU_CHASSISSTEERMODECTRL_FRONT_DIFFERENT_BACK);
@@ -153,7 +153,7 @@ void ControlConverter::timerCallback()
   // throttle
   a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
   a2v_drive_ctrl_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
-  a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->accel_cmd * 100.0;
+  a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
 
   // keep shifting and braking when target gear is different from actual gear
   if (drive_sta_fb_ptr_->vcu_chassis_gear_fb != a2v_drive_ctrl_msg.acu_chassis_gear_ctrl) {
