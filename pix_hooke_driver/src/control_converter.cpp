@@ -30,6 +30,9 @@ ControlConverter::ControlConverter() : Node("control_converter")
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
   param_.steering_factor = 500.0 / param_.max_steering_angle;
 
+  // initialization engage
+  engage_cmd_ = false;
+
   // initialize msgs and timestamps
   drive_sta_fb_received_time_ = this->now();
   actuation_command_received_time_ = this->now();
@@ -44,6 +47,12 @@ ControlConverter::ControlConverter() : Node("control_converter")
     create_publisher<A2vSteerCtrl>("/pix_hooke/a2v_steerctrl_132", rclcpp::QoS(1));
   a2v_vehicle_ctrl_pub_ =
     create_publisher<A2vVehicleCtrl>("/pix_hooke/a2v_vehiclectrl_133", rclcpp::QoS(1));
+  
+  //services
+  control_mode_server_ = create_service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>(
+    "/control/control_mode_request",
+    std::bind(
+      &ControlConverter::onControlModeRequest, this, std::placeholders::_1, std::placeholders::_2));
 
   // subscribers
   actuation_command_sub_ =
