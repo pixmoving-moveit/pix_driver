@@ -155,7 +155,7 @@ void ControlConverter::timerCallback()
   a2v_steer_ctrl_msg.header.stamp = current_time;
   a2v_steer_ctrl_msg.acu_chassis_steer_angle_speed_ctrl = 250;
   a2v_steer_ctrl_msg.acu_chassis_steer_angle_target =
-    -actuation_command_ptr_->actuation.steer_cmd * steering_factor_;
+    -actuation_command_ptr_->actuation.steer_cmd * param_.steering_factor;
   a2v_steer_ctrl_msg.acu_chassis_steer_en_ctrl = 1;
   a2v_steer_ctrl_msg.acu_chassis_steer_mode_ctrl =
     static_cast<int8_t>(ACU_CHASSISSTEERMODECTRL_FRONT_DIFFERENT_BACK);
@@ -181,12 +181,13 @@ void ControlConverter::timerCallback()
   }
 
   // throttle
-  if(engage_cmd_)
-  {
-    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
-  }else{
-    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_DISABLE;
-  }
+  // if(engage_cmd_)
+  // {
+  //   a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
+  // }else{
+  //   a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_DISABLE;
+  // }
+  a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = 1;
   a2v_drive_ctrl_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
   a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
 

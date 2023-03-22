@@ -89,7 +89,6 @@ class ControlConverter : public rclcpp::Node
 private:
   // parameters
   Param param_;
-  double steering_factor_;
   bool engage_cmd_;
 
   // shared msgs
