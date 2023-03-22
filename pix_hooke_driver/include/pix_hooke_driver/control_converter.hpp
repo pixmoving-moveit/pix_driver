@@ -21,6 +21,7 @@
 #include <rclcpp/rclcpp.hpp>
 // autoware
 #include <autoware_auto_vehicle_msgs/msg/gear_command.hpp>
+#include <autoware_auto_vehicle_msgs/srv/control_mode_command.hpp>
 #include <tier4_vehicle_msgs/msg/actuation_command_stamped.hpp>
 // pix control
 #include <pix_hooke_driver_msgs/msg/a2v_brake_ctrl.hpp>
@@ -89,6 +90,7 @@ private:
   // parameters
   Param param_;
   double steering_factor_;
+  bool engage_cmd_;
 
   // shared msgs
   V2aDriveStaFb::ConstSharedPtr drive_sta_fb_ptr_;
@@ -111,6 +113,9 @@ private:
   // emergency command
   // hazard lights command
   // turn indicators command
+
+  // services
+  rclcpp::Service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>::SharedPtr control_mode_server_;
 
   // publishers
   rclcpp::Publisher<A2vBrakeCtrl>::SharedPtr a2v_brake_ctrl_pub_;
@@ -148,6 +153,15 @@ public:
    */
   void callbackDriveStatusFeedback(
     const pix_hooke_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr & msg);
+  /**
+   * @brief request function to modify control mode AUTO/MANUAL
+   * 
+   * @param request 
+   * @param response 
+   */
+  void onControlModeRequest(
+    const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::SharedPtr request,
+    const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Response::SharedPtr response);
   /**
    * @brief timer callback function, to evaluate whether if msgs are timeout, than publish control msgs to pix driver control command node
    * 

@@ -30,6 +30,9 @@ ControlConverter::ControlConverter() : Node("control_converter")
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
   param_.steering_factor = 500.0 / param_.max_steering_angle;
 
+  // initialization engage
+  engage_cmd_ = false;
+
   // initialize msgs and timestamps
   drive_sta_fb_received_time_ = this->now();
   actuation_command_received_time_ = this->now();
@@ -44,6 +47,12 @@ ControlConverter::ControlConverter() : Node("control_converter")
     create_publisher<A2vSteerCtrl>("/pix_hooke/a2v_steerctrl_132", rclcpp::QoS(1));
   a2v_vehicle_ctrl_pub_ =
     create_publisher<A2vVehicleCtrl>("/pix_hooke/a2v_vehiclectrl_133", rclcpp::QoS(1));
+  
+  //services
+  control_mode_server_ = create_service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>(
+    "/control/control_mode_request",
+    std::bind(
+      &ControlConverter::onControlModeRequest, this, std::placeholders::_1, std::placeholders::_2));
 
   // subscribers
   actuation_command_sub_ =
@@ -79,6 +88,27 @@ void ControlConverter::callbackDriveStatusFeedback(const V2aDriveStaFb::ConstSha
 {
   drive_sta_fb_received_time_ = this->now();
   drive_sta_fb_ptr_ = msg;
+}
+
+void ControlConverter::onControlModeRequest(
+  const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::SharedPtr request,
+  const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Response::SharedPtr response)
+{
+  if (request->mode == autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::AUTONOMOUS) {
+    engage_cmd_ = true;
+    response->success = true;
+    return;
+  }
+
+  if (request->mode == autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::MANUAL) {
+    engage_cmd_ = false;
+    response->success = true;
+    return;
+  }
+
+  RCLCPP_ERROR(get_logger(), "unsupported control_mode!!");
+  response->success = false;
+  return;
 }
 
 void ControlConverter::timerCallback()
@@ -151,7 +181,12 @@ void ControlConverter::timerCallback()
   }
 
   // throttle
-  a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
+  if(engage_cmd_)
+  {
+    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
+  }else{
+    a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_DISABLE;
+  }
   a2v_drive_ctrl_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
   a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
 
