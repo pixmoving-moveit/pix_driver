@@ -9,7 +9,7 @@
     <param name="base_frame_id" value="$(var base_frame_id)"/>
     <param name="command_timeout_ms" value="$(var command_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
-    <remap from="output/can_tx" to="/can_output" />
+    <remap from="output/can_tx" to="/to_can_bus" />
     <remap from="input/engage" to="/pix_hooke_driver/control_command/engage" />
   </node>
   <node pkg="pix_hooke_driver" name="pix_hooke_driver_report_node" exec="pix_hooke_driver_report_parser_node" output="screen">
