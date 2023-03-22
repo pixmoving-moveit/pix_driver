@@ -194,7 +194,7 @@ void ReportConverter::timerCallback()
   case static_cast<int8_t>(VCU_DRIVINGMODEFB_STANDBY):
     control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::DISENGAGED;
     break;
-  case static_cast<int8_t>(VCU_DRIVINGMODEFB_MAN):
+  case static_cast<int8_t>(VCU_DRIVINGMODEFB_REMOTE):
     control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::MANUAL;
     break;
   default:
