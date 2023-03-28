@@ -227,6 +227,15 @@ void ReportConverter::timerCallback()
   }
   turn_indicators_status_pub_->publish(turn_indicators_report_msg);
 
+  // tier4 vehicle msgs, acutation msgs
+  actuation_status_stamped_msg.header.stamp = current_time;
+  actuation_status_stamped_msg.header.frame_id = "base_link";
+  actuation_status_stamped_msg.status.accel_status =
+    drive_sta_fb_ptr_->vcu_chassis_throttle_padl_fb / 100.0;
+  actuation_status_stamped_msg.status.brake_status =
+    brake_sta_fb_ptr_->vcu_chassis_brake_padl_fb / 100.0;
+  // have no idea about the mean of steer_status in ActuationStatusStamped, so it should be empty
+  actuation_status_pub_->publish(actuation_status_stamped_msg);
   // to be done, tier4 msgs
 }
 
