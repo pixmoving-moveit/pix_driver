@@ -1,5 +1,5 @@
-#ifndef PIX_HOOKE_DRIVER__REPORT_PARSER_HPP_
-#define PIX_HOOKE_DRIVER__REPORT_PARSER_HPP_
+#ifndef PIX_ROBOBUS_DRIVER__REPORT_PARSER_HPP_
+#define PIX_ROBOBUS_DRIVER__REPORT_PARSER_HPP_
 
 #include <string>
 #include <memory>
@@ -182,4 +182,4 @@ public:
 };
 } // report_parser
 } // pix_robobus_driver
-#endif // PIX_HOOKE_DRIVER__REPORT_PARSER_HPP_
+#endif // PIX_ROBOBUS_DRIVER__REPORT_PARSER_HPP_

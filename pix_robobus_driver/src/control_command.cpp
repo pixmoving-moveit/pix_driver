@@ -24,7 +24,7 @@ ControlCommand::ControlCommand() : Node("control_command")
     // from robobus driver autoware interface
     /**
     a2v_brake_ctrl_sub_ = create_subscription<A2vBrakeCtrl>(
-      "/pix_hooke/a2v_brakectrl_131", 1, std::bind(&ControlCommand::callbackBrakeCtrl, this, _1));
+      "/pix_robobus/a2v_brakectrl_131", 1, std::bind(&ControlCommand::callbackBrakeCtrl, this, _1));
     **/
     throttle_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::ThrottleCommand>("/pix_robobus/throttle_command", 1, std::bind(&ControlCommand::callbackThrottleCommand, this, _1));
 brake_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::BrakeCommand>("/pix_robobus/brake_command", 1, std::bind(&ControlCommand::callbackBrakeCommand, this, _1));

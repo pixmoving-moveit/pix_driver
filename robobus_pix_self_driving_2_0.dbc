@@ -1,0 +1,482 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: MBE VCU ACU
+VAL_TABLE_ AllowSelfDrivingRun 1 "Allow" 0 "NotAllow" ;
+VAL_TABLE_ VCU_ChassisEStopSta 7 "碰撞急停" 6 "自驾急停" 5 "远控急停" 4 "自驾断连急停" 3 "遥控断连急停" 2 "遥控急停" 1 "车身急停" 0 "no estop" ;
+VAL_TABLE_ PromptsVoice 1 "ON" 0 "OFF" ;
+VAL_TABLE_ PowerSta 1 "Ready" 0 "NoReady" ;
+VAL_TABLE_ DoorReportSta 3 "speed is not zero" 2 "door close" 1 "door open" 0 "invalid" ;
+VAL_TABLE_ DoorCloseSta 1 "closing" 0 "none" ;
+VAL_TABLE_ DoorOpenSta 1 "opening" 0 "none" ;
+VAL_TABLE_ DoorCtrlSta 2 "open door" 1 "close door" 0 "invalid" ;
+VAL_TABLE_ CarWork_State 3 "FAULT" 2 "OK" 1 "SELF_CHECK" 0 "INIT" ;
+VAL_TABLE_ CarPower_State 3 "READY" 2 "ON" 1 "ACC" 0 "OFF" ;
+VAL_TABLE_ Headlight 1 "On" 0 "Off" ;
+VAL_TABLE_ AEB_Trigger_State 8 "RightTrigger" 4 "LeftTrigger" 2 "BackTrigger" 1 "FrontTrigger" 0 "NoTrigger" ;
+VAL_TABLE_ Brake_Light_Actual 1 "BrakeLight_ON" 0 "BrakeLight_OFF" ;
+VAL_TABLE_ Turn_Light_Actual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
+VAL_TABLE_ VIN_Req 1 "Vin_req_enable" 0 "Vin_req_disable" ;
+VAL_TABLE_ Drive_Mode_STS 1 "Speed Drive Mode" 0 "Throttle Paddle Drive Mode" ;
+VAL_TABLE_ Steer_Mode_STS 2 "Sync Direction Steer Mode" 1 "Non Direction Steer Mode" 0 "Standard Steer Mode" ;
+VAL_TABLE_ Steer_Mode_CTRL 2 "Sync Direction Steer" 1 "Non Direction Steer" 0 "Standard Steer" ;
+VAL_TABLE_ Drive_Mode_CTRL 1 "Speed Drive" 0 "Throttle Paddle Drive" ;
+VAL_TABLE_ AEB_EN_CTRL 1 "Enable AEB" 0 "Disable AEB" ;
+VAL_TABLE_ Vehicle_Mode_State 3 "Standby Mode" 2 "Emergency Mode" 1 "Auto Mode" 0 "Manual Remote  Mode" ;
+VAL_TABLE_ BackCrash_State 1 "Crash Event" 0 "No Event" ;
+VAL_TABLE_ FrontCrash_State 1 "Crash Event" 0 "No Event" ;
+VAL_TABLE_ AEB_State 1 "Active" 0 "Inctive" ;
+VAL_TABLE_ Brake_FLT2 1 "Brake system comunication fault" 0 "No fault " ;
+VAL_TABLE_ Brake_FLT1 1 "Brake system hardware fault" 0 "No fault" ;
+VAL_TABLE_ Brake_EN_CTRL 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Brake_EN_state 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_TABLE_ Park_FLT 1 "Fault" 0 "No Fault" ;
+VAL_TABLE_ Parking_actual 1 "Parking_trigger" 0 "Release" ;
+VAL_TABLE_ Park_Target 1 "Parking_trigger" 0 "Release" ;
+VAL_TABLE_ Park_EN_CTRL 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Gear_FLT 1 "Fault" 0 "No Fault" ;
+VAL_TABLE_ Gear_Actual 4 "D" 3 "N" 2 "R" 1 "P" 0 "Invaild" ;
+VAL_TABLE_ Gear_Target 4 "D" 3 "N" 2 "R" 1 "P" 0 "Invalid" ;
+VAL_TABLE_ Gear_EN_CTRL 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Throttle_EN_state 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_TABLE_ Throttle_EN_CTRL 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Steer_EN_state 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_TABLE_ Steer_EN_CTRL 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Throttle_FLT2 1 "Drive system comunication fault" 0 "No fault" ;
+VAL_TABLE_ Throttle_FLT1 1 "Drive system hardware fault" 0 "No fault" ;
+VAL_TABLE_ Steer_FLT2 1 "Steer system comunication fault" 0 "No fault" ;
+VAL_TABLE_ Steer_FLT1 1 "Steer system hardware fault" 0 "No fault" ;
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ HighBeam_Actual : 0|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ HighBeam_Ctrl : 0|1@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 928 AutoCtrlMsg: 8 Vector__XXX
+ SG_ AutoHearttbeat : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ AutoDriveCtrlMode : 7|8@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 944 AutoRemoteCtrlMsg: 8 Vector__XXX
+ SG_ AutoRemoteHearttbeat : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ AutoRemoteDriveCtrlMode : 7|8@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 336 ChassisSta2Mobileye: 8 VCU
+ SG_ Vehicle_Speed2Mbe : 7|16@0- (0.1,0) [-3276.8|3276.7] "kph"  MBE
+ SG_ Brake_LightActual : 18|1@0+ (1,0) [0|1] ""  MBE
+ SG_ TurnLight_Actual : 17|2@0+ (1,0) [0|0] ""  MBE
+
+BO_ 1314 VehicleMileageFb: 8 VCU
+ SG_ VehicleSubMileage : 31|24@0+ (0.001,0) [0|16777.215] "km" Vector__XXX
+ SG_ VehicleODO : 7|24@0+ (0.1,0) [0|1677721.5] "km" Vector__XXX
+
+BO_ 1305 Vehicle_Door_Report: 8 Vector__XXX
+ SG_ DoorReportSta : 9|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorOpenTimeout : 4|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorOpenSta : 0|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorOpenInplace : 2|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorCloseTimeout : 5|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorCloseSta : 1|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorCloseInplace : 3|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DoorButtonEnable : 6|1@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1302 VIN_Resp3: 8 Vector__XXX
+ SG_ VIN16 : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1301 VIN_Resp2: 8 Vector__XXX
+ SG_ VIN15 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN14 : 55|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN13 : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN12 : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN11 : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN10 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN09 : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN08 : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1300 VIN_Resp1: 8 Vector__XXX
+ SG_ VIN07 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN06 : 55|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN05 : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN04 : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN03 : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN02 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN01 : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VIN00 : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 261 Vehicle_Mode_Command: 8 ACU
+ SG_ Auto_Prompts : 23|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ ClearanceLamp_Ctrl : 19|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ TurnRight_Prompts : 20|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ TurnLeft_Prompts : 21|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Headlight_Ctrl : 18|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ BackUp_Prompts : 22|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Vehicle_DoorCtrl : 33|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ CheckSum_105 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ TurnLight_Ctrl : 17|2@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ Vehicle_VIN_Req : 24|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Drive_ModeCtrl : 10|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ Steer_ModeCtrl : 2|3@0+ (1,0) [0|7] "" Vector__XXX
+
+BO_ 1298 BMS_Report: 8 VCU
+ SG_ BatteryLeadacid_Voltage : 55|8@0+ (0.1,0) [0|25.5] "V" Vector__XXX
+ SG_ Battery_Current : 23|16@0+ (0.1,-3200) [-3200|3353.5] "A" Vector__XXX
+ SG_ Battery_Voltage : 7|16@0+ (0.01,0) [0|300] "V" Vector__XXX
+ SG_ Battery_Soc : 39|8@0+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 1297 ULTR_Sensor_5: 8 Vector__XXX
+ SG_ uiUSS7_ToF_Direct : 55|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS6_ToF_Direct : 39|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS1_ToF_Direct : 23|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS0_ToF_Direct : 7|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+
+BO_ 1296 ULTR_Sensor_4: 8 Vector__XXX
+ SG_ uiUSS5_ToF_Indirect : 55|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS4_ToF_Indirect : 39|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS3_ToF_Indirect : 23|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS2_ToF_Indirect : 7|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+
+BO_ 1289 ULTR_Sensor_3: 8 Vector__XXX
+ SG_ uiUSS5_ToF_Direct : 55|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS4_ToF_Direct : 39|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS3_ToF_Direct : 23|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS2_ToF_Direct : 7|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+
+BO_ 1288 ULTR_Sensor_2: 8 Vector__XXX
+ SG_ uiUSS9_ToF_Indirect : 23|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS8_ToF_Indirect : 7|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS11_ToF_Indirect : 55|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS10_ToF_Indirect : 39|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+
+BO_ 1287 ULTR_Sensor_1: 8 Vector__XXX
+ SG_ uiUSS9_ToF_Direct : 23|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS8_ToF_Direct : 7|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS11_ToF_Direct : 55|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+ SG_ uiUSS10_ToF_Direct : 39|16@0+ (0.01724,0) [0|65535] "cm"  ACU
+
+BO_ 260 Park_Command: 8 ACU
+ SG_ CheckSum_104 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ Park_Target : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Park_EnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1286 WheelSpeed_Report: 8 Vector__XXX
+ SG_ WheelSpeedRR : 55|16@0- (0.001,0) [-32.768|32.767] "m/s"  ACU
+ SG_ WheelSpeedRL : 39|16@0- (0.001,0) [-32.768|32.767] "m/s"  ACU
+ SG_ WheelSpeedFR : 23|16@0- (0.001,0) [-32.768|32.767] "m/s"  ACU
+ SG_ WheelSpeedFL : 7|16@0- (0.001,0) [-32.768|32.767] "m/s"  ACU
+
+BO_ 1285 VCU_Report: 8 Vector__XXX
+ SG_ AllowSelfDrivingRun : 54|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ChassisEStopStaFb : 63|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ ClearanceLamp_Actual : 60|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ CarWork_State : 51|4@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ CarPower_State : 53|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ AEB_Trigger_State : 58|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Brake_LightActual : 11|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Headlight_Actual : 59|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ TurnLight_Actual : 57|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Vehicle_Errcode : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ Drive_ModeStatus : 39|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ Steer_ModeStatus : 10|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ Vehicle_ModeState : 36|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Vehicle_FrontCrashState : 33|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ BackCrash_State : 34|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ AEB_State : 32|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Vehicle_Acc : 7|12@0- (0.01,0) [-10|10] "m/s^2"  ACU
+ SG_ Vehicle_Speed : 23|16@0- (0.001,0) [-32.768|32.767] "m/s"  ACU
+
+BO_ 1284 Park_Report: 8 VCU
+ SG_ Parking_Actual : 0|1@0+ (1,0) [0|1] ""  ACU
+ SG_ Park_Flt : 15|8@0+ (1,0) [0|1] ""  ACU
+
+BO_ 1283 Gear_Report: 8 VCU
+ SG_ Gear_Flt : 15|8@0+ (1,0) [0|1] ""  ACU
+ SG_ Gear_Actual : 2|3@0+ (1,0) [0|4] ""  ACU
+
+BO_ 1281 Brake_Report: 8 Vector__XXX
+ SG_ Brake_PedalActual : 31|16@0+ (0.1,0) [0|100] "%"  ACU
+ SG_ Brake_Flt2 : 23|8@0+ (1,0) [0|1] ""  ACU
+ SG_ Brake_Flt1 : 15|8@0+ (1,0) [0|1] ""  ACU
+ SG_ Brake_EnState : 1|2@0+ (1,0) [0|2] ""  ACU
+
+BO_ 1280 Throttle_Report: 8 VCU
+ SG_ Dirve_ThrottlePedalActual : 31|16@0+ (0.1,0) [0|100] "%"  ACU
+ SG_ Dirve_Flt2 : 23|8@0+ (1,0) [0|1] ""  ACU
+ SG_ Dirve_Flt1 : 15|8@0+ (1,0) [0|1] ""  ACU
+ SG_ Dirve_EnState : 1|2@0+ (1,0) [0|2] ""  ACU
+
+BO_ 1282 Steering_Report: 8 VCU
+ SG_ Steer_AngleSpeedSetVal : 55|8@0+ (2,0) [0|500] "deg/s"  ACU
+ SG_ Steer_Flt2 : 23|8@0+ (1,0) [0|255] ""  ACU
+ SG_ Steer_Flt1 : 15|8@0+ (1,0) [0|255] ""  ACU
+ SG_ Steer_EnState : 1|2@0+ (1,0) [0|2] ""  ACU
+ SG_ Steer_AngleActual : 31|16@0+ (1,-500) [-450|450] "deg"  ACU
+
+BO_ 259 Gear_Command: 8 ACU
+ SG_ Gear_Target : 10|3@0+ (1,0) [0|4] "" Vector__XXX
+ SG_ Gear_EnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CheckSum_103 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 258 Steering_Command: 8 ACU
+ SG_ Steer_EnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Steer_AngleTarget : 31|16@0+ (1,-500) [-450|450] "deg" Vector__XXX
+ SG_ Steer_AngleSpeed : 15|8@0+ (2,0) [0|500] "deg/s" Vector__XXX
+ SG_ CheckSum_102 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 257 Brake_Command: 8 ACU
+ SG_ AEB_EnCtrl : 1|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Brake_Dec : 15|10@0+ (0.01,0) [0|10] "m/s^2" Vector__XXX
+ SG_ CheckSum_101 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ Brake_Pedal_Target : 31|16@0+ (0.1,0) [0|100] "%" Vector__XXX
+ SG_ Brake_EnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 256 Throttle_Command: 8 ACU
+ SG_ Dirve_SpeedTarget : 47|12@0+ (0.01,0) [0|10.23] "m/s" Vector__XXX
+ SG_ Dirve_Acc : 15|10@0+ (0.01,0) [0|10] "m/s^2" Vector__XXX
+ SG_ CheckSum_100 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ Dirve_ThrottlePedalTarget : 31|16@0+ (0.1,0) [0|100] "%" Vector__XXX
+ SG_ Dirve_EnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 928 AutoHearttbeat "心跳信号";
+CM_ SG_ 928 AutoDriveCtrlMode "自驾控制接管命令";
+CM_ SG_ 944 AutoRemoteHearttbeat "心跳信号";
+CM_ SG_ 944 AutoRemoteDriveCtrlMode "远控控制命令";
+CM_ BO_ 336 "反馈到mobileye报文";
+CM_ SG_ 261 Auto_Prompts "自动驾驶提示音";
+CM_ SG_ 1298 Battery_Current "Battery Total Current";
+CM_ SG_ 1298 Battery_Voltage "Battery Total Voltage";
+CM_ SG_ 1298 Battery_Soc "Battery Soc percentage";
+CM_ SG_ 1285 AllowSelfDrivingRun "允许自动驾驶运行指令";
+CM_ SG_ 1281 Brake_Flt2 "Brake system communication fault";
+CM_ SG_ 1281 Brake_Flt1 "Brake system hardware fault";
+CM_ SG_ 1280 Dirve_Flt2 "Drive system communication fault";
+CM_ SG_ 1280 Dirve_Flt1 "Drive system hardware fault";
+CM_ SG_ 1282 Steer_Flt2 "Steer system communication fault";
+CM_ SG_ 1282 Steer_Flt1 "Steer system hardware fault";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BU_  "NmStationAddress" HEX 0 0;
+BA_DEF_  "GenNWMApBusSleep" STRING ;
+BA_DEF_  "GenNWMApCanNormal" STRING ;
+BA_DEF_  "GenNWMApCanOff" STRING ;
+BA_DEF_  "GenNWMApCanOn" STRING ;
+BA_DEF_  "GenNWMApCanSleep" STRING ;
+BA_DEF_  "GenNWMApCanWakeUp" STRING ;
+BA_DEF_  "GenNWMGotoMode_Awake" STRING ;
+BA_DEF_  "GenNWMGotoMode_BusSleep" STRING ;
+BA_DEF_  "GenNWMSleepTime" INT 0 1000000;
+BA_DEF_  "GenNWMTalkNM" STRING ;
+BA_DEF_ BU_  "GenNodSleepTime" INT 0 1000000;
+BA_DEF_ BO_  "NmMessage" ENUM  "No","Yes";
+BA_DEF_ BU_  "NmNode" ENUM  "No","Yes";
+BA_DEF_ SG_  "NWM-WakeupAllowed" ENUM  "No","Yes";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 2 50000;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 1 1000;
+BA_DEF_ BO_  "GenMsgNrOfRepetitions" INT 1 999999;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","spontaneous","cyclicIfActive","spontaneousWithDelay","cyclicAndSpontaneous","cyclicAndSpontaneousWithDelay","spontaneousWithRepetition","cyclicIfActiveAndSpontaneousWD";
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 100000;
+BA_DEF_ SG_  "GenSigSendType" ENUM  "spontaneous";
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 100000000000;
+BA_DEF_ EV_  "GenEnvControlType" ENUM  "NoControl","SliderHoriz","SliderVert","PushButton","Edit","BitmapSwitch";
+BA_DEF_ EV_  "GenEnvMsgName" STRING ;
+BA_DEF_ EV_  "GenEnvMsgOffset" INT 0 999999999;
+BA_DEF_ EV_  "GenEnvAutoGenCtrl" ENUM  "No","Yes";
+BA_DEF_  "GenEnvVarEndingDsp" STRING ;
+BA_DEF_  "GenEnvVarEndingSnd" STRING ;
+BA_DEF_  "GenEnvVarPrefix" STRING ;
+BA_DEF_ BO_  "GenMsgAltSetting" STRING ;
+BA_DEF_ BO_  "GenMsgAutoGenDsp" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgAutoGenSnd" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgConditionalSend" STRING ;
+BA_DEF_ BO_  "GenMsgEVName" STRING ;
+BA_DEF_ BO_  "GenMsgPostIfSetting" STRING ;
+BA_DEF_ BO_  "GenMsgPostSetting" STRING ;
+BA_DEF_ BO_  "GenMsgPreIfSetting" STRING ;
+BA_DEF_ BO_  "GenMsgPreSetting" STRING ;
+BA_DEF_ BU_  "GenNodAutoGenSnd" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigAltSetting" STRING ;
+BA_DEF_ SG_  "GenSigAssignSetting" STRING ;
+BA_DEF_ SG_  "GenSigAutoGenDsp" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigAutoGenSnd" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigConditionalSend" STRING ;
+BA_DEF_ SG_  "GenSigEnvVarType" ENUM  "int","float","undef";
+BA_DEF_ SG_  "GenSigEVName" STRING ;
+BA_DEF_ SG_  "GenSigPostIfSetting" STRING ;
+BA_DEF_ SG_  "GenSigPostSetting" STRING ;
+BA_DEF_ SG_  "GenSigPreIfSetting" STRING ;
+BA_DEF_ SG_  "GenSigPreSetting" STRING ;
+BA_DEF_ SG_  "GenSigReceiveSetting" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "GenNWMApBusSleep" "apBusSleep()";
+BA_DEF_DEF_  "GenNWMApCanNormal" "apCanNormal()";
+BA_DEF_DEF_  "GenNWMApCanOff" "apCanOff()";
+BA_DEF_DEF_  "GenNWMApCanOn" "apCanOn()";
+BA_DEF_DEF_  "GenNWMApCanSleep" "apCanSleep()";
+BA_DEF_DEF_  "GenNWMApCanWakeUp" "apCanWakeUp()";
+BA_DEF_DEF_  "GenNWMGotoMode_Awake" "GotoMode_Awake()";
+BA_DEF_DEF_  "GenNWMGotoMode_BusSleep" "GotoMode_BusSleep()";
+BA_DEF_DEF_  "GenNWMSleepTime" 0;
+BA_DEF_DEF_  "GenNWMTalkNM" "TalkNM()";
+BA_DEF_DEF_  "GenNodSleepTime" 0;
+BA_DEF_DEF_  "NmMessage" "No";
+BA_DEF_DEF_  "NmNode" "No";
+BA_DEF_DEF_  "NWM-WakeupAllowed" "";
+BA_DEF_DEF_  "NodeLayerModules" "CANoeILNLVector.dll";
+BA_DEF_DEF_  "GenMsgCycleTime" 100;
+BA_DEF_DEF_  "GenMsgDelayTime" 1;
+BA_DEF_DEF_  "GenMsgNrOfRepetitions" 1;
+BA_DEF_DEF_  "GenMsgSendType" "";
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenSigSendType" "";
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenEnvControlType" "";
+BA_DEF_DEF_  "GenEnvMsgName" "";
+BA_DEF_DEF_  "GenEnvMsgOffset" 0;
+BA_DEF_DEF_  "GenEnvAutoGenCtrl" "No";
+BA_DEF_DEF_  "GenEnvVarEndingDsp" "Dsp_";
+BA_DEF_DEF_  "GenEnvVarEndingSnd" "_";
+BA_DEF_DEF_  "GenEnvVarPrefix" "Env";
+BA_DEF_DEF_  "GenMsgAltSetting" "";
+BA_DEF_DEF_  "GenMsgAutoGenDsp" "";
+BA_DEF_DEF_  "GenMsgAutoGenSnd" "";
+BA_DEF_DEF_  "GenMsgConditionalSend" "";
+BA_DEF_DEF_  "GenMsgEVName" "";
+BA_DEF_DEF_  "GenMsgPostIfSetting" "";
+BA_DEF_DEF_  "GenMsgPostSetting" "";
+BA_DEF_DEF_  "GenMsgPreIfSetting" "";
+BA_DEF_DEF_  "GenMsgPreSetting" "";
+BA_DEF_DEF_  "GenNodAutoGenSnd" "";
+BA_DEF_DEF_  "GenSigAltSetting" "";
+BA_DEF_DEF_  "GenSigAssignSetting" "";
+BA_DEF_DEF_  "GenSigAutoGenDsp" "";
+BA_DEF_DEF_  "GenSigAutoGenSnd" "";
+BA_DEF_DEF_  "GenSigConditionalSend" "";
+BA_DEF_DEF_  "GenSigEnvVarType" "undef";
+BA_DEF_DEF_  "GenSigEVName" "";
+BA_DEF_DEF_  "GenSigPostIfSetting" "";
+BA_DEF_DEF_  "GenSigPostSetting" "";
+BA_DEF_DEF_  "GenSigPreIfSetting" "";
+BA_DEF_DEF_  "GenSigPreSetting" "";
+BA_DEF_DEF_  "GenSigReceiveSetting" "";
+BA_ "GenMsgCycleTime" BO_ 1302 500;
+BA_ "GenMsgCycleTime" BO_ 1301 500;
+BA_ "GenMsgCycleTime" BO_ 1300 500;
+BA_ "GenMsgCycleTime" BO_ 1298 20;
+BA_ "GenMsgCycleTime" BO_ 1297 130;
+BA_ "GenMsgCycleTime" BO_ 1296 130;
+BA_ "GenMsgCycleTime" BO_ 1289 130;
+BA_ "GenMsgCycleTime" BO_ 1288 130;
+BA_ "GenMsgCycleTime" BO_ 1287 130;
+BA_ "GenMsgCycleTime" BO_ 260 20;
+BA_ "GenMsgCycleTime" BO_ 1286 20;
+BA_ "GenMsgCycleTime" BO_ 1285 20;
+BA_ "GenMsgCycleTime" BO_ 1284 50;
+BA_ "GenMsgCycleTime" BO_ 1283 50;
+BA_ "GenMsgCycleTime" BO_ 1281 20;
+BA_ "GenMsgCycleTime" BO_ 1280 20;
+BA_ "GenMsgCycleTime" BO_ 1282 20;
+BA_ "GenMsgCycleTime" BO_ 259 50;
+BA_ "GenMsgCycleTime" BO_ 258 20;
+BA_ "GenMsgCycleTime" BO_ 257 20;
+BA_ "GenMsgCycleTime" BO_ 256 20;
+BA_ "GenSigStartValue" SG_ 1298 Battery_Current 32000;
+BA_ "GenSigStartValue" SG_ 1285 Vehicle_Acc 0;
+BA_ "GenSigStartValue" SG_ 1282 Steer_AngleSpeedSetVal 0;
+BA_ "GenSigStartValue" SG_ 1282 Steer_AngleActual 500;
+BA_ "GenSigStartValue" SG_ 258 Steer_AngleTarget 500;
+BA_ "GenSigStartValue" SG_ 257 Brake_Dec 0;
+BA_ "GenSigStartValue" SG_ 256 Dirve_Acc 0;
+VAL_ 3221225472 HighBeam_Actual 1 "On" 0 "Off" ;
+VAL_ 3221225472 HighBeam_Ctrl 1 "On" 0 "Off" ;
+VAL_ 336 Brake_LightActual 1 "BrakeLight_ON" 0 "BrakeLight_OFF" ;
+VAL_ 336 TurnLight_Actual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
+VAL_ 1305 DoorReportSta 1 "opening" 0 "none" ;
+VAL_ 1305 DoorOpenTimeout 1 "opening" 0 "none" ;
+VAL_ 1305 DoorOpenSta 1 "opening" 0 "none" ;
+VAL_ 1305 DoorOpenInplace 1 "opening" 0 "none" ;
+VAL_ 1305 DoorCloseTimeout 1 "opening" 0 "none" ;
+VAL_ 1305 DoorCloseSta 1 "closing" 0 "none" ;
+VAL_ 1305 DoorCloseInplace 1 "opening" 0 "none" ;
+VAL_ 1305 DoorButtonEnable 1 "opening" 0 "none" ;
+VAL_ 261 Auto_Prompts 1 "ON" 0 "OFF" ;
+VAL_ 261 ClearanceLamp_Ctrl 1 "On" 0 "Off" ;
+VAL_ 261 TurnRight_Prompts 1 "ON" 0 "OFF" ;
+VAL_ 261 TurnLeft_Prompts 1 "ON" 0 "OFF" ;
+VAL_ 261 Headlight_Ctrl 1 "On" 0 "Off" ;
+VAL_ 261 BackUp_Prompts 1 "ON" 0 "OFF" ;
+VAL_ 261 Vehicle_DoorCtrl 2 "open door" 1 "close door" 0 "invalid" ;
+VAL_ 261 TurnLight_Ctrl 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlamp_ON" 1 "Left_Turnlamp_ON" 0 "Turnlamp_OFF" ;
+VAL_ 261 Vehicle_VIN_Req 1 "Vin_req_enable" 0 "Vin_req_disable" ;
+VAL_ 261 Drive_ModeCtrl 1 "Speed Drive" 0 "Throttle Paddle Drive" ;
+VAL_ 261 Steer_ModeCtrl 2 "Sync Direction Steer" 1 "Non Direction Steer" 0 "Standard Steer" ;
+VAL_ 260 Park_Target 1 "Parking_trigger" 0 "Release" ;
+VAL_ 260 Park_EnCtrl 1 "Enable" 0 "Disable" ;
+VAL_ 1285 AllowSelfDrivingRun 1 "Allow" 0 "NotAllow" ;
+VAL_ 1285 VCU_ChassisEStopStaFb 7 "碰撞急停" 6 "自驾急停" 5 "远控急停" 4 "自驾断连急停" 3 "遥控断连急停" 2 "遥控急停" 1 "车身急停" 0 "no estop" ;
+VAL_ 1285 ClearanceLamp_Actual 1 "On" 0 "Off" ;
+VAL_ 1285 CarWork_State 3 "FAULT" 2 "OK" 1 "SELF_CHECK" 0 "INIT" ;
+VAL_ 1285 CarPower_State 1 "Ready" 0 "NoReady" ;
+VAL_ 1285 AEB_Trigger_State 8 "RightTrigger" 4 "LeftTrigger" 2 "BackTrigger" 1 "FrontTrigger" 0 "NoTrigger" ;
+VAL_ 1285 Brake_LightActual 1 "BrakeLight_ON" 0 "BrakeLight_OFF" ;
+VAL_ 1285 Headlight_Actual 1 "On" 0 "Off" ;
+VAL_ 1285 TurnLight_Actual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
+VAL_ 1285 Drive_ModeStatus 1 "Speed Drive Mode" 0 "Throttle Paddle Drive Mode" ;
+VAL_ 1285 Steer_ModeStatus 2 "Sync Direction Steer Mode" 1 "Non Direction Steer Mode" 0 "Standard Steer Mode" ;
+VAL_ 1285 Vehicle_ModeState 3 "Standby Mode" 2 "Emergency Mode" 1 "Auto Mode" 0 "Manual Remote Mode" ;
+VAL_ 1285 Vehicle_FrontCrashState 1 "Crash Event" 0 "No Event" ;
+VAL_ 1285 BackCrash_State 1 "Crash Event" 0 "No Event" ;
+VAL_ 1285 AEB_State 1 "Active" 0 "Inactive" ;
+VAL_ 1284 Parking_Actual 1 "Parking_trigger" 0 "Release" ;
+VAL_ 1284 Park_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 1283 Gear_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 1283 Gear_Actual 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
+VAL_ 1281 Brake_Flt2 1 "Brake system comunication fault" 0 "No fault " ;
+VAL_ 1281 Brake_Flt1 1 "Brake system hardware fault" 0 "No fault" ;
+VAL_ 1281 Brake_EnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 1280 Dirve_Flt2 1 "Drive system comunication fault" 0 "No fault" ;
+VAL_ 1280 Dirve_Flt1 1 "Drive system hardware fault" 0 "No fault" ;
+VAL_ 1280 Dirve_EnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 1282 Steer_Flt2 1 "Steer system comunication fault" 0 "No fault" ;
+VAL_ 1282 Steer_Flt1 1 "Steer system hardware fault" 0 "No fault" ;
+VAL_ 1282 Steer_EnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 259 Gear_Target 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
+VAL_ 259 Gear_EnCtrl 1 "Enable" 0 "Disable" ;
+VAL_ 258 Steer_EnCtrl 1 "Enable" 0 "Disable" ;
+VAL_ 257 AEB_EnCtrl 1 "Enable AEB" 0 "Disable AEB" ;
+VAL_ 257 Brake_EnCtrl 1 "Enable" 0 "Disable" ;
+VAL_ 256 Dirve_EnCtrl 1 "Enable" 0 "Disable" ;
+

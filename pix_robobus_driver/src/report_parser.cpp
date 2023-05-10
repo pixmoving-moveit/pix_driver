@@ -48,7 +48,7 @@ vehicle_mileage_fb_received_time_ = this->now();
   {
     /** example
     brake_sta_fb_pub_ =
-      create_publisher<V2aBrakeStaFb>("/pix_hooke/v2a_brakestafb", rclcpp::QoS{1});
+      create_publisher<V2aBrakeStaFb>("/pix_robobus/v2a_brakestafb", rclcpp::QoS{1});
     **/
     chassis_sta_to_mobileye_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ChassisStaToMobileye>("/pix_robobus/chassis_sta_to_mobileye", rclcpp::QoS{1});
 auto_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>("/pix_robobus/auto_ctrl_msg", rclcpp::QoS{1});

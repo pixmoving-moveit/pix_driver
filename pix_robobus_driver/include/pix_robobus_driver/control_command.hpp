@@ -1,5 +1,5 @@
-#ifndef PIX_HOOKE_DRIVER__CONTROL_COMMAND_HPP_
-#define PIX_HOOKE_DRIVER__CONTROL_COMMAND_HPP_
+#ifndef PIX_ROBOBUS_DRIVER__CONTROL_COMMAND_HPP_
+#define PIX_ROBOBUS_DRIVER__CONTROL_COMMAND_HPP_
 
 #include <string>
 #include <memory>
@@ -143,4 +143,4 @@ void callbackVehicleModeCommand(const pix_robobus_driver_msgs::msg::VehicleModeC
 
 } // control_command
 } // pix_robobus_driver
-#endif // PIX_HOOKE_DRIVER__CONTROL_COMMAND_HPP_
+#endif // PIX_ROBOBUS_DRIVER__CONTROL_COMMAND_HPP_
