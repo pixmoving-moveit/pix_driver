@@ -29,28 +29,43 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
   param_.base_frame_id = declare_parameter("base_frame_id", "base_link");
 
   // initialize msg received timestamps
-  steer_sta_fb_received_timestamp_ = this->now();
-  brake_sta_fb_received_timestamp_ = this->now();
-  drive_sta_fb_received_timestamp_ = this->now();
-  vehicle_sta_fb_received_timestamp_ = this->now();
-  vehicle_work_sta_fb_received_timestamp_ = this->now();
+  throttle_report_received_timestamp_ = this->now();
+  brake_report_received_timestamp_ = this->now();
+  steering_report_received_timestamp_ = this->now();
+  gear_report_received_timestamp_ = this->now();
+  vcu_report_received_timestamp_ = this->now();
+  vehicle_door_report_received_timestamp_ = this->now();
+
+  // topic name 
+  std::string throttle_report_sub_topic_name = "/pix_robobus/throttle_report";
+  std::string brake_report_sub_topic_name = "/pix_robobus/brake_report";
+  std::string steering_report_sub_topic_name = "/pix_robobus/steering_report";
+  std::string gear_report_sub_topic_name = "/pix_robobus/gear_report";
+  std::string vcu_report_sub_topic_name = "/pix_robobus/vcu_report";
+  std::string vehicle_door_report_sub_topic_name = "/pix_robobus/vehicle_door_report";
 
   // initialize subscribers
-  brake_sta_fb_sub_ = create_subscription<pix_robobus_driver_msgs::msg::V2aBrakeStaFb>(
-    "/pix_robobus/v2a_brakestafb", 1,
-    std::bind(&ReportConverter::brakeStaFbCallback, this, std::placeholders::_1));
-  drive_sta_fb_sub_ = create_subscription<pix_robobus_driver_msgs::msg::V2aDriveStaFb>(
-    "/pix_robobus/v2a_drivestafb", 1,
-    std::bind(&ReportConverter::driveStaFbCallback, this, std::placeholders::_1));
-  steer_sta_fb_sub_ = create_subscription<pix_robobus_driver_msgs::msg::V2aSteerStaFb>(
-    "/pix_robobus/v2a_steerstafb", 1,
-    std::bind(&ReportConverter::steerStaFbCallback, this, std::placeholders::_1));
-  vehicle_sta_fb_sub_ = create_subscription<pix_robobus_driver_msgs::msg::V2aVehicleStaFb>(
-    "/pix_robobus/v2a_vehiclestafb", 1,
-    std::bind(&ReportConverter::vehicleStaFbCallback, this, std::placeholders::_1));
-  vehicle_work_sta_fb_sub_ = create_subscription<pix_robobus_driver_msgs::msg::V2aVehicleWorkStaFb>(
-    "/pix_robobus/v2a_vehicleworkstafb", 1,
-    std::bind(&ReportConverter::vehicleWorkStaFbCallback, this, std::placeholders::_1));
+  throttle_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::ThrottleReport>(
+    throttle_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::throttleReportCallback, this, std::placeholders::_1));
+  brake_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::BrakeReport>(
+    brake_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::brakeReportCallback, this, std::placeholders::_1));
+  steering_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::SteeringReport>(
+    steering_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::steeringReportCallback, this, std::placeholders::_1));
+    
+  gear_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::GearReport>(
+    gear_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::gearReportCallback, this, std::placeholders::_1));
+
+  vcu_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::VcuReport>(
+    vcu_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::vcuReportCallback, this, std::placeholders::_1));
+
+  vehicle_door_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::VehicleDoorReport>(
+    vehicle_door_report_sub_topic_name, 1,
+    std::bind(&ReportConverter::vehicleDoorReportCallback, this, std::placeholders::_1));
 
   // initialize publishers
   control_mode_pub_ = create_publisher<autoware_auto_vehicle_msgs::msg::ControlModeReport>(
@@ -80,163 +95,168 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
     std::bind(&ReportConverter::timerCallback, this));
 }
 
-void ReportConverter::steerStaFbCallback(const pix_robobus_driver_msgs::msg::V2aSteerStaFb::ConstSharedPtr & msg)
-{
-  steer_sta_fb_received_timestamp_ = this->now();
-  steer_sta_fb_ptr_ = msg;
-}
-
-void ReportConverter::brakeStaFbCallback(const pix_robobus_driver_msgs::msg::V2aBrakeStaFb::ConstSharedPtr & msg)
-{
-  brake_sta_fb_received_timestamp_ = this->now();
-  brake_sta_fb_ptr_ = msg;
-}
-
-void ReportConverter::driveStaFbCallback(const pix_robobus_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr & msg)
-{
-  drive_sta_fb_received_timestamp_ = this->now();
-  drive_sta_fb_ptr_ = msg;
-}
-
-void ReportConverter::vehicleStaFbCallback(const pix_robobus_driver_msgs::msg::V2aVehicleStaFb::ConstSharedPtr & msg)
-{
-  vehicle_sta_fb_received_timestamp_ = this->now();
-  vehicle_sta_fb_ptr_ = msg;
-}
-
-void ReportConverter::vehicleWorkStaFbCallback(const pix_robobus_driver_msgs::msg::V2aVehicleWorkStaFb::ConstSharedPtr & msg)
-{
-  vehicle_work_sta_fb_received_timestamp_ = this->now();
-  vehicle_work_sta_fb_ptr_ = msg;
-}
-
+// timer callback function
 void ReportConverter::timerCallback()
 {
   const rclcpp::Time current_time = this->now();
   const double steer_sta_fb_delta_time_ms =
-    (current_time - steer_sta_fb_received_timestamp_).seconds() * 1000.0;
+    (current_time - steering_report_received_timestamp_).seconds() * 1000.0;
   const double brake_sta_fb_delta_time_ms =
-    (current_time - brake_sta_fb_received_timestamp_).seconds() * 1000.0;
+    (current_time - brake_report_received_timestamp_).seconds() * 1000.0;
   const double drive_sta_fb_delta_time_ms =
-    (current_time - drive_sta_fb_received_timestamp_).seconds() * 1000.0;
+    (current_time - throttle_report_received_timestamp_).seconds() * 1000.0;
   const double vehicle_sta_fb_delta_time_ms =
-    (current_time - vehicle_sta_fb_received_timestamp_).seconds() * 1000.0;
+    (current_time - vcu_report_received_timestamp_).seconds() * 1000.0;
+  const double gear_report_delta_time_ms = 
+    (current_time - gear_report_received_timestamp_).seconds() * 1000.0;
   const double vehicle_work_sta_fb_delta_time_ms =
-    (current_time - vehicle_work_sta_fb_received_timestamp_).seconds() * 1000.0;
+    (current_time - vehicle_door_report_received_timestamp_).seconds() * 1000.0;
 
-  if (steer_sta_fb_ptr_ == nullptr || brake_sta_fb_ptr_ == nullptr || drive_sta_fb_ptr_ == nullptr ||
-      vehicle_sta_fb_ptr_ == nullptr || steer_sta_fb_delta_time_ms>param_.report_msg_timeout_ms ||
-      brake_sta_fb_delta_time_ms>param_.report_msg_timeout_ms || drive_sta_fb_delta_time_ms>param_.report_msg_timeout_ms ||
-      vehicle_sta_fb_delta_time_ms>param_.report_msg_timeout_ms)
+  if (throttle_report_ptr_ == nullptr || brake_report_ptr_ == nullptr || steering_report_ptr_ == nullptr ||
+      gear_report_ptr_ == nullptr || vcu_report_ptr_ == nullptr || vehicle_door_report_ptr_ == nullptr ||
+      steer_sta_fb_delta_time_ms>param_.report_msg_timeout_ms || brake_sta_fb_delta_time_ms>param_.report_msg_timeout_ms || 
+      drive_sta_fb_delta_time_ms>param_.report_msg_timeout_ms || vehicle_sta_fb_delta_time_ms>param_.report_msg_timeout_ms ||
+      gear_report_delta_time_ms>param_.report_msg_timeout_ms)
   {
     RCLCPP_ERROR_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(), "vital msgs not received or timeout");
     return;
   }
 
-  if(vehicle_work_sta_fb_ptr_ == nullptr || vehicle_work_sta_fb_delta_time_ms>param_.report_msg_timeout_ms)
+  if(vcu_report_ptr_ == nullptr || vehicle_work_sta_fb_delta_time_ms>param_.report_msg_timeout_ms)
   {
     RCLCPP_WARN_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(), "vehicle work sta fb not received or timeout");
   }
 
-  // autoware msgs
-  autoware_auto_vehicle_msgs::msg::GearReport gear_msg;
-  autoware_auto_vehicle_msgs::msg::ControlModeReport control_mode_report_msg;
-  autoware_auto_vehicle_msgs::msg::HazardLightsReport hazard_lights_report_msg;
-  autoware_auto_vehicle_msgs::msg::SteeringReport steer_report_msg;
-  autoware_auto_vehicle_msgs::msg::VelocityReport velocity_report_msg;
-  autoware_auto_vehicle_msgs::msg::TurnIndicatorsReport turn_indicators_report_msg;
-  // tier4 msgs
-  tier4_vehicle_msgs::msg::ActuationStatusStamped actuation_status_stamped_msg;
-  tier4_vehicle_msgs::msg::SteeringWheelStatusStamped steering_wheel_status_msg;
-  tier4_api_msgs::msg::DoorStatus door_status_msg;
-
   // making gear msg
-  gear_msg.stamp = current_time;
-  switch (drive_sta_fb_ptr_->vcu_chassis_gear_fb) {
-    case static_cast<int8_t>(VCU_CHASSISGEARFB_D):
-      gear_msg.report = autoware_auto_vehicle_msgs::msg::GearReport::DRIVE;
+  gear_msg_.stamp = current_time;
+  switch (gear_report_ptr_->gear_actual) {
+    case static_cast<int8_t>(GEAR_DRIVE):
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::DRIVE;
       break;
-    case static_cast<int8_t>(VCU_CHASSISGEARFB_N):
-      gear_msg.report = autoware_auto_vehicle_msgs::msg::GearReport::NEUTRAL;
+    case static_cast<int8_t>(GEAR_NEUTRAL):
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::NEUTRAL;
       break;
-    case static_cast<int8_t>(VCU_CHASSISGEARFB_NO_USE):
-      gear_msg.report = autoware_auto_vehicle_msgs::msg::GearReport::NONE;
+    case static_cast<int8_t>(GEAR_REVERSE):
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::REVERSE;
       break;
-    case static_cast<int8_t>(VCU_CHASSISGEARFB_R):
-      gear_msg.report = autoware_auto_vehicle_msgs::msg::GearReport::REVERSE;
+    case static_cast<int8_t>(GEAR_PARK):
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::PARK;
+      break;
+    case static_cast<int8_t>(GEAR_INVALID):
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::NONE;
       break;
     default:
-      gear_msg.report = autoware_auto_vehicle_msgs::msg::GearReport::NONE;
+      gear_msg_.report = autoware_auto_vehicle_msgs::msg::GearReport::NONE;
       break;
   }
-  gear_status_pub_->publish(gear_msg);
+  gear_status_pub_->publish(gear_msg_);
 
   // making velocity
-  velocity_report_msg.header.frame_id = param_.base_frame_id;
-  velocity_report_msg.header.stamp = current_time;
-  velocity_report_msg.longitudinal_velocity = drive_sta_fb_ptr_->vcu_chassis_speed_fb;
-  vehicle_twist_pub_->publish(velocity_report_msg);
+  velocity_report_msg_.header.frame_id = param_.base_frame_id;
+  velocity_report_msg_.header.stamp = current_time;
+  velocity_report_msg_.longitudinal_velocity = vcu_report_ptr_->vehicle_speed;
+  vehicle_twist_pub_->publish(velocity_report_msg_);
 
   // make steering angle
-  steer_report_msg.stamp = current_time;
-  steer_report_msg.steering_tire_angle = -1.0 * steer_sta_fb_ptr_->vcu_chassis_steer_angle_fb * param_.steering_factor;
-  steering_status_pub_->publish(steer_report_msg);
+  steer_report_msg_.stamp = current_time;
+  steer_report_msg_.steering_tire_angle = steering_report_ptr_->steer_angle_actual * param_.steering_factor;
+  steering_status_pub_->publish(steer_report_msg_);
 
   // make control mode
-  control_mode_report_msg.stamp = current_time;
-  switch (vehicle_work_sta_fb_ptr_->vcu_driving_mode_fb)
+  control_mode_report_msg_.stamp = current_time;
+  switch (vcu_report_ptr_->vehicle_mode_state)
   {
-  case static_cast<int8_t>(VCU_DRIVINGMODEFB_SELF_DRIVING):
-    control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::AUTONOMOUS;
+  case static_cast<int8_t>(VEHICLE_Manual_Remote_Mode):
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::MANUAL;
     break;
-  case static_cast<int8_t>(VCU_DRIVINGMODEFB_STANDBY):
-    control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::DISENGAGED;
+  case static_cast<int8_t>(VEHICLE_Auto_Mode):
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::AUTONOMOUS;
     break;
-  case static_cast<int8_t>(VCU_DRIVINGMODEFB_REMOTE):
-    control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::MANUAL;
+  case static_cast<int8_t>(VEHICLE_Emergency_Mode):
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::DISENGAGED;
+    break;
+  case static_cast<int8_t>(VEHICLE_Standby_Mode):
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::NOT_READY;
     break;
   default:
-    control_mode_report_msg.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::NOT_READY;
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::NOT_READY;
     break;
   }
-  control_mode_pub_->publish(control_mode_report_msg);
+  control_mode_pub_->publish(control_mode_report_msg_);
 
   // hazard lights status
-  hazard_lights_report_msg.stamp = current_time;
-  if(vehicle_sta_fb_ptr_->vcu_vehicle_hazard_war_lamp_fb ==VCU_VEHICLEHAZARDWARLAMPFB_ON)
+  hazard_lights_report_msg_.stamp = current_time;
+  if(vcu_report_ptr_->turn_light_actual == TurnLight_Hazard_Warning_Lampsts_ON)
   {
-    hazard_lights_report_msg.report = autoware_auto_vehicle_msgs::msg::HazardLightsReport::ENABLE;
+    hazard_lights_report_msg_.report = autoware_auto_vehicle_msgs::msg::HazardLightsReport::ENABLE;
   }else{
-    hazard_lights_report_msg.report = autoware_auto_vehicle_msgs::msg::HazardLightsReport::DISABLE;
+    hazard_lights_report_msg_.report = autoware_auto_vehicle_msgs::msg::HazardLightsReport::DISABLE;
   }
 
   // turn indicators, pix chassi feedbacks LEFT light and RIGHT light separately, if the hazard light blink, it will output ENABLE_LEFT as default
-  turn_indicators_report_msg.stamp = current_time;
-  if(vehicle_sta_fb_ptr_->vcu_vehicle_left_lamp_fb==VCU_VEHICLELEFTLAMPFB_OFF && vehicle_sta_fb_ptr_->vcu_vehicle_right_lamp_fb==VCU_VEHICLERIGHTLAMPFB_OFF)
+  turn_indicators_report_msg_.stamp = current_time;
+  if(vcu_report_ptr_->turn_light_actual==TurnLight_Turnlampsts_OFF)
   {
-    turn_indicators_report_msg.report =
+    turn_indicators_report_msg_.report =
       autoware_auto_vehicle_msgs::msg::TurnIndicatorsReport::DISABLE;
-  } else if (vehicle_sta_fb_ptr_->vcu_vehicle_right_lamp_fb == VCU_VEHICLERIGHTLAMPFB_ON) {
-    turn_indicators_report_msg.report =
+  } else if (vcu_report_ptr_->turn_light_actual == TurnLight_Right_Turnlampsts_ON) {
+    turn_indicators_report_msg_.report =
       autoware_auto_vehicle_msgs::msg::TurnIndicatorsReport::ENABLE_RIGHT;
-  } else if(vehicle_sta_fb_ptr_->vcu_vehicle_left_lamp_fb==VCU_VEHICLELEFTLAMPFB_ON) {
-    turn_indicators_report_msg.report =
+  } else if(vcu_report_ptr_->turn_light_actual==TurnLight_Left_Turnlampsts_ON) {
+    turn_indicators_report_msg_.report =
       autoware_auto_vehicle_msgs::msg::TurnIndicatorsReport::ENABLE_LEFT;
   }
-  turn_indicators_status_pub_->publish(turn_indicators_report_msg);
+  turn_indicators_status_pub_->publish(turn_indicators_report_msg_);
 
   // tier4 vehicle msgs, acutation msgs
-  actuation_status_stamped_msg.header.stamp = current_time;
-  actuation_status_stamped_msg.header.frame_id = "base_link";
-  actuation_status_stamped_msg.status.accel_status =
-    drive_sta_fb_ptr_->vcu_chassis_throttle_padl_fb / 100.0;
-  actuation_status_stamped_msg.status.brake_status =
-    brake_sta_fb_ptr_->vcu_chassis_brake_padl_fb / 100.0;
+  actuation_status_stamped_msg_.header.stamp = current_time;
+  actuation_status_stamped_msg_.header.frame_id = "base_link";
+  actuation_status_stamped_msg_.status.accel_status =
+    throttle_report_ptr_->dirve_throttle_pedal_actual / 100.0;
+  actuation_status_stamped_msg_.status.brake_status =
+    brake_report_ptr_->brake_pedal_actual / 100.0;
   // have no idea about the mean of steer_status in ActuationStatusStamped, so it should be empty
-  actuation_status_pub_->publish(actuation_status_stamped_msg);
+  actuation_status_pub_->publish(actuation_status_stamped_msg_);
   // to be done, tier4 msgs
+}
+
+// sub callback function
+void ReportConverter::throttleReportCallback(const pix_robobus_driver_msgs::msg::ThrottleReport::ConstSharedPtr &msg)
+{
+  throttle_report_received_timestamp_ = this->now();
+  throttle_report_ptr_ = msg;
+}
+
+void ReportConverter::brakeReportCallback(const pix_robobus_driver_msgs::msg::BrakeReport::ConstSharedPtr &msg)
+{
+  brake_report_received_timestamp_ = this->now();
+  brake_report_ptr_= msg;
+}
+
+void ReportConverter::steeringReportCallback(const pix_robobus_driver_msgs::msg::SteeringReport::ConstSharedPtr &msg)
+{
+  steering_report_received_timestamp_ = this->now();
+  steering_report_ptr_ = msg;
+}
+
+void ReportConverter::gearReportCallback(const pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr &msg)
+{
+  gear_report_received_timestamp_ = this->now();
+  gear_report_ptr_ = msg;
+}
+
+void ReportConverter::vcuReportCallback(const pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr &msg)
+{
+  vcu_report_received_timestamp_ = this->now();
+  vcu_report_ptr_ = msg;
+}
+
+void ReportConverter::vehicleDoorReportCallback(const pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr &msg)
+{
+  vehicle_door_report_received_timestamp_ = this->now();
+  vehicle_door_report_ptr_ = msg;
 }
 
 } // namespace report_converter

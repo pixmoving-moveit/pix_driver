@@ -33,38 +33,40 @@
 #include <tier4_api_msgs/msg/door_status.hpp>
 
 // pix_robobus_driver_msgs
-#include <pix_robobus_driver_msgs/msg/v2a_brake_sta_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_chassis_wheel_angle_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_chassis_wheel_rpm_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_chassis_wheel_tire_press_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_drive_sta_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_power_sta_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_steer_sta_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_vehicle_flt_sta.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_vehicle_sta_fb.hpp>
-#include <pix_robobus_driver_msgs/msg/v2a_vehicle_work_sta_fb.hpp>
+#include <pix_robobus_driver_msgs/msg/throttle_report.hpp>
+#include <pix_robobus_driver_msgs/msg/brake_report.hpp>
+#include <pix_robobus_driver_msgs/msg/steering_report.hpp>
+#include <pix_robobus_driver_msgs/msg/gear_report.hpp>
+#include <pix_robobus_driver_msgs/msg/vcu_report.hpp>
+#include <pix_robobus_driver_msgs/msg/vehicle_door_report.hpp>
+
 
 namespace pix_robobus_driver
 {
 namespace report_converter
 {
-enum { VCU_CHASSISGEARFB_NO_USE, VCU_CHASSISGEARFB_D, VCU_CHASSISGEARFB_N, VCU_CHASSISGEARFB_R };
-enum { VCU_CHASSISDRIVERENSTA_DISABLE, VCU_CHASSISDRIVERENSTA_ENABLE };
+enum { GEAR_INVALID, GEAR_PARK, GEAR_REVERSE, GEAR_NEUTRAL, GEAR_DRIVE};
+enum { Disable, Enable };
 enum {
-  VCU_DRIVINGMODEFB_STANDBY,
-  VCU_DRIVINGMODEFB_SELF_DRIVING,
-  VCU_DRIVINGMODEFB_REMOTE,
-  VCU_DRIVINGMODEFB_MAN
+  VEHICLE_Manual_Remote_Mode,
+  VEHICLE_Auto_Mode,
+  VEHICLE_Emergency_Mode,
+  VEHICLE_Standby_Mode
 };
-enum { VCU_VEHICLEHAZARDWARLAMPFB_OFF, VCU_VEHICLEHAZARDWARLAMPFB_ON };
-enum { VCU_VEHICLELEFTLAMPFB_OFF, VCU_VEHICLELEFTLAMPFB_ON };
-enum { VCU_VEHICLERIGHTLAMPFB_OFF, VCU_VEHICLERIGHTLAMPFB_ON };
+enum { 
+  TurnLight_Turnlampsts_OFF, 
+  TurnLight_Left_Turnlampsts_ON,
+  TurnLight_Right_Turnlampsts_ON,
+  TurnLight_Hazard_Warning_Lampsts_ON
+};
+enum { DOOR_OPENING, DOOR_NONE };
+
 
 /**
  * @brief param structure of report converter node
  * @param period loop rate of publishers in hz
  * @param max_steering_angle max steering angle in radians
- * @param report_msg_timeout_ms timeout threshold of report msg from pix hooke driver in ms
+ * @param report_msg_timeout_ms timeout threshold of report msg from pix robobus driver in ms
  * @param base_frame_id frame id of vehicle
  * @param steering_factor the factor that convert steering feedback signal value to autoware steering value
  */
@@ -99,69 +101,89 @@ private:
   rclcpp::Publisher<tier4_vehicle_msgs::msg::SteeringWheelStatusStamped>::SharedPtr steering_wheel_status_pub_;
   rclcpp::Publisher<tier4_api_msgs::msg::DoorStatus>::SharedPtr door_status_pub_;
   
-  // subscribers from pix hooke driver
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aSteerStaFb>::SharedPtr steer_sta_fb_sub_;
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aBrakeStaFb>::SharedPtr brake_sta_fb_sub_;
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aDriveStaFb>::SharedPtr drive_sta_fb_sub_;
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aVehicleStaFb>::SharedPtr vehicle_sta_fb_sub_;
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aVehicleWorkStaFb>::SharedPtr vehicle_work_sta_fb_sub_;
+  // subscribers from pix robobus driver
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::ThrottleReport>::SharedPtr throttle_report_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::BrakeReport>::SharedPtr brake_report_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::SteeringReport>::SharedPtr steering_report_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::GearReport>::SharedPtr gear_report_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::VcuReport>::SharedPtr vcu_report_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::VehicleDoorReport>::SharedPtr vehicle_door_report_sub_;
 
   // timers
   rclcpp::TimerBase::ConstSharedPtr timer_;
 
   // msg shared ptrs
-  pix_robobus_driver_msgs::msg::V2aSteerStaFb::ConstSharedPtr steer_sta_fb_ptr_;
-  pix_robobus_driver_msgs::msg::V2aBrakeStaFb::ConstSharedPtr brake_sta_fb_ptr_;
-  pix_robobus_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr drive_sta_fb_ptr_;
-  pix_robobus_driver_msgs::msg::V2aVehicleStaFb::ConstSharedPtr vehicle_sta_fb_ptr_;
-  pix_robobus_driver_msgs::msg::V2aVehicleWorkStaFb::ConstSharedPtr vehicle_work_sta_fb_ptr_;
+  pix_robobus_driver_msgs::msg::ThrottleReport::ConstSharedPtr throttle_report_ptr_;
+  pix_robobus_driver_msgs::msg::BrakeReport::ConstSharedPtr brake_report_ptr_;
+  pix_robobus_driver_msgs::msg::SteeringReport::ConstSharedPtr steering_report_ptr_;
+  pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr gear_report_ptr_;
+  pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr vcu_report_ptr_;
+  pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr vehicle_door_report_ptr_;
 
   // msg received timestamps
-  rclcpp::Time steer_sta_fb_received_timestamp_;
-  rclcpp::Time brake_sta_fb_received_timestamp_;
-  rclcpp::Time drive_sta_fb_received_timestamp_;
-  rclcpp::Time vehicle_sta_fb_received_timestamp_;
-  rclcpp::Time vehicle_work_sta_fb_received_timestamp_;
+  rclcpp::Time throttle_report_received_timestamp_;
+  rclcpp::Time brake_report_received_timestamp_;
+  rclcpp::Time steering_report_received_timestamp_;
+  rclcpp::Time gear_report_received_timestamp_;
+  rclcpp::Time vcu_report_received_timestamp_;
+  rclcpp::Time vehicle_door_report_received_timestamp_;
 
-  public :
+  // autoware msgs
+  autoware_auto_vehicle_msgs::msg::GearReport gear_msg_;
+  autoware_auto_vehicle_msgs::msg::ControlModeReport control_mode_report_msg_;
+  autoware_auto_vehicle_msgs::msg::HazardLightsReport hazard_lights_report_msg_;       
+  autoware_auto_vehicle_msgs::msg::SteeringReport steer_report_msg_;                   
+  autoware_auto_vehicle_msgs::msg::VelocityReport velocity_report_msg_;                
+  autoware_auto_vehicle_msgs::msg::TurnIndicatorsReport turn_indicators_report_msg_;   
+  // tier4 msgs
+  tier4_vehicle_msgs::msg::ActuationStatusStamped actuation_status_stamped_msg_;
+  tier4_vehicle_msgs::msg::SteeringWheelStatusStamped steering_wheel_status_msg_;
+  tier4_api_msgs::msg::DoorStatus door_status_msg;
+
+  public:
   /**
    * @brief Construct a new Report Converter object
    *
    */
   ReportConverter();
-  /**
-   * @brief callback function that gets the steer status feedback from pix hooke driver
-   * 
-   * @param msg 
-   */
-  void steerStaFbCallback(const pix_robobus_driver_msgs::msg::V2aSteerStaFb::ConstSharedPtr & msg);
-  /**
-   * @brief callback function that gets the brake status feedback from pix hooke driver
-   * 
-   * @param msg 
-   */
-  void brakeStaFbCallback(const pix_robobus_driver_msgs::msg::V2aBrakeStaFb::ConstSharedPtr & msg);
-  /**
-   * @brief callback function that gets the drive status feedback from pix hooke driver
-   * 
-   * @param msg 
-   */
-  void driveStaFbCallback(const pix_robobus_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr & msg);
-  /**
-   * @brief callback function that gets the vehicle status feedback from pix hooke driver
-   * 
-   * @param msg 
-   */
-  void vehicleStaFbCallback(
-    const pix_robobus_driver_msgs::msg::V2aVehicleStaFb::ConstSharedPtr & msg);
-  /**
-   * @brief callback function that gets the vehicle work status feedback from pix hooke driver
-   * 
-   * @param msg 
-   */
-  void vehicleWorkStaFbCallback(
-    const pix_robobus_driver_msgs::msg::V2aVehicleWorkStaFb::ConstSharedPtr & msg);
   void timerCallback();
+
+  /**
+   * @brief callback function that gets the drive status feedback from pix robobus driver
+   * @param msg 
+   */
+  void throttleReportCallback(const pix_robobus_driver_msgs::msg::ThrottleReport::ConstSharedPtr & msg);
+
+  /**
+   * @brief callback function that gets the brake status feedback from pix robobus driver
+   * @param msg 
+   */
+  void brakeReportCallback(const pix_robobus_driver_msgs::msg::BrakeReport::ConstSharedPtr & msg);
+
+  /**
+   * @brief callback function that gets the steer status feedback from pix ron o bu s driver
+   * @param msg 
+   */
+  void steeringReportCallback(const pix_robobus_driver_msgs::msg::SteeringReport::ConstSharedPtr & msg);
+
+  /**
+   * @brief callback function that gets the  gear status feedback from pix robobus driver
+   * @param msg 
+   */
+  void gearReportCallback(const pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr & msg);
+
+  /**
+   * @brief callback function that gets the vehicle status feedback from pix robobus driver
+   * @param msg 
+   */
+  void vcuReportCallback(const pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr & msg);
+
+  /**
+   * @brief callback function that gets the door status feedback from pix robobus driver
+   * @param msg 
+   */
+  void vehicleDoorReportCallback(const pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr & msg);
+  
 };
 } // report_converter
 } // pix_robobus_driver

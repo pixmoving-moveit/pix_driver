@@ -34,19 +34,30 @@ ControlConverter::ControlConverter() : Node("control_converter")
   engage_cmd_ = false;
 
   // initialize msgs and timestamps
-  drive_sta_fb_received_time_ = this->now();
+  gear_report_received_time_ = this->now();
   actuation_command_received_time_ = this->now();
   gear_command_received_time_ = this->now();
 
+  // topic name 
+  std::string throttle_ctrl_pub_topic_name = "/pix_robobus/throttle_command";
+  std::string gear_ctrl_pub_topic_name = "/pix_robobus/gear_command";
+  std::string steer_ctrl_pub_topic_name = "/pix_robobus/steering_command";
+  std::string brake_ctrl_pub_topic_name = "/pix_robobus/brake_command";
+  std::string park_ctrl_pub_topic_name = "/pix_robobus/park_command";
+  std::string vehicle_ctrl_pub_topic_name = "/pix_robobus/vehicle_mode_command";
   // publishers
-  a2v_brake_ctrl_pub_ =
-    create_publisher<A2vBrakeCtrl>("/pix_robobus/a2v_brakectrl_131", rclcpp::QoS(1));
-  a2v_drive_ctrl_pub_ =
-    create_publisher<A2vDriveCtrl>("/pix_robobus/a2v_drivectrl_130", rclcpp::QoS(1));
-  a2v_steer_ctrl_pub_ =
-    create_publisher<A2vSteerCtrl>("/pix_robobus/a2v_steerctrl_132", rclcpp::QoS(1));
-  a2v_vehicle_ctrl_pub_ =
-    create_publisher<A2vVehicleCtrl>("/pix_robobus/a2v_vehiclectrl_133", rclcpp::QoS(1));
+  throttle_ctrl_pub_ =
+    create_publisher<ThrottleCommand>(throttle_ctrl_pub_topic_name, rclcpp::QoS(1));
+  gear_ctrl_pub_ =
+    create_publisher<GearCommand>(gear_ctrl_pub_topic_name, rclcpp::QoS(1));
+  steer_ctrl_pub_ =
+    create_publisher<SteeringCommand>(steer_ctrl_pub_topic_name, rclcpp::QoS(1));
+  brake_ctrl_pub_ =
+    create_publisher<BrakeCommand>(brake_ctrl_pub_topic_name, rclcpp::QoS(1));
+  park_ctrl_pub_ =
+    create_publisher<ParkCommand>(park_ctrl_pub_topic_name, rclcpp::QoS(1));
+  vehicle_ctrl_pub_ =
+    create_publisher<VehicleModeCommand>(vehicle_ctrl_pub_topic_name, rclcpp::QoS(1));
   
   //services
   control_mode_server_ = create_service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>(
@@ -62,9 +73,9 @@ ControlConverter::ControlConverter() : Node("control_converter")
   gear_command_sub_ = create_subscription<autoware_auto_vehicle_msgs::msg::GearCommand>(
     "/control/command/gear_cmd", 1,
     std::bind(&ControlConverter::callbackGearCommand, this, std::placeholders::_1));
-  drive_feedback_sub_ = create_subscription<V2aDriveStaFb>(
+  gear_feedback_sub_ = create_subscription<GearReport>(
     "/pix_robobus/v2a_drivestafb", 1,
-    std::bind(&ControlConverter::callbackDriveStatusFeedback, this, std::placeholders::_1));
+    std::bind(&ControlConverter::callbackGearReport, this, std::placeholders::_1));
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
     std::bind(&ControlConverter::timerCallback, this));
@@ -84,10 +95,10 @@ void ControlConverter::callbackGearCommand(
   gear_command_ptr_ = msg;
 }
 
-void ControlConverter::callbackDriveStatusFeedback(const V2aDriveStaFb::ConstSharedPtr & msg)
+void ControlConverter::callbackGearReport(const GearReport::ConstSharedPtr & msg)
 {
-  drive_sta_fb_received_time_ = this->now();
-  drive_sta_fb_ptr_ = msg;
+  gear_report_received_time_ = this->now();
+  gear_report_ptr_ = msg;
 }
 
 void ControlConverter::onControlModeRequest(
@@ -119,7 +130,7 @@ void ControlConverter::timerCallback()
   const double gear_command_delta_time_ms =
     (current_time - gear_command_received_time_).seconds() * 1000.0;
   const double drive_sta_fb_delta_time_ms =
-    (current_time - drive_sta_fb_received_time_).seconds() * 1000.0;
+    (current_time - gear_report_received_time_).seconds() * 1000.0;
 
   if(actuation_command_delta_time_ms > param_.autoware_control_command_timeout
       || gear_command_delta_time_ms > param_.autoware_control_command_timeout
@@ -132,7 +143,7 @@ void ControlConverter::timerCallback()
       actuation_command_delta_time_ms, gear_command_delta_time_ms);
     return;
   }
-  if(drive_sta_fb_delta_time_ms > param_.autoware_control_command_timeout || drive_sta_fb_ptr_ == nullptr)
+  if(drive_sta_fb_delta_time_ms > param_.autoware_control_command_timeout || gear_report_ptr_ == nullptr)
   {
     RCLCPP_ERROR_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
@@ -141,65 +152,70 @@ void ControlConverter::timerCallback()
   }
 
   // sending control messages to pix dirver control command
-  A2vBrakeCtrl a2v_brake_ctrl_msg;
-  A2vDriveCtrl a2v_drive_ctrl_msg;
-  A2vSteerCtrl a2v_steer_ctrl_msg;
-  A2vVehicleCtrl a2v_vehicle_ctrl_msg;
+  BrakeCommand brake_ctrl_msg;
+  ThrottleCommand throttle_ctrl_msg;
+  SteeringCommand steer_ctrl_msg;
+  VehicleModeCommand vehicle_ctrl_msg;
+  GearCommand gear_ctrl_msg;
 
   // brake
-  a2v_brake_ctrl_msg.header.stamp = current_time;
-  a2v_brake_ctrl_msg.acu_chassis_brake_pdl_target = actuation_command_ptr_->actuation.brake_cmd * 100.0;
-  a2v_brake_ctrl_msg.acu_chassis_brake_en = 1;
+  brake_ctrl_msg.header.stamp = current_time;
+  brake_ctrl_msg.brake_pedal_target = actuation_command_ptr_->actuation.brake_cmd * 100.0;
+  brake_ctrl_msg.brake_en_ctrl = 1;
 
   // steer
-  a2v_steer_ctrl_msg.header.stamp = current_time;
-  a2v_steer_ctrl_msg.acu_chassis_steer_angle_speed_ctrl = 250;
-  a2v_steer_ctrl_msg.acu_chassis_steer_angle_target =
+  steer_ctrl_msg.header.stamp = current_time;
+  steer_ctrl_msg.steer_angle_speed = 250;
+  steer_ctrl_msg.steer_angle_target =
     -actuation_command_ptr_->actuation.steer_cmd * param_.steering_factor;
-  a2v_steer_ctrl_msg.acu_chassis_steer_en_ctrl = 1;
-  a2v_steer_ctrl_msg.acu_chassis_steer_mode_ctrl =
-    static_cast<int8_t>(ACU_CHASSISSTEERMODECTRL_FRONT_DIFFERENT_BACK);
+  steer_ctrl_msg.steer_en_ctrl = 1;
+
+  
 
   // gear
-  a2v_drive_ctrl_msg.header.stamp = current_time;
+  gear_ctrl_msg.header.stamp = current_time;
+  gear_ctrl_msg.gear_en_ctrl = 1;
   switch (gear_command_ptr_->command) {
-    case autoware_auto_vehicle_msgs::msg::GearCommand::NONE:
-      a2v_drive_ctrl_msg.acu_chassis_gear_ctrl = static_cast<int8_t>(ACU_CHASSISGEARCTRL_DEFAULT_N);
-      break;
     case autoware_auto_vehicle_msgs::msg::GearCommand::DRIVE:
-      a2v_drive_ctrl_msg.acu_chassis_gear_ctrl = static_cast<int8_t>(ACU_CHASSISGEARCTRL_D);
+      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_DRIVE);
       break;
     case autoware_auto_vehicle_msgs::msg::GearCommand::NEUTRAL:
-      a2v_drive_ctrl_msg.acu_chassis_gear_ctrl = static_cast<int8_t>(ACU_CHASSISGEARCTRL_N);
+      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
       break;
     case autoware_auto_vehicle_msgs::msg::GearCommand::REVERSE:
-      a2v_drive_ctrl_msg.acu_chassis_gear_ctrl = static_cast<int8_t>(ACU_CHASSISGEARCTRL_R);
+      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_REVERSE);
+      break;
+    case autoware_auto_vehicle_msgs::msg::GearCommand::PARK:
+      gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_PARK);
+      break;
+    case autoware_auto_vehicle_msgs::msg::GearCommand::NONE :
+      gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_INVALID);
       break;
     default:
-      a2v_drive_ctrl_msg.acu_chassis_gear_ctrl = static_cast<int8_t>(ACU_CHASSISGEARCTRL_N);
+      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
       break;
   }
-
   // throttle
-  // if(engage_cmd_)
-  // {
-  //   a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_ENABLE;
-  // }else{
-  //   a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = ACU_CHASSISDRIVERENCTRL_DISABLE;
-  // }
-  a2v_drive_ctrl_msg.acu_chassis_driver_en_ctrl = 1;
-  a2v_drive_ctrl_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
-  a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
+  throttle_ctrl_msg.dirve_en_ctrl = 1;
+  throttle_ctrl_msg.dirve_throttle_pedal_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
+
+  // vehicle
+  vehicle_ctrl_msg.steer_mode_ctrl = 
+    static_cast<int8_t>(STEER_SYNC_DIRECTION);
+  vehicle_ctrl_msg.drive_mode_ctrl = DIRVE_ENCTRL_THROTTLE_PADDLE;
+  
 
   // keep shifting and braking when target gear is different from actual gear
-  if (drive_sta_fb_ptr_->vcu_chassis_gear_fb != a2v_drive_ctrl_msg.acu_chassis_gear_ctrl) {
-    a2v_brake_ctrl_msg.acu_chassis_brake_pdl_target = 20.0;
-    a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = 0.0;
+  if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
+    brake_ctrl_msg.brake_pedal_target = 20.0;
+    throttle_ctrl_msg.dirve_speed_target = 0.0;
   }
   // publishing msgs
-  a2v_brake_ctrl_pub_->publish(a2v_brake_ctrl_msg);
-  a2v_drive_ctrl_pub_->publish(a2v_drive_ctrl_msg);
-  a2v_steer_ctrl_pub_->publish(a2v_steer_ctrl_msg);
+  throttle_ctrl_pub_->publish(throttle_ctrl_msg);
+  gear_ctrl_pub_->publish(gear_ctrl_msg);
+  steer_ctrl_pub_->publish(steer_ctrl_msg);
+  brake_ctrl_pub_->publish(brake_ctrl_msg);
+  vehicle_ctrl_pub_->publish(vehicle_ctrl_msg);
 }
 } // namespace control_converter
 } // namespace pix_driver

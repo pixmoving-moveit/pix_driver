@@ -23,50 +23,53 @@
 #include <autoware_auto_vehicle_msgs/msg/gear_command.hpp>
 #include <autoware_auto_vehicle_msgs/srv/control_mode_command.hpp>
 #include <tier4_vehicle_msgs/msg/actuation_command_stamped.hpp>
+#include <tier4_api_msgs/msg/door_status.hpp>
+
 // pix control
-#include <pix_robobus_driver_msgs/msg/a2v_brake_ctrl.hpp>
-#include <pix_robobus_driver_msgs/msg/a2v_drive_ctrl.hpp>
-#include <pix_robobus_driver_msgs/msg/a2v_steer_ctrl.hpp>
-#include <pix_robobus_driver_msgs/msg/a2v_vehicle_ctrl.hpp>
-#include <pix_robobus_driver_msgs/msg/a2v_wheel_ctrl.hpp>
+#include <pix_robobus_driver_msgs/msg/throttle_command.hpp>
+#include <pix_robobus_driver_msgs/msg/gear_command.hpp>
+#include <pix_robobus_driver_msgs/msg/steering_command.hpp>
+#include <pix_robobus_driver_msgs/msg/brake_command.hpp>
+#include <pix_robobus_driver_msgs/msg/park_command.hpp>
+#include <pix_robobus_driver_msgs/msg/vehicle_mode_command.hpp>
+// #include <pix_robobus_driver_msgs/msg/a2v_wheel_ctrl.hpp>
 // pix report
-#include <pix_robobus_driver_msgs/msg/v2a_drive_sta_fb.hpp>
+#include <pix_robobus_driver_msgs/msg/gear_report.hpp>
 
 namespace pix_robobus_driver
 {
 namespace control_converter
 {
-using A2vBrakeCtrl = pix_robobus_driver_msgs::msg::A2vBrakeCtrl;
-using A2vDriveCtrl = pix_robobus_driver_msgs::msg::A2vDriveCtrl;
-using A2vSteerCtrl = pix_robobus_driver_msgs::msg::A2vSteerCtrl;
-using A2vWheelCtrl = pix_robobus_driver_msgs::msg::A2vWheelCtrl;
-using A2vVehicleCtrl = pix_robobus_driver_msgs::msg::A2vVehicleCtrl;
-using V2aDriveStaFb = pix_robobus_driver_msgs::msg::V2aDriveStaFb;
+using ThrottleCommand = pix_robobus_driver_msgs::msg::ThrottleCommand;
+using GearCommand = pix_robobus_driver_msgs::msg::GearCommand;
+using SteeringCommand = pix_robobus_driver_msgs::msg::SteeringCommand;
+using BrakeCommand = pix_robobus_driver_msgs::msg::BrakeCommand;
+using ParkCommand = pix_robobus_driver_msgs::msg::ParkCommand;
+using VehicleModeCommand = pix_robobus_driver_msgs::msg::VehicleModeCommand;
+using GearReport = pix_robobus_driver_msgs::msg::GearReport;
+// using A2vWheelCtrl = pix_robobus_driver_msgs::msg::A2vWheelCtrl;
 
-//chassis driver enable control
-enum { ACU_CHASSISDRIVERENCTRL_DISABLE, ACU_CHASSISDRIVERENCTRL_ENABLE };
+//chassis = enable control
+enum { DISABLE, ENABLE };
 //chassis drive mode control
 enum {
-  ACU_CHASSISDRIVERMODECTRL_SPEED_CTRL_MODE,
-  ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE,
-  ACU_CHASSISDRIVERMODECTRL_RESERVE,
+  DIRVE_ENCTRL_THROTTLE_PADDLE,
+  DIRVE_ENCTRL_SPEED
 };
-// chassis gear control
+// chassis gear control and report
 enum {
-  ACU_CHASSISGEARCTRL_DEFAULT_N,
-  ACU_CHASSISGEARCTRL_D,
-  ACU_CHASSISGEARCTRL_N,
-  ACU_CHASSISGEARCTRL_R
+  GEAR_INVALID,
+  GEAR_PARK,
+  GEAR_REVERSE,
+  GEAR_NEUTRAL,
+  GEAR_DRIVE
 };
-// chassis gear feedback
-enum { VCU_CHASSISGEARFB_NO_USE, VCU_CHASSISGEARFB_D, VCU_CHASSISGEARFB_N, VCU_CHASSISGEARFB_R };
+
 // chassi steer mode control
 enum {
-  ACU_CHASSISSTEERMODECTRL_FRONT_ACKERMAN = 0,
-  ACU_CHASSISSTEERMODECTRL_SAME_FRONT_AND_BACK,
-  ACU_CHASSISSTEERMODECTRL_FRONT_DIFFERENT_BACK,
-  ACU_CHASSISSTEERMODECTRL_BACK_ACKRMAN,
-  ACU_CHASSISSTEERMODECTRL_FRONT_BACK
+  STEER_STANDARD,
+  STEER_NON_DIRECTION,
+  STEER_SYNC_DIRECTION
 };
 
 /**
@@ -92,12 +95,13 @@ private:
   bool engage_cmd_;
 
   // shared msgs
-  V2aDriveStaFb::ConstSharedPtr drive_sta_fb_ptr_;
+  GearReport::ConstSharedPtr gear_report_ptr_;
   autoware_auto_vehicle_msgs::msg::GearCommand::ConstSharedPtr gear_command_ptr_;
   tier4_vehicle_msgs::msg::ActuationCommandStamped::ConstSharedPtr actuation_command_ptr_;
+  tier4_api_msgs::msg::DoorStatus::ConstSharedPtr door_status_ptr_;
 
   // timestamps
-  rclcpp::Time drive_sta_fb_received_time_;
+  rclcpp::Time gear_report_received_time_;
   rclcpp::Time gear_command_received_time_;
   rclcpp::Time actuation_command_received_time_;
 
@@ -106,8 +110,8 @@ private:
     actuation_command_sub_;
   rclcpp::Subscription<autoware_auto_vehicle_msgs::msg::GearCommand>::ConstSharedPtr
     gear_command_sub_;
-  rclcpp::Subscription<pix_robobus_driver_msgs::msg::V2aDriveStaFb>::ConstSharedPtr
-    drive_feedback_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::GearReport>::ConstSharedPtr
+    gear_feedback_sub_;
   // need to be done
   // emergency command
   // hazard lights command
@@ -117,10 +121,12 @@ private:
   rclcpp::Service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>::SharedPtr control_mode_server_;
 
   // publishers
-  rclcpp::Publisher<A2vBrakeCtrl>::SharedPtr a2v_brake_ctrl_pub_;
-  rclcpp::Publisher<A2vDriveCtrl>::SharedPtr a2v_drive_ctrl_pub_;
-  rclcpp::Publisher<A2vSteerCtrl>::SharedPtr a2v_steer_ctrl_pub_;
-  rclcpp::Publisher<A2vVehicleCtrl>::SharedPtr a2v_vehicle_ctrl_pub_;
+  rclcpp::Publisher<ThrottleCommand>::SharedPtr throttle_ctrl_pub_;
+  rclcpp::Publisher<GearCommand>::SharedPtr gear_ctrl_pub_;
+  rclcpp::Publisher<SteeringCommand>::SharedPtr steer_ctrl_pub_;
+  rclcpp::Publisher<BrakeCommand>::SharedPtr brake_ctrl_pub_;
+  rclcpp::Publisher<ParkCommand>::SharedPtr park_ctrl_pub_;
+  rclcpp::Publisher<VehicleModeCommand>::SharedPtr vehicle_ctrl_pub_;
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;
@@ -150,8 +156,9 @@ public:
    * 
    * @param msg input message
    */
-  void callbackDriveStatusFeedback(
-    const pix_robobus_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr & msg);
+  void callbackGearReport(
+    const pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr & msg);
+
   /**
    * @brief request function to modify control mode AUTO/MANUAL
    * 
@@ -161,6 +168,7 @@ public:
   void onControlModeRequest(
     const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::SharedPtr request,
     const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Response::SharedPtr response);
+
   /**
    * @brief timer callback function, to evaluate whether if msgs are timeout, than publish control msgs to pix driver control command node
    * 
