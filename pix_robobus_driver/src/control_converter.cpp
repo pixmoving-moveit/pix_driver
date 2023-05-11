@@ -28,7 +28,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
     declare_parameter("autoware_control_command_timeout", 100);
   param_.loop_rate = declare_parameter("loop_rate", 50.0);
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
-  param_.steering_factor = 500.0 / param_.max_steering_angle;
+  param_.steering_factor = 450.0 / param_.max_steering_angle;
 
   // initialization engage
   engage_cmd_ = false;
@@ -74,7 +74,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
     "/control/command/gear_cmd", 1,
     std::bind(&ControlConverter::callbackGearCommand, this, std::placeholders::_1));
   gear_feedback_sub_ = create_subscription<GearReport>(
-    "/pix_robobus/v2a_drivestafb", 1,
+    "/pix_robobus/gear_report", 1,
     std::bind(&ControlConverter::callbackGearReport, this, std::placeholders::_1));
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
@@ -167,7 +167,7 @@ void ControlConverter::timerCallback()
   steer_ctrl_msg.header.stamp = current_time;
   steer_ctrl_msg.steer_angle_speed = 250;
   steer_ctrl_msg.steer_angle_target =
-    -actuation_command_ptr_->actuation.steer_cmd * param_.steering_factor;
+    actuation_command_ptr_->actuation.steer_cmd * param_.steering_factor;
   steer_ctrl_msg.steer_en_ctrl = 1;
 
   
@@ -196,19 +196,20 @@ void ControlConverter::timerCallback()
       break;
   }
   // throttle
+  throttle_ctrl_msg.header.stamp = current_time;
   throttle_ctrl_msg.dirve_en_ctrl = 1;
   throttle_ctrl_msg.dirve_throttle_pedal_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
 
   // vehicle
-  vehicle_ctrl_msg.steer_mode_ctrl = 
-    static_cast<int8_t>(STEER_SYNC_DIRECTION);
+  vehicle_ctrl_msg.header.stamp = current_time;
+  vehicle_ctrl_msg.steer_mode_ctrl = static_cast<int8_t>(STEER_NON_DIRECTION);
   vehicle_ctrl_msg.drive_mode_ctrl = DIRVE_ENCTRL_THROTTLE_PADDLE;
   
 
   // keep shifting and braking when target gear is different from actual gear
   if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
     brake_ctrl_msg.brake_pedal_target = 20.0;
-    throttle_ctrl_msg.dirve_speed_target = 0.0;
+    throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
   }
   // publishing msgs
   throttle_ctrl_pub_->publish(throttle_ctrl_msg);

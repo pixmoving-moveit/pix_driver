@@ -174,11 +174,11 @@ void ReportConverter::timerCallback()
   case static_cast<int8_t>(VEHICLE_Auto_Mode):
     control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::AUTONOMOUS;
     break;
+  case static_cast<int8_t>(VEHICLE_Standby_Mode):
+    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::AUTONOMOUS;
+    break;
   case static_cast<int8_t>(VEHICLE_Emergency_Mode):
     control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::DISENGAGED;
-    break;
-  case static_cast<int8_t>(VEHICLE_Standby_Mode):
-    control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::NOT_READY;
     break;
   default:
     control_mode_report_msg_.mode = autoware_auto_vehicle_msgs::msg::ControlModeReport::NOT_READY;
