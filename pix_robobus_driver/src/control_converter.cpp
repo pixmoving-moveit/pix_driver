@@ -76,6 +76,11 @@ ControlConverter::ControlConverter() : Node("control_converter")
   gear_feedback_sub_ = create_subscription<GearReport>(
     "/pix_robobus/gear_report", 1,
     std::bind(&ControlConverter::callbackGearReport, this, std::placeholders::_1));
+
+  // operation mode
+  operation_mode_sub_ = create_subscription<autoware_adapi_v1_msgs::msg::OperationModeState>(
+    "/api/operation_mode/state", 1,
+    std::bind(&ControlConverter::callbackOperationMode, this, std::placeholders::_1));
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
     std::bind(&ControlConverter::timerCallback, this));
@@ -99,6 +104,11 @@ void ControlConverter::callbackGearReport(const GearReport::ConstSharedPtr & msg
 {
   gear_report_received_time_ = this->now();
   gear_report_ptr_ = msg;
+}
+
+void ControlConverter::callbackOperationMode(const autoware_adapi_v1_msgs::msg::OperationModeState::ConstSharedPtr & msg)
+{
+  operation_mode_ptr_ = msg;
 }
 
 void ControlConverter::onControlModeRequest(
@@ -135,7 +145,8 @@ void ControlConverter::timerCallback()
   if(actuation_command_delta_time_ms > param_.autoware_control_command_timeout
       || gear_command_delta_time_ms > param_.autoware_control_command_timeout
       || actuation_command_ptr_==nullptr
-      || gear_command_ptr_==nullptr)
+      || gear_command_ptr_==nullptr
+      || operation_mode_ptr_==nullptr)
   {
     RCLCPP_ERROR_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
@@ -157,6 +168,7 @@ void ControlConverter::timerCallback()
   SteeringCommand steer_ctrl_msg;
   VehicleModeCommand vehicle_ctrl_msg;
   GearCommand gear_ctrl_msg;
+  ParkCommand park_ctrl_msg;
 
   // brake
   brake_ctrl_msg.header.stamp = current_time;
@@ -211,12 +223,23 @@ void ControlConverter::timerCallback()
     brake_ctrl_msg.brake_pedal_target = 20.0;
     throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
   }
+
+  // parking
+  park_ctrl_msg.header.stamp = current_time;
+  park_ctrl_msg.park_en_ctrl = true;
+  if(operation_mode_ptr_->mode == operation_mode_ptr_->STOP){
+    park_ctrl_msg.park_target = true;
+  } else{
+    park_ctrl_msg.park_target = false;
+  }
+
   // publishing msgs
   throttle_ctrl_pub_->publish(throttle_ctrl_msg);
   gear_ctrl_pub_->publish(gear_ctrl_msg);
   steer_ctrl_pub_->publish(steer_ctrl_msg);
   brake_ctrl_pub_->publish(brake_ctrl_msg);
   vehicle_ctrl_pub_->publish(vehicle_ctrl_msg);
+  park_ctrl_pub_->publish(park_ctrl_msg);
 }
 } // namespace control_converter
 } // namespace pix_driver
