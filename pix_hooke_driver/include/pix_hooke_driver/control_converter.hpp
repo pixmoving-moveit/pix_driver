@@ -23,6 +23,7 @@
 #include <autoware_auto_vehicle_msgs/msg/gear_command.hpp>
 #include <autoware_auto_vehicle_msgs/srv/control_mode_command.hpp>
 #include <tier4_vehicle_msgs/msg/actuation_command_stamped.hpp>
+#include <autoware_adapi_v1_msgs/msg/operation_mode_state.hpp>
 // pix control
 #include <pix_hooke_driver_msgs/msg/a2v_brake_ctrl.hpp>
 #include <pix_hooke_driver_msgs/msg/a2v_drive_ctrl.hpp>
@@ -95,6 +96,7 @@ private:
   V2aDriveStaFb::ConstSharedPtr drive_sta_fb_ptr_;
   autoware_auto_vehicle_msgs::msg::GearCommand::ConstSharedPtr gear_command_ptr_;
   tier4_vehicle_msgs::msg::ActuationCommandStamped::ConstSharedPtr actuation_command_ptr_;
+  autoware_adapi_v1_msgs::msg::OperationModeState::ConstSharedPtr operation_mode_ptr_;
 
   // timestamps
   rclcpp::Time drive_sta_fb_received_time_;
@@ -112,6 +114,9 @@ private:
   // emergency command
   // hazard lights command
   // turn indicators command
+  // operation mode
+  rclcpp::Subscription<autoware_adapi_v1_msgs::msg::OperationModeState>::ConstSharedPtr
+    operation_mode_sub_;
 
   // services
   rclcpp::Service<autoware_auto_vehicle_msgs::srv::ControlModeCommand>::SharedPtr control_mode_server_;
@@ -152,6 +157,13 @@ public:
    */
   void callbackDriveStatusFeedback(
     const pix_hooke_driver_msgs::msg::V2aDriveStaFb::ConstSharedPtr & msg);
+  /**
+   * @brief callback function of operation mode feedback
+   * 
+   * @param msg input message
+   */
+  void callbackOperationMode(
+     const autoware_adapi_v1_msgs::msg::OperationModeState::ConstSharedPtr & msg);
   /**
    * @brief request function to modify control mode AUTO/MANUAL
    * 

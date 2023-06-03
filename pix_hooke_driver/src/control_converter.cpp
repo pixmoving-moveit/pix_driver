@@ -65,6 +65,10 @@ ControlConverter::ControlConverter() : Node("control_converter")
   drive_feedback_sub_ = create_subscription<V2aDriveStaFb>(
     "/pix_hooke/v2a_drivestafb", 1,
     std::bind(&ControlConverter::callbackDriveStatusFeedback, this, std::placeholders::_1));
+  // operation mode
+  operation_mode_sub_ = create_subscription<autoware_adapi_v1_msgs::msg::OperationModeState>(
+    "/api/operation_mode/state", 1,
+    std::bind(&ControlConverter::callbackOperationMode, this, std::placeholders::_1));
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
     std::bind(&ControlConverter::timerCallback, this));
@@ -89,6 +93,11 @@ void ControlConverter::callbackDriveStatusFeedback(const V2aDriveStaFb::ConstSha
   drive_sta_fb_received_time_ = this->now();
   drive_sta_fb_ptr_ = msg;
 }
+
+void ControlConverter::callbackOperationMode(const autoware_adapi_v1_msgs::msg::OperationModeState::ConstSharedPtr & msg)
+ {
+   operation_mode_ptr_ = msg;
+ }
 
 void ControlConverter::onControlModeRequest(
   const autoware_auto_vehicle_msgs::srv::ControlModeCommand::Request::SharedPtr request,
@@ -124,7 +133,8 @@ void ControlConverter::timerCallback()
   if(actuation_command_delta_time_ms > param_.autoware_control_command_timeout
       || gear_command_delta_time_ms > param_.autoware_control_command_timeout
       || actuation_command_ptr_==nullptr
-      || gear_command_ptr_==nullptr)
+      || gear_command_ptr_==nullptr
+      || operation_mode_ptr_==nullptr)
   {
     RCLCPP_ERROR_THROTTLE(
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
@@ -195,6 +205,13 @@ void ControlConverter::timerCallback()
   if (drive_sta_fb_ptr_->vcu_chassis_gear_fb != a2v_drive_ctrl_msg.acu_chassis_gear_ctrl) {
     a2v_brake_ctrl_msg.acu_chassis_brake_pdl_target = 20.0;
     a2v_drive_ctrl_msg.acu_chassis_throttle_pdl_target = 0.0;
+  }
+
+  // check the opeartion mode, if the operation mode is STOP, it should triger the parking brake
+  if(operation_mode_ptr_->mode == operation_mode_ptr_->STOP){
+    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = true;
+  }else{
+    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = false;
   }
   // publishing msgs
   a2v_brake_ctrl_pub_->publish(a2v_brake_ctrl_msg);
