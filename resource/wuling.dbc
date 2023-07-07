@@ -1,0 +1,262 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: IDS DCU
+
+VAL_TABLE_ cail 1 "cail" 0 "default" ;
+VAL_TABLE_ work_state 1 "工作" 0 "停止" ;
+
+BO_ 256 MSG100: 8 IDS
+ SG_ AutoCtrlEna : 0|1@0+ (1,0) [0|1] "-"  DCU
+ SG_ ModeCtrlCnt : 51|4@0+ (1,0) [0|15] "-"  DCU
+ SG_ ModeCtrlCks : 63|8@0+ (1,0) [0|255] "-"  DCU
+
+BO_ 257 MSG101: 8 IDS
+ SG_ AccPedCmd : 1|10@0+ (0.1,0) [0|100] "%"  DCU
+ SG_ AccCtrlEna : 7|1@0+ (1,0) [0|1] "-"  DCU
+ SG_ AccPedInv : 17|10@0+ (0.1,0) [0|100] "%"  DCU
+ SG_ AccCtrlCnt : 51|4@0+ (1,0) [0|15] "-"  DCU
+ SG_ AccCtrlCks : 63|8@0+ (1,0) [0|255] "-"  DCU
+ SG_ AccTkoDis : 6|1@0+ (1,0) [0|1] "-"  DCU
+
+BO_ 260 MSG104: 8 IDS
+ SG_ WiperCmd : 15|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ HornCmd : 12|1@0+ (1,0) [0|1] "-" Vector__XXX
+ SG_ GearCmd : 3|4@0+ (1,0) [0|255] "-"  DCU
+ SG_ GearCtrlEna : 7|1@0+ (1,0) [0|1] "-"  DCU
+ SG_ TurnLightCmd : 9|2@0+ (1,0) [0|3] "-"  DCU
+ SG_ BeamLightCmd : 11|2@0+ (1,0) [0|3] "-"  DCU
+ SG_ GearCtrlCnt : 51|4@0+ (1,0) [0|15] "-"  DCU
+ SG_ GearCtrlCks : 63|8@0+ (1,0) [0|255] "-"  DCU
+
+BO_ 512 MSG200: 8 DCU
+ SG_ AutoCtrlStat : 1|2@0+ (1,0) [0|3] "-"  IDS
+ SG_ ModeStatCnt : 51|4@0+ (1,0) [0|15] "-"  IDS
+ SG_ ModeStatCks : 63|8@0+ (1,0) [0|255] "-"  IDS
+
+BO_ 513 MSG201: 8 DCU
+ SG_ AccPedAct : 1|10@0+ (0.1,0) [0|100] "%"  IDS
+ SG_ AccPedCmd : 17|10@0+ (1,0) [0|255] "-"  IDS
+ SG_ AccPedExe : 33|10@0+ (0.1,0) [0|100] "%"  IDS
+ SG_ AccCtrlStat : 7|2@0+ (1,0) [0|3] "-"  IDS
+ SG_ AccStatCnt : 51|4@0+ (1,0) [0|15] "-"  IDS
+ SG_ AccStatCks : 63|8@0+ (1,0) [0|255] "-"  IDS
+
+BO_ 516 MSG204: 8 DCU
+ SG_ VehSpd : 28|13@0+ (0.014,0) [0|114.674] "km/h" Vector__XXX
+ SG_ WiperCmd : 19|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ WiperAct : 17|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ HornCmd : 23|1@0+ (1,0) [0|1] "-" Vector__XXX
+ SG_ HornStatus : 22|1@0+ (1,0) [0|1] "-" Vector__XXX
+ SG_ GearAct : 3|4@0+ (1,0) [0|5] "-"  IDS
+ SG_ GearCmd : 7|4@0+ (1,0) [0|5] "-"  IDS
+ SG_ TurnLightCmd : 11|2@0+ (1,0) [0|2] "-"  IDS
+ SG_ TurnLightAct : 9|2@0+ (1,0) [0|2] "-"  IDS
+ SG_ BeamLightAct : 13|2@0+ (1,0) [0|1] "-"  IDS
+ SG_ BeamLightCmd : 15|2@0+ (1,0) [0|1] "-"  IDS
+ SG_ GearStatCnt : 51|4@0+ (1,0) [0|15] "-"  IDS
+ SG_ GearStatCks : 63|8@0+ (1,0) [0|255] "-"  IDS
+
+BO_ 868 sendx: 8 Vector__XXX
+ SG_ VCU_sts : 29|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_SelfStudy : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_KeySt : 31|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_ExtBrkpressure_V : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ExtBrkpressure : 7|8@0+ (1,0) [0|125] "Mpa" Vector__XXX
+ SG_ VCU_EBS_StModeReq : 15|4@0+ (1,0) [0|14] "" Vector__XXX
+ SG_ VCU_EBS_ctRoll : 35|4@0+ (1,0) [0|14] "" Vector__XXX
+ SG_ VCU_DrvMode : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 649 receive: 8 Vector__XXX
+ SG_ EBS_MotAglFbk : 55|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ EBS_WarningLight : 29|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_StMode : 15|4@0+ (1,0) [0|14] "" Vector__XXX
+ SG_ EBS_PresFbk : 7|8@0+ (1,0) [0|125] "" Vector__XXX
+ SG_ EBS_Fault_Info : 39|16@0+ (1,0) [0|65535] "" Vector__XXX
+ SG_ EBS_ExtBrkPrio : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_DrvrInteraction : 28|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_ctRoll : 59|4@0+ (1,0) [0|15] "" Vector__XXX
+ SG_ EBS_BrkPedalApplied_V : 31|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_BrkPedalApplied : 30|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_Brakelight : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 398 EPS_send2: 8 Vector__XXX
+ SG_ work_mode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Torger_value : 40|16@1- (0.1,0) [-6|6] "Nm" Vector__XXX
+ SG_ Tar_current : 24|16@1- (0.1,0) [-40|40] "A" Vector__XXX
+ SG_ Steer_speed : 56|16@1- (0.1,0) [-4096|4096] "　deg/s" Vector__XXX
+
+BO_ 789 EPS_receive2: 8 Vector__XXX
+ SG_ Vech_value : 16|16@1+ (0.00390625,0) [0|250] "km/h" Vector__XXX
+ SG_ Vech_enable : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 399 EPS_send: 8 Vector__XXX
+ SG_ XJF : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ real_current : 24|16@1+ (0.001,0) [0|80] "A" Vector__XXX
+ SG_ real_angle : 8|16@1- (1,0) [-720|720] "" Vector__XXX
+ SG_ ECU_temputer : 48|8@1+ (1,0) [-40|150] "" Vector__XXX
+ SG_ ECU_state : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 788 EPS_receive: 8 Vector__XXX
+ SG_ work_state : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ tar_angle : 8|16@1- (1,0) [-720|720] "" Vector__XXX
+ SG_ cail_sas : 1|2@1+ (1,0) [0|1] "" Vector__XXX
+
+CM_ SG_ 256 AutoCtrlEna "自动控制模式总开关:0=禁用,1=使能。";
+CM_ SG_ 256 ModeCtrlCnt "报文计数器。";
+CM_ SG_ 256 ModeCtrlCks "报文校验和。";
+CM_ SG_ 257 AccPedCmd "加速踏板位置指令,有效范围0~100%。";
+CM_ SG_ 257 AccCtrlEna "加速踏板控制使能:0=禁用,1=使能。";
+CM_ SG_ 257 AccPedInv "加速踏板位置校验值:有效范围0~100%。";
+CM_ SG_ 257 AccCtrlCnt "报文计数器。";
+CM_ SG_ 257 AccCtrlCks "报文校验和。";
+CM_ SG_ 257 AccTkoDis "-";
+CM_ SG_ 260 WiperCmd "雨刮控制指令:0=不开雨刮,1=雨刮低速挡,2=雨刮高速挡,3=雨刮喷水挡。";
+CM_ SG_ 260 HornCmd "鸣笛控制指令:0:不鸣笛,1:鸣笛。";
+CM_ SG_ 260 GearCmd "档位控制指令:2=R档,3=N档,4=D档,其他保留。";
+CM_ SG_ 260 GearCtrlEna "档位控制使能:0=禁用,1=使能。";
+CM_ SG_ 260 TurnLightCmd "转向灯控制指令:0=不控制转向灯,1=左转向灯闪烁,2=右转向灯闪烁,3保留。";
+CM_ SG_ 260 BeamLightCmd "远近光灯控制指令:0=不开灯,1=开灯,其他:保留。";
+CM_ SG_ 260 GearCtrlCnt "报文计数器。";
+CM_ SG_ 260 GearCtrlCks "报文校验和。";
+CM_ SG_ 512 AutoCtrlStat "自动控制模式状态:0=禁用,1=使能,2=故障,3保留。";
+CM_ SG_ 512 ModeStatCnt "报文计数器。";
+CM_ SG_ 512 ModeStatCks "报文校验和。";
+CM_ SG_ 513 AccPedAct "实际的加速踏板位置:有效范围0~100%。";
+CM_ SG_ 513 AccPedCmd "加速踏板位置指令回传:有效范围0~100%。";
+CM_ SG_ 513 AccPedExe "执行的加速踏板位置:有效范围0~100%。";
+CM_ SG_ 513 AccCtrlStat "驱动控制状态:0=禁用,1=使能,2=故障,3保留。";
+CM_ SG_ 513 AccStatCnt "报文计数器。";
+CM_ SG_ 513 AccStatCks "报文校验和。";
+CM_ SG_ 516 VehSpd "车速。";
+CM_ SG_ 516 WiperCmd "雨刮控制指令:0=不开雨刮,1=雨刮低速挡,2=雨刮高速挡,3=雨刮喷水挡。";
+CM_ SG_ 516 WiperAct "实际的雨刮状态:0=未开雨刮,1=开启雨刮低速挡,2=开启雨刮高速挡,3=开启雨刮喷水挡。";
+CM_ SG_ 516 HornCmd "鸣笛控制指令:0:不鸣笛,1:鸣笛。";
+CM_ SG_ 516 HornStatus "鸣笛状态:0=未鸣笛,1=正在鸣笛。";
+CM_ SG_ 516 GearAct "实际的档位:2=R档,3=N档,4=D档,其他保留。";
+CM_ SG_ 516 GearCmd "档位指令回传:2=R档,3=N档,4=D档,其他保留。";
+CM_ SG_ 516 TurnLightCmd "转向灯控制指令回传:0=不控制转向灯,1=左转向灯闪烁,2=右转向灯闪烁,3保留。";
+CM_ SG_ 516 TurnLightAct "转向灯状态:0=不控制转向灯,1=左转向灯闪烁,2=右转向灯闪烁,3保留。";
+CM_ SG_ 516 BeamLightAct "远近光灯状态:0=灯关闭,1=灯开启,其他:保留。";
+CM_ SG_ 516 BeamLightCmd "远近光灯控制指令:0=灯关闭,1=灯开启,其他:保留。";
+CM_ SG_ 516 GearStatCnt "报文计数器。";
+CM_ SG_ 516 GearStatCks "报文校验和。";
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "BusType" "*";
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+VAL_ 788 cail_sas 1 "cail" 0 "default" ;
+
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 100000000000;
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 10000;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","not_used","not_used","not_used","not_used","Cyclic","not_used","IfActive","NoMsgSendType";
+BA_DEF_ BU_  "NmStationAddress" HEX 0 0;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenSigSendType" "Cyclic";
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "NoMsgSendType";
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "DBName" "CANTemplate";
+BA_ "GenMsgSendType" BO_ 256 0;
+BA_ "GenMsgCycleTime" BO_ 256 10;
+BA_ "GenMsgSendType" BO_ 257 0;
+BA_ "GenMsgCycleTime" BO_ 257 10;
+BA_ "GenMsgSendType" BO_ 260 0;
+BA_ "GenMsgCycleTime" BO_ 260 10;
+BA_ "GenMsgSendType" BO_ 512 0;
+BA_ "GenMsgCycleTime" BO_ 512 20;
+BA_ "GenMsgSendType" BO_ 513 0;
+BA_ "GenMsgCycleTime" BO_ 513 20;
+BA_ "GenMsgSendType" BO_ 516 0;
+BA_ "GenMsgCycleTime" BO_ 516 20;
+BA_ "GenSigStartValue" SG_ 256 AutoCtrlEna 0;
+BA_ "GenSigStartValue" SG_ 256 ModeCtrlCnt 0;
+BA_ "GenSigStartValue" SG_ 256 ModeCtrlCks 0;
+BA_ "GenSigStartValue" SG_ 257 AccPedCmd 0;
+BA_ "GenSigStartValue" SG_ 257 AccCtrlEna 0;
+BA_ "GenSigStartValue" SG_ 257 AccPedInv 0;
+BA_ "GenSigStartValue" SG_ 257 AccCtrlCnt 0;
+BA_ "GenSigStartValue" SG_ 257 AccCtrlCks 0;
+BA_ "GenSigStartValue" SG_ 257 AccTkoDis 0;
+BA_ "GenSigStartValue" SG_ 260 HornCmd 0;
+BA_ "GenSigStartValue" SG_ 260 GearCmd 0;
+BA_ "GenSigStartValue" SG_ 260 GearCtrlEna 0;
+BA_ "GenSigStartValue" SG_ 260 TurnLightCmd 0;
+BA_ "GenSigStartValue" SG_ 260 BeamLightCmd 0;
+BA_ "GenSigStartValue" SG_ 260 GearCtrlCnt 0;
+BA_ "GenSigStartValue" SG_ 260 GearCtrlCks 0;
+BA_ "GenSigStartValue" SG_ 512 AutoCtrlStat 0;
+BA_ "GenSigStartValue" SG_ 512 ModeStatCnt 0;
+BA_ "GenSigStartValue" SG_ 512 ModeStatCks 0;
+BA_ "GenSigStartValue" SG_ 513 AccPedAct 0;
+BA_ "GenSigStartValue" SG_ 513 AccPedCmd 0;
+BA_ "GenSigStartValue" SG_ 513 AccPedExe 0;
+BA_ "GenSigStartValue" SG_ 513 AccCtrlStat 0;
+BA_ "GenSigStartValue" SG_ 513 AccStatCnt 0;
+BA_ "GenSigStartValue" SG_ 513 AccStatCks 0;
+BA_ "GenSigStartValue" SG_ 516 VehSpd 0;
+BA_ "GenSigStartValue" SG_ 516 HornCmd 0;
+BA_ "GenSigStartValue" SG_ 516 HornStatus 0;
+BA_ "GenSigStartValue" SG_ 516 GearAct 0;
+BA_ "GenSigStartValue" SG_ 516 GearCmd 0;
+BA_ "GenSigStartValue" SG_ 516 TurnLightCmd 0;
+BA_ "GenSigStartValue" SG_ 516 TurnLightAct 0;
+BA_ "GenSigStartValue" SG_ 516 BeamLightAct 0;
+BA_ "GenSigStartValue" SG_ 516 BeamLightCmd 0;
+BA_ "GenSigStartValue" SG_ 516 GearStatCnt 0;
+BA_ "GenSigStartValue" SG_ 516 GearStatCks 0;
+
