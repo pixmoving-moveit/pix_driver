@@ -53,6 +53,9 @@ src/command_node.cc
 src/Byte.cc
 )
 
+catkin_install_python(PROGRAMS src/control_converter.py src/report_converter_imu.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 add_dependencies(${PROJECT_NAME}_report_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_command_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

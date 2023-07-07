@@ -1,13 +1,7 @@
 <launch>
-    <arg name="aeb_en" default="1" />
-    <!-- <arg name="remote_mode" default="true" doc="remote mode" /> -->
-    <arg name="use_pedal" default="true" />
-    
     <node pkg="pix_mini_ev_driver" name="report_node" type="pix_mini_ev_driver_report_node"  output="screen"/>
     <node pkg="pix_mini_ev_driver" name="command_node" type="pix_mini_ev_driver_command_node" output="screen"/> 
-    <node pkg="pix_mini_ev_driver" name="read_converter" type="report_converter_imu.py" output="screen"/>
-    
-    <node pkg="pix_mini_ev_driver" name="control_converter_speed" type="control_converter_speed.py" if="$(eval use_pedal==false)" output="screen"/>
-    <node pkg="pix_mini_ev_driver" name="control_converter" type="control_converter.py" if="$(eval use_pedal==true)" output="screen"/>
-    <!-- <param name="aeb_en_ctrl" value="$(arg aeb_en)" />  -->
+
+    <!-- <node pkg="pix_mini_ev_driver" name="read_converter" type="report_converter_imu.py" output="screen"/>
+    <node pkg="pix_mini_ev_driver" name="control_converter" type="control_converter.py"  output="screen"/> -->
 </launch>
