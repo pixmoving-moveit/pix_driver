@@ -326,11 +326,11 @@ int main(int argc, char* argv[])
 
     // creat ros Subscriber
     // Example: ros::Subscriber sub_brake = nh.subscribe("/pix/brake_command", 1, brake_callback);
-    ros::Subscriber sub_vhiclemodecommand_100 = nh.subscribe("/pix_hongguang_mini_ev/vhiclemodecommand_100", 1, vhiclemodecommand_100_callback);
-	ros::Subscriber sub_throttlecommand_101 = nh.subscribe("/pix_hongguang_mini_ev/throttlecommand_101", 1, throttlecommand_101_callback);
-	ros::Subscriber sub_gearcommand_104 = nh.subscribe("/pix_hongguang_mini_ev/gearcommand_104", 1, gearcommand_104_callback);
-	ros::Subscriber sub_steeringcomand_314 = nh.subscribe("/pix_hongguang_mini_ev/steeringcomand_314", 1, steeringcomand_314_callback);
-	ros::Subscriber sub_brakecommand_364 = nh.subscribe("/pix_hongguang_mini_ev/brakecommand_364", 1, brakecommand_364_callback);
+    ros::Subscriber sub_vhiclemodecommand_100 = nh.subscribe("/pix_hongguang_mini_ev/vhiclemode_command_100", 1, vhiclemodecommand_100_callback);
+	ros::Subscriber sub_throttlecommand_101 = nh.subscribe("/pix_hongguang_mini_ev/throttle_command_101", 1, throttlecommand_101_callback);
+	ros::Subscriber sub_gearcommand_104 = nh.subscribe("/pix_hongguang_mini_ev/gear_command_104", 1, gearcommand_104_callback);
+	ros::Subscriber sub_steeringcomand_314 = nh.subscribe("/pix_hongguang_mini_ev/steering_comand_314", 1, steeringcomand_314_callback);
+	ros::Subscriber sub_brakecommand_364 = nh.subscribe("/pix_hongguang_mini_ev/brake_command_364", 1, brakecommand_364_callback);
 	
     //  creat ros publisher
     pub_can = nh.advertise<can_msgs::Frame>("/sent_messages", 10, false);

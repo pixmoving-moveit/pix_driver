@@ -175,11 +175,11 @@ int main(int argc, char* argv[])
     ros::Subscriber sub = nh.subscribe("/received_messages", 1, can_callback);
 
     // pub_{can_name} = nh.advertise<pix_driver_msgs::{name}>("/pix/{can_name}_report", 1, true);
-    pub_steeringreport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::steeringreport_18f>("/pix_hongguang_mini_ev/steeringreport", 1, true);
-	pub_vhiclemodereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::vhiclemodereport_200>("/pix_hongguang_mini_ev/vhiclemodereport", 1, true);
-	pub_throttlereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::throttlereport_201>("/pix_hongguang_mini_ev/throttlereport", 1, true);
-	pub_gearreport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::gearreport_204>("/pix_hongguang_mini_ev/gearreport", 1, true);
-	pub_brakereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::brakereport_289>("/pix_hongguang_mini_ev/brakereport", 1, true);
+    pub_steeringreport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::steeringreport_18f>("/pix_hongguang_mini_ev/steering_report", 1, true);
+	pub_vhiclemodereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::vhiclemodereport_200>("/pix_hongguang_mini_ev/vhiclemode_report", 1, true);
+	pub_throttlereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::throttlereport_201>("/pix_hongguang_mini_ev/throttle_report", 1, true);
+	pub_gearreport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::gearreport_204>("/pix_hongguang_mini_ev/gear_report", 1, true);
+	pub_brakereport = nh.advertise<pix_hongguang_mini_ev_driver_msgs::brakereport_289>("/pix_hongguang_mini_ev/brake_report", 1, true);
 	
     // add another publisher
 
