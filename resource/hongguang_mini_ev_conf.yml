@@ -1,0 +1,10 @@
+dbc_file: hongguang_mini_ev_20230707.dbc
+protocol_conf: hongguang_mini_ev.yml
+car_type: hongguang_mini_ev
+sender_list: [VhicleModeCommand, ThrottleCommand, GearCommand, BrakeCommand, SteeringComand]
+sender: ACU
+black_list: []
+
+output_dir: output
+config_dir: config/
+
