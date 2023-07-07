@@ -26,7 +26,6 @@ class ControlConverter:
         self.pub_brake = rospy.Publisher('/pix/brake_command', sendx_364, queue_size=10)
         self.pub_steer = rospy.Publisher('/pix/steering_command', eps_receive_314, queue_size=10)
         self.pub_gear = rospy.Publisher('/pix/gear_command', msg104_104, queue_size=10)
-        self.pub_vehicle = rospy.Publisher('/pix/vehicle_mode_command', msg100_100, queue_size=10)
 
         self.throttle_msg = msg101_101()
         self.brake_msg = sendx_364()
@@ -48,7 +47,7 @@ class ControlConverter:
         self.gear = msg.shift.data
         stamp = rospy.Time.now()
         
-        # AEB 和 刹车功能设计
+        # 刹车功能设计
         # self.brake_msg.aeb_en_ctrl = rospy.get_param("aeb_en_ctrl", 0)
         self.brake_msg.header.stamp = stamp
         
@@ -56,45 +55,40 @@ class ControlConverter:
         # self.brake_msg.Brake_EnCtrl = 1
 
         self.steer_msg.header.stamp = stamp
-        self.steer_msg.Steer_EnCtrl = 1
-        self.steer_msg.Steer_AngleTarget = self.steer * steering_factor
-        self.steer_msg.Steer_AngleSpeed = 250
+        self.steer_msg.work_state = True
+        self.steer_msg.tar_angle = self.steer * steering_factor
+        # self.steer_msg.Steer_AngleSpeed = 250
         self.pub_steer.publish(self.steer_msg)
 
         self.gear_msg.header.stamp = stamp
-        self.gear_msg.Gear_EnCtrl = 1
+        self.gear_msg.GearCtrlEna = True
+        # :2=R档,3=N档,4=D档,其他保留。
+        # self.gear_msg.GearCmd
         if(self.gear==0):
-            self.gear_msg.Gear_Target = 0
+            self.gear_msg.GearCmd = 0
         elif(self.gear==1):
-            self.gear_msg.Gear_Target = 1
+            self.gear_msg.GearCmd = 0
         elif(self.gear==2):
-            self.gear_msg.Gear_Target = 2
+            self.gear_msg.GearCmd = 2
         elif(self.gear==3):
-            self.gear_msg.Gear_Target = 3
+            self.gear_msg.GearCmd = 3
         elif(self.gear==4):
-            self.gear_msg.Gear_Target = 4
+            self.gear_msg.GearCmd = 4
         
         self.pub_gear.publish(self.gear_msg)
 
         self.throttle_msg.header.stamp = stamp
-        self.throttle_msg.Dirve_ThrottlePedalTarget = self.throttle*100.0
-        self.throttle_msg.Dirve_EnCtrl = 1
+        self.throttle_msg.AccPedCmd = self.throttle*100.0
+        self.throttle_msg.AccCtrlEna = True
 
         # 当档位不一致时，
-        if(self.gear_state!=self.gear):
-            self.throttle_msg.Dirve_ThrottlePedalTarget = 0
-            self.brake_msg.Brake_Pedal_Target = 30
+        # if(self.gear_state!=self.gear):
+        #     self.throttle_msg.Dirve_ThrottlePedalTarget = 0
+        #     self.brake_msg.Brake_Pedal_Target = 30
         
         self.pub_throttle.publish(self.throttle_msg)
 
         self.pub_brake.publish(self.brake_msg)
-
-        self.vehicle_msg.header.stamp = stamp
-        self.vehicle_msg.Drive_ModeCtrl = 0
-        self.vehicle_msg.Steer_ModeCtrl = 1
-        # self.vehicle_msg.vin_req = 1
-        self.pub_vehicle.publish(self.vehicle_msg)
-
 
 
 if __name__ == '__main__':
