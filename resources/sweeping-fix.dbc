@@ -1,0 +1,527 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: AUTO VCU
+VAL_TABLE_ ChargeAlignmentStateFeedback 1 "已对准(允许加水）" 0 "未对准" ;
+VAL_TABLE_ FanSpeedMode 1 "Speed" 0 "Default" ;
+VAL_TABLE_ FanModeCtrl 3 "HIGH" 2 "MID" 1 "LOW" 0 "OFF" ;
+VAL_TABLE_ MouthpieceUpDownCtrl 2 "DOWN" 1 "UP" 0 "NO" ;
+VAL_TABLE_ AutoCleaningStartCtrl 3 "NO" 2 "STOP" 1 "START" 0 "NO" ;
+VAL_TABLE_ VehicleModeState 3 "Standby Mode" 2 "Emergency Mode" 1 " Auto Mode" 0 "Manual Remote Mode" ;
+VAL_TABLE_ SteerModeStatus 2 "Sync Direction Steer Mode" 1 "Non Direction Steer Mode" 0 "Standard Steer Mode" ;
+VAL_TABLE_ DriveModeStatus 1 "Speed Drive Mode" 0 " Throttle Paddle Drive Mode" ;
+VAL_TABLE_ TurnLightActual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
+VAL_TABLE_ CarPowerState 2 "READY" 1 "ON" 0 "OFF" ;
+VAL_TABLE_ CarWorkState 7 "crash" 6 "error" 5 "E-stop" 4 " work" 3 "3" 2 "2" 1 "1" 0 "init" ;
+VAL_TABLE_ SteerModeCtrl 2 " Sync Direction Steer" 1 "Non Direction Steer" 0 "Standard Steer" ;
+VAL_TABLE_ DriveModeCtrl 1 "Speed Drive" 0 "Throttle Paddle Drive" ;
+VAL_TABLE_ TurnLightCtrl 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlamp_ON" 1 "Left_Turnlamp_ON" 0 "Turnlamp_OFF" ;
+VAL_TABLE_ ParkingActual 1 "Parking_trigger" 0 "Release" ;
+VAL_TABLE_ GearActual 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
+VAL_TABLE_ SteerEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_TABLE_ VcuBmsHighPowerReq 1 "PowerOn" 0 "PowerOff" ;
+VAL_TABLE_ VehicleSpeedQ 2 "有效的" 1 "无效的" 0 "未初始化" ;
+VAL_TABLE_ AngleMiddle 85 "对中指令" 0 "无需对中" ;
+VAL_TABLE_ BMotorWorkmode 32 "角度控制模式" 0 "机械模式" ;
+VAL_TABLE_ BAngleMiddleFbk 238 "角度对中成功" 85 " 已进行过角度对中" 17 "角度对中失败" 0 "未进行过角度对中" ;
+VAL_TABLE_ BMotorWorkModeFbk 33 "角度模式-启动热保护" 32 "角度模式" 0 "机械模式" ;
+VAL_TABLE_ FAngleMiddleFbk 238 "角度对中成功" 85 " 已进行过角度对中" 17 "角度对中失败" 0 "未进行过角度对中" ;
+VAL_TABLE_ FMotorWorkModeFbk 33 "角度模式-启动热保护" 32 "角度模式" 0 "机械模式" ;
+VAL_TABLE_ Speedlimit 1 "LowSpeed" 0 "StdSpeed" ;
+VAL_TABLE_ MotorControlselection 1 "Torque" 0 "Speed" ;
+VAL_TABLE_ SteerMslection 3 "CfWS" 2 "FrWS" 1 "FoWS" ;
+VAL_TABLE_ RemoteLock 1 "lock" 0 "Unlock" ;
+
+
+BO_ 514 Vcu2AcuChassisErrCode3: 8 VCU
+	SG_ ChassisRrEdsErrorCode2 : 56|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisRfEdsErrorCode2 : 40|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisLrEdsErrorCode2 : 24|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisLfEdsErrorCode2 : 8|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisRrEdsErrorCode : 48|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisRfEdsErrorCode : 32|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisLrEdsErrorCode : 16|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisLfEdsErrorCode : 0|8@0+ (1,0) [0|255] ""  Vector__XXX
+
+BO_ 513 Vcu2AcuChassisErrCode2: 8 VCU
+	SG_ ChassisEbsErrorCode3 : 40|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisBmsErrorCode : 16|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisBackEpsErrorCode : 56|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisFrontEpsErrorCode : 48|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisEbsErrorCode2 : 32|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisEbsErrorCode1 : 24|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ ChassisEbsErrorlv : 16|4@0+ (1,0) [0|15] ""  Vector__XXX
+
+BO_ 512 Vcu2AcuChassisErrCode1: 8 VCU
+	SG_ BmsCommunicationFault : 7|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ ChassisEmergencySta : 10|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ LeadacidBatteryLow : 11|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ ControlerCommunicationFault : 8|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ ChassisCrashSta : 9|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EpsRearCommunicationFault : 6|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EpsFrontCommunicationFault : 5|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EdsRrCommunicationFault : 3|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EdsRfCommunicationFault : 2|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EdsLrCommunicationFault : 1|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EdsLfCommunicationFault : 0|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ EbsCommunicationFault : 4|1@0+ (1,0) [0|1] ""  Vector__XXX
+	SG_ ChassisVcuOtherErr : 16|8@0+ (1,0) [0|255] ""  Vector__XXX
+	SG_ BmsFault1 : 26|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault2 : 28|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault3 : 30|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault4 : 32|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault5 : 34|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault6 : 36|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault7 : 38|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault8 : 40|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault9 : 42|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault10 : 44|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault11 : 46|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault12 : 48|2@0+ (1,0) [0|17] ""  Vector__XXX
+	SG_ BmsFault13 : 50|2@0+ (1,0) [0|17] ""  Vector__XXX
+
+BO_ 263 AcuSweepCtrlCmd: 8 AUTO
+ SG_ FanSpeedCtrl : 47|16@0- (1,0) [0|65535] "rpm"  VCU
+ SG_ MowingSpeedCtrl : 25|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ SweepModeCtrl : 21|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ FanSpeedMode : 19|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ FanModeCtrl : 17|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ SweepPlateUpDown : 15|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ MouthpieceUpDownCtrl : 13|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ ShakerDusterCtrl : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ DedustingCtrl : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ AutoGarbageDumpStartCtrl : 3|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ AutoCleaningStartCtrl : 1|2@0+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 1314 VehicleMileageFb: 8 VCU
+ SG_ VehicleSubMileage : 39|24@0- (0.01,0) [0|167772.15] "km" Vector__XXX
+ SG_ VehicleODO : 15|24@0- (0.1,0) [0|1677721.5] "km"  AUTO
+
+BO_ 1313 Vcu2AcuSweepWorkSta: 4 VCU
+ SG_ SweepEmergencySigFb : 10|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ VcuSweepPlateUpDownStaFb : 9|2@0- (1,0) [0|3] "" Vector__XXX
+ SG_ VcuAutoGarbageDumpStaFb : 1|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ VcuAutoCleaningStaFb : 0|1@0- (1,0) [0|1] ""  AUTO
+
+BO_ 1307 ScuWorkTimeFb: 8 VCU
+ SG_ BatteryVoltage : 7|8@0- (0.1,0) [0|25.4] "V"  AUTO
+ SG_ WorkTime : 15|24@0- (0.1,0) [0|838860.7] "" Vector__XXX
+
+BO_ 1305 Vcu2AcuSweepSta: 8 VCU
+ SG_ ScuSweepConntorllerErr2 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ScuSweepConntorllerErr1 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ScuSweepConntrollerCurrent : 32|16@1- (1,0) [0|65535] "" Vector__XXX
+ SG_ ScuSweepConntrollerVoltage : 16|16@1- (1,0) [0|65535] "" Vector__XXX
+ SG_ ScuSweepSpeed : 8|8@1- (1,0) [0|255] "" Vector__XXX
+ SG_ ScuSweepTravelMm : 0|8@1- (1,0) [0|255] "mm"  AUTO
+
+BO_ 1304 Vcu2AcuSweepFanSta: 8 VCU
+ SG_ ScuFanConntorllerErr2 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ScuFanConntorllerErr1 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ScuFanConntorllerTemp : 40|8@1- (1,-40) [-40|160] "℃" Vector__XXX
+ SG_ ScuFanMotorTemp : 32|8@1- (1,-40) [-40|210] "℃" Vector__XXX
+ SG_ ScuFanConntorllerCurrent : 16|16@1- (1,-2000) [-2000|2000] "A" Vector__XXX
+ SG_ ScuFanConntorllerMainVoltage : 0|16@1- (1,0) [0|500] "V"  AUTO
+
+BO_ 1303 Vcu2AcuSweepStaFb: 8 VCU
+ SG_ ScuMowingSpeedFb : 32|16@1- (1,0) [0|65535] "rpm" Vector__XXX
+ SG_ PushRodTravelDifferenceAlarm : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EndOfGarbageDumpingDes : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EndOfGarbageDumping : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuFanSpeedFb : 16|16@1- (1,0) [0|65535] "rpm" Vector__XXX
+ SG_ ScuLiquidLeve : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ SCU_Heartbeat : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScanControllerCommunicationFault : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ FanControllerCommunicationFault : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ SCU_FilterClogging : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ SCU_SweepLifeEnd : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ SCU_DustbinFull : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuLiquidLeveHigh : 1|1@1+ (1,0) [0|1] ""  AUTO
+ SG_ ScuLiquidLevelLow : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 261 VehicleModeCommand: 8 AUTO
+ SG_ CheckSum__105 : 63|8@0- (1,0) [0|255] "" Vector__XXX
+ SG_ HeadlightCtrl : 18|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ TurnLightCtrl : 17|2@0- (1,0) [0|3] "" Vector__XXX
+ SG_ DriveModeCtrl : 10|3@0- (1,0) [0|7] "" Vector__XXX
+ SG_ SteerModeCtrl : 2|3@0- (1,0) [0|7] ""  VCU
+
+BO_ 1298 BmsReport: 8 VCU
+ SG_ BatteryLeadacidVoltage : 55|8@0- (0.1,0) [0|25.4] "V" Vector__XXX
+ SG_ WirelessChargingSta : 41|2@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ BatterySoc : 39|8@0- (1,0) [0|100] "%" Vector__XXX
+ SG_ BatteryCurrent : 23|16@0- (0.1,0) [-3200|3353.5] "A" Vector__XXX
+ SG_ BatteryVoltage : 7|16@0- (0.01,0) [0|300] "V"  AUTO
+
+BO_ 260 ParkCommand: 8 AUTO
+ SG_ CheckSum_104 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ ParkTarget : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ ParkEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
+
+BO_ 1286 WheelSpeedReport: 8 VCU
+ SG_ WheelSpeedRR : 55|16@0- (0.001,0) [0|65.535] "m/s" Vector__XXX
+ SG_ WheelSpeedRL : 39|16@0- (0.001,0) [0|65.535] "m/s" Vector__XXX
+ SG_ WheelSpeedFR : 23|16@0- (0.001,0) [0|65.535] "m/s" Vector__XXX
+ SG_ WheelSpeedFL : 7|16@0- (0.001,0) [0|65.535] "m/s"  AUTO
+
+BO_ 1285 VcuReport: 8 VCU
+ SG_ TurnLightActual : 57|2@0- (1,0) [0|3] "" Vector__XXX
+ SG_ AebTriggerState : 58|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ HeadlightActual : 59|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ CarWorkState : 53|4@0- (1,0) [0|7] "" Vector__XXX
+ SG_ CarPowerState : 49|2@0- (1,0) [0|1] "" Vector__XXX
+ SG_ VehicleErrcode : 47|8@0- (1,0) [0|255] "" Vector__XXX
+ SG_ AebBrakeState : 32|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ FrontCrashState : 33|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ BackCrashState : 34|1@0- (1,0) [0|1] "" Vector__XXX
+ SG_ VehicleModeState : 36|2@0- (1,0) [0|3] "" Vector__XXX
+ SG_ DriveModeStatus : 39|3@0- (1,0) [0|7] "" Vector__XXX
+ SG_ VehicleSpeed : 23|16@0- (0.001,0) [-32.768|32.767] "m/s"  AUTO
+ SG_ SteerModeStatus : 10|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ BrakeLightActual : 11|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ VehicleAcc : 7|12@0- (0.01,0) [-10|10] "m/s^2" Vector__XXX
+
+BO_ 1284 ParkReport: 2 VCU
+ SG_ ParkFlt : 15|8@0- (1,0) [0|0] ""  AUTO
+ SG_ ParkingActual : 0|1@0- (1,0) [0|1] "" Vector__XXX
+
+BO_ 1283 GearReport: 2 VCU
+ SG_ GearFlt : 15|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ GearActual : 2|3@0- (1,0) [0|7] ""  AUTO
+
+BO_ 1281 BrakeReport: 8 VCU
+ SG_ BrakePedalActual : 31|16@0- (0.1,0) [0|100] "%" Vector__XXX
+ SG_ BrakeFlt2 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ BrakeFlt1 : 15|8@0- (1,0) [0|255] "" Vector__XXX
+ SG_ BrakeEnState : 1|2@0- (1,0) [0|3] ""  AUTO
+
+BO_ 1280 ThrottleReport: 8 VCU
+ SG_ DirveThrottlePedalActual : 31|16@0- (0.1,0) [0|100] "%" Vector__XXX
+ SG_ DirveFlt2 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ DirveFlt1 : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ DirveEnState : 1|2@0+ (1,0) [0|3] ""  AUTO
+
+BO_ 1282 SteeringReport: 8 VCU
+ SG_ SteerAngleSpeedActual : 63|8@0- (1,0) [0|250] "deg/s" Vector__XXX
+ SG_ SteerAngleRearActual : 47|16@0- (1,0) [-500|500] "deg" Vector__XXX
+ SG_ SteerAngleActual : 31|16@0- (1,0) [-500|500] "deg" Vector__XXX
+ SG_ SteerFlt2 : 23|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ SteerFlt1 : 15|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ SteerEnState : 1|2@0- (1,0) [0|3] ""  AUTO
+
+BO_ 259 GearCommand: 8 AUTO
+ SG_ CheckSum_103 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ GearTarget : 10|3@0+ (1,0) [0|7] ""  VCU
+ SG_ GearEnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 258 SteeringCommand: 8 AUTO
+ SG_ CheckSum_102 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ SteerAngleTarget : 23|16@0- (1,0) [-500|500] "deg" Vector__XXX
+ SG_ SteerAngleSpeed : 15|8@0- (1,0) [0|250] "deg/s" Vector__XXX
+ SG_ SteerEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
+
+BO_ 257 BrakeCommand: 8 AUTO
+ SG_ CheckSum_101 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ BrakePedalTarget : 23|16@0- (0.1,0) [0|100] "%" Vector__XXX
+ SG_ BrakeEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
+
+BO_ 256 ThrottleCommand: 8 AUTO
+ SG_ CheckSum_100 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ DirveSpeedTarget : 39|12@0- (0.01,0) [0|40.95] "m/s" Vector__XXX
+ SG_ DirveThrottlePedalTarget : 23|16@0- (0.1,0) [0|100] "%" Vector__XXX
+ SG_ DirveEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
+
+CM_ "PIX公司整车CAN通讯";
+CM_ BU_ AUTO "自动驾驶控制器";
+CM_ BU_ VCU "整车控制器";
+CM_ BO_ 514 "底盘故障码3";
+CM_ BO_ 513 "底盘故障码2";
+CM_ BO_ 512 "底盘故障码1";
+CM_ BO_ 263 "清扫控制指令";
+CM_ SG_ 263 FanSpeedCtrl "风机速度控制";
+CM_ SG_ 263 MowingSpeedCtrl "割草转速挡位控制";
+CM_ SG_ 263 SweepModeCtrl "扫盘转速挡位控制";
+CM_ SG_ 263 FanSpeedMode "风机速度模式";
+CM_ SG_ 263 FanModeCtrl "风机工作模式";
+CM_ SG_ 263 SweepPlateUpDown "扫盘升降";
+CM_ SG_ 263 MouthpieceUpDownCtrl "吸盘升降控制";
+CM_ SG_ 263 ShakerDusterCtrl "振尘控制";
+CM_ SG_ 263 DedustingCtrl "喷雾降尘控制";
+CM_ SG_ 263 AutoGarbageDumpStartCtrl "一键倾倒控制";
+CM_ SG_ 263 AutoCleaningStartCtrl "一键清扫控制";
+CM_ BO_ 1314 "车辆里程反馈";
+CM_ SG_ 1314 VehicleSubMileage "单次里程";
+CM_ SG_ 1314 VehicleODO "总里程";
+CM_ BO_ 1313 "VCU控制清扫工作状态";
+CM_ SG_ 1313 SweepEmergencySigFb "清扫系统紧急停止反馈";
+CM_ SG_ 1313 VcuSweepPlateUpDownStaFb "扫盘升降状态反馈";
+CM_ SG_ 1313 VcuAutoGarbageDumpStaFb "一键倾倒状态反馈";
+CM_ SG_ 1313 VcuAutoCleaningStaFb "一键清扫状态反馈";
+CM_ BO_ 1307 "工作时长 同0x1801D1B5";
+CM_ SG_ 1307 BatteryVoltage "12V 系统电压";
+CM_ SG_ 1307 WorkTime "工作时长";
+CM_ BO_ 1305 "扫盘状态";
+CM_ SG_ 1305 ScuSweepConntorllerErr2 "扫盘电机电控故障码2";
+CM_ SG_ 1305 ScuSweepConntorllerErr1 "扫盘电机电控故障码1";
+CM_ SG_ 1305 ScuSweepConntrollerCurrent "扫盘电机控制器母线电流";
+CM_ SG_ 1305 ScuSweepConntrollerVoltage "扫盘电机控制器母线电压";
+CM_ SG_ 1305 ScuSweepSpeed "扫盘电机实际转速";
+CM_ SG_ 1305 ScuSweepTravelMm "扫盘浮动行程值";
+CM_ BO_ 1304 "风机状态";
+CM_ SG_ 1304 ScuFanConntorllerErr2 "风机控制器故障码2";
+CM_ SG_ 1304 ScuFanConntorllerErr1 "风机控制器故障码1";
+CM_ SG_ 1304 ScuFanConntorllerTemp "风机电机控制器温度";
+CM_ SG_ 1304 ScuFanMotorTemp "风机电机温度";
+CM_ SG_ 1304 ScuFanConntorllerCurrent "风机直流母线电流";
+CM_ SG_ 1304 ScuFanConntorllerMainVoltage "风机直流母线电压";
+CM_ BO_ 1303 "清扫系统状态1";
+CM_ SG_ 1303 ScuMowingSpeedFb "割草电机实际转速";
+CM_ SG_ 1303 PushRodTravelDifferenceAlarm "推杆行程差值报警";
+CM_ SG_ 1303 EndOfGarbageDumpingDes "一键垃圾倾倒下降结束";
+CM_ SG_ 1303 EndOfGarbageDumping "垃圾倾倒倾翻结束";
+CM_ SG_ 1303 ScuFanSpeedFb "风机电机实际转速";
+CM_ SG_ 1303 ScuLiquidLeve "清水箱液位值";
+CM_ SG_ 1303 SCU_Heartbeat "上装控制器心跳";
+CM_ SG_ 1303 ScanControllerCommunicationFault "扫盘控制器通信故障报警";
+CM_ SG_ 1303 FanControllerCommunicationFault "风机控制器通信故障报警";
+CM_ SG_ 1303 SCU_FilterClogging "滤芯堵赛报警";
+CM_ SG_ 1303 SCU_SweepLifeEnd "扫盘磨损结束报警";
+CM_ SG_ 1303 SCU_DustbinFull "垃圾箱满溢报警";
+CM_ SG_ 1303 ScuLiquidLeveHigh "清水箱高液位报警";
+CM_ SG_ 1303 ScuLiquidLevelLow "清水箱低液位报警";
+CM_ BO_ 261 "车辆模式指令";
+CM_ SG_ 261 CheckSum__105 "校验和";
+CM_ SG_ 261 HeadlightCtrl "大灯控制";
+CM_ SG_ 261 TurnLightCtrl "转向灯控制";
+CM_ SG_ 261 DriveModeCtrl "驾驶模式控制";
+CM_ SG_ 261 SteerModeCtrl "转向模式控制";
+CM_ BO_ 1298 "电池状态报告";
+CM_ SG_ 1298 BatteryLeadacidVoltage "铅酸电池电压";
+CM_ SG_ 1298 WirelessChargingSta "无线充电状态";
+CM_ SG_ 1298 BatterySoc "电池SOC";
+CM_ SG_ 1298 BatteryCurrent "电池电流";
+CM_ SG_ 1298 BatteryVoltage "电池电压";
+CM_ BO_ 260 "驻车指令";
+CM_ SG_ 260 CheckSum_104 "校验和";
+CM_ SG_ 260 ParkTarget "驻车目标";
+CM_ SG_ 260 ParkEnCtrl "驻车使能控制";
+CM_ BO_ 1286 "轮速报告";
+CM_ SG_ 1286 WheelSpeedRR "右后轮速";
+CM_ SG_ 1286 WheelSpeedRL "左后轮速";
+CM_ SG_ 1286 WheelSpeedFR "右前轮速";
+CM_ SG_ 1286 WheelSpeedFL "左前轮速";
+CM_ BO_ 1285 "VCU状态报告";
+CM_ SG_ 1285 TurnLightActual "转向灯实际状态";
+CM_ SG_ 1285 AebTriggerState "AEB触发状态";
+CM_ SG_ 1285 HeadlightActual "大灯实际状态";
+CM_ SG_ 1285 CarWorkState "车辆工作状态";
+CM_ SG_ 1285 CarPowerState "车辆上电状态";
+CM_ SG_ 1285 VehicleErrcode "车辆故障码";
+CM_ SG_ 1285 AebBrakeState "AEB制动状态";
+CM_ SG_ 1285 FrontCrashState "前碰撞状态";
+CM_ SG_ 1285 BackCrashState "后碰撞状态";
+CM_ SG_ 1285 VehicleModeState "车辆模式状态";
+CM_ SG_ 1285 DriveModeStatus "行驶模式状态";
+CM_ SG_ 1285 VehicleSpeed "车辆速度";
+CM_ SG_ 1285 SteerModeStatus "转向模式";
+CM_ SG_ 1285 BrakeLightActual "制动灯实际状态";
+CM_ SG_ 1285 VehicleAcc "车辆加速度";
+CM_ BO_ 1284 "驻车报告";
+CM_ SG_ 1284 ParkFlt "驻车故障";
+CM_ SG_ 1284 ParkingActual "实际驻车状态";
+CM_ BO_ 1283 "挡位报告";
+CM_ SG_ 1283 GearFlt "挡位故障";
+CM_ SG_ 1283 GearActual "实际挡位";
+CM_ BO_ 1281 "制动报告";
+CM_ SG_ 1281 BrakePedalActual "制动踏板实际值";
+CM_ SG_ 1281 BrakeFlt2 "制动故障码2";
+CM_ SG_ 1281 BrakeFlt1 "制动故障码1";
+CM_ SG_ 1281 BrakeEnState "制动使能状态";
+CM_ BO_ 1280 "油门报告";
+CM_ SG_ 1280 DirveThrottlePedalActual "行驶油门实际值";
+CM_ SG_ 1280 DirveFlt2 "行驶故障码2";
+CM_ SG_ 1280 DirveFlt1 "行驶故障码1";
+CM_ SG_ 1280 DirveEnState "行驶使能状态";
+CM_ BO_ 1282 "转向报告";
+CM_ SG_ 1282 SteerAngleSpeedActual "转向实际角速度";
+CM_ SG_ 1282 SteerAngleRearActual "后转向实际角度";
+CM_ SG_ 1282 SteerAngleActual "转向实际角度";
+CM_ SG_ 1282 SteerFlt2 "转向故障码2";
+CM_ SG_ 1282 SteerFlt1 "转向故障码1";
+CM_ SG_ 1282 SteerEnState "转向使能状态";
+CM_ BO_ 259 "挡位指令";
+CM_ SG_ 259 CheckSum_103 "校验和";
+CM_ SG_ 259 GearTarget "目标挡位";
+CM_ SG_ 259 GearEnCtrl "挡位使能";
+CM_ BO_ 258 "转向指令";
+CM_ SG_ 258 CheckSum_102 "校验和";
+CM_ SG_ 258 SteerAngleTarget "转向角度";
+CM_ SG_ 258 SteerAngleSpeed "转向角速度";
+CM_ SG_ 258 SteerEnCtrl "转向使能";
+CM_ BO_ 257 "制动指令";
+CM_ SG_ 257 CheckSum_101 "校验和";
+CM_ SG_ 257 BrakePedalTarget "制动油门";
+CM_ SG_ 257 BrakeEnCtrl "制动使能";
+CM_ BO_ 256 "油门指令";
+CM_ SG_ 256 CheckSum_100 "校验和";
+CM_ SG_ 256 DirveSpeedTarget "目标速度";
+CM_ SG_ 256 DirveThrottlePedalTarget "目标油门";
+CM_ SG_ 256 DirveEnCtrl "驾驶使能";
+CM_ SG_ 513 ChassisEbsErrorCode3 "制动故障码3";
+CM_ SG_ 513 ChassisBmsErrorCode "";
+CM_ SG_ 513 ChassisBackEpsErrorCode "后转向故障码";
+CM_ SG_ 513 ChassisFrontEpsErrorCode "前转向故障码";
+CM_ SG_ 513 ChassisEbsErrorCode2 "制动故障码2";
+CM_ SG_ 513 ChassisEbsErrorCode1 "制动故障码1";
+CM_ SG_ 513 ChassisEbsErrorlv "制动故障级别";
+CM_ SG_ 514 ChassisRrEdsErrorCode2 "右后电控故障2";
+CM_ SG_ 514 ChassisRfEdsErrorCode2 "右前电控故障2";
+CM_ SG_ 514 ChassisLrEdsErrorCode2 "左后电控故障2";
+CM_ SG_ 514 ChassisLfEdsErrorCode2 "左前电控故障2";
+CM_ SG_ 514 ChassisRrEdsErrorCode "右后电控故障";
+CM_ SG_ 514 ChassisRfEdsErrorCode "右前电控故障";
+CM_ SG_ 514 ChassisLrEdsErrorCode "左后电控故障";
+CM_ SG_ 514 ChassisLfEdsErrorCode "左前电控故障";
+CM_ SG_ 512 BmsCommunicationFault "BMS通讯故障"
+CM_ SG_ 512 ChassisEmergencySta "底盘急停";
+CM_ SG_ 512 LeadacidBatteryLow "铅酸电池电量低";
+CM_ SG_ 512 ControlerCommunicationFault "控制器通讯故障";
+CM_ SG_ 512 ChassisCrashSta "防撞条触发状态";
+CM_ SG_ 512 EpsRearCommunicationFault "后EPS通讯故障";
+CM_ SG_ 512 EpsFrontCommunicationFault "前EPS通讯故障";
+CM_ SG_ 512 EdsRrCommunicationFault "右后电控通讯故障";
+CM_ SG_ 512 EdsRfCommunicationFault "右前电控通讯故障";
+CM_ SG_ 512 EdsLrCommunicationFault "左后电控通讯故障";
+CM_ SG_ 512 EdsLfCommunicationFault "左前电控通讯故障";
+CM_ SG_ 512 EbsCommunicationFault "EHB通讯故障";
+CM_ SG_ 512 ChassisVcuOtherErr "VCU其他故障";
+CM_ SG_ 512 BmsFault1 "单体过压故障";
+CM_ SG_ 512 BmsFault2 "单体低压故障";
+CM_ SG_ 512 BmsFault3 "单体压差过大故障";
+CM_ SG_ 512 BmsFault4 "放电高温故障";
+CM_ SG_ 512 BmsFault5 "放电低温故障";
+CM_ SG_ 512 BmsFault6 "充电高温故障";
+CM_ SG_ 512 BmsFault7 "充电低温故障";
+CM_ SG_ 512 BmsFault8 "单体温差过大故障";
+CM_ SG_ 512 BmsFault9 "总压过低故障";
+CM_ SG_ 512 BmsFault10 "充电过流故障";
+CM_ SG_ 512 BmsFault11 "放电过流故障";
+CM_ SG_ 512 BmsFault12 "SOC过低故障";
+CM_ SG_ 512 BmsFault13 "总压过低故障";
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclie","OnEvent","Cyclie_And_OnEvent";
+BA_DEF_  "Manufacturer" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenMsgSendType" "Cyclie";
+BA_DEF_DEF_  "Manufacturer" "PIX";
+BA_DEF_DEF_  "GenMsgCycleTime" 20;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "BusType" "CAN";
+BA_ "GenMsgCycleTime" BO_ 514 200;
+BA_ "GenMsgCycleTime" BO_ 513 200;
+BA_ "GenMsgCycleTime" BO_ 512 200;
+BA_ "GenMsgCycleTime" BO_ 1314 1000;
+BA_ "GenMsgCycleTime" BO_ 1313 50;
+BA_ "GenMsgCycleTime" BO_ 1307 1000;
+BA_ "GenMsgCycleTime" BO_ 1305 50;
+BA_ "GenMsgCycleTime" BO_ 1304 50;
+BA_ "GenMsgCycleTime" BO_ 1303 50;
+BA_ "GenMsgCycleTime" BO_ 1284 50;
+BA_ "GenMsgCycleTime" BO_ 1283 50;
+BA_ "GenMsgCycleTime" BO_ 259 50;
+VAL_ 263 MowingSpeedCtrl 3 "HIGH" 2 "MID" 1 "LOW" 0 "OFF" ;
+VAL_ 263 SweepModeCtrl 3 "HIGH" 2 "MID" 1 "LOW" 0 "OFF" ;
+VAL_ 263 FanSpeedMode 1 "Speed" 0 "Default" ;
+VAL_ 263 FanModeCtrl 3 "HIGH" 2 "MID" 1 "LOW" 0 "OFF" ;
+VAL_ 263 SweepPlateUpDown 2 "DOWN" 1 "UP" 0 "NO" ;
+VAL_ 263 MouthpieceUpDownCtrl 2 "DOWN" 1 "UP" 0 "NO" ;
+VAL_ 263 AutoGarbageDumpStartCtrl 3 "NO" 2 "STOP" 1 "START" 0 "NO" ;
+VAL_ 263 AutoCleaningStartCtrl 3 "NO" 2 "STOP" 1 "START" 0 "NO" ;
+VAL_ 1313 VcuSweepPlateUpDownStaFb 2 "DOWN" 1 "UP" 0 "NO" ;
+VAL_ 261 TurnLightCtrl 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlamp_ON" 1 "Left_Turnlamp_ON" 0 "Turnlamp_OFF" ;
+VAL_ 261 DriveModeCtrl 1 "Speed Drive" 0 "Throttle Paddle Drive" ;
+VAL_ 261 SteerModeCtrl 2 " Sync Direction Steer" 1 "Non Direction Steer" 0 "Standard Steer" ;
+VAL_ 1285 TurnLightActual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
+VAL_ 1285 CarWorkState 7 "crash" 6 "error" 5 "E-stop" 4 " work" 3 "3" 2 "2" 1 "1" 0 "init" ;
+VAL_ 1285 CarPowerState 2 "READY" 1 "ON" 0 "OFF" ;
+VAL_ 1285 VehicleModeState 3 "Standby Mode" 2 "Emergency Mode" 1 " Auto Mode" 0 "Manual Remote Mode" ;
+VAL_ 1285 DriveModeStatus 1 "Speed Drive Mode" 0 " Throttle Paddle Drive Mode" ;
+VAL_ 1285 SteerModeStatus 2 "Sync Direction Steer Mode" 1 "Non Direction Steer Mode" 0 "Standard Steer Mode" ;
+VAL_ 1284 ParkingActual 1 "Parking_trigger" 0 "Release" ;
+VAL_ 1283 GearActual 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
+VAL_ 1281 BrakeEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 1280 DirveEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 1282 SteerEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
+VAL_ 259 GearTarget 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
+VAL_ 512 BmsCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 ChassisEmergencySta 0 "TRUE"  1 "FALSE";
+VAL_ 512 LeadacidBatteryLow 0 "TRUE"  1 "FALSE";
+VAL_ 512 ControlerCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 ChassisCrashSta 0 "TRUE"  1 "FALSE";
+VAL_ 512 EpsRearCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EpsFrontCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EdsRrCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EdsRfCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EdsLrCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EdsLfCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 EbsCommunicationFault 0 "TRUE"  1 "FALSE";
+VAL_ 512 ChassisVcuOtherErr 0 "TRUE"  1 "FALSE";
+VAL_ 512 BmsFault1 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault2 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault3 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault4 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault5 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault6 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault7 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault8 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault9 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault10 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault11 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault12 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 512 BmsFault13 0 "NORMAL" 1 "LEVEL_1_ALARM" 2 "LEVEL_2_ALARM" 3 "LEVEL_3_ALARM";
+VAL_ 513 ChassisEbsErrorCode3 0 "CURRENT_SENSOR_MALFUNCTION" 1 "LOW_POWER_SUPPLY_VOLTAGE_FAULT" 2 "HIGH_POWER_SUPPLY_VOLTAGE_FAULT" 4 "POWER_SWITCH_FAULT" 8 "PRE_DRIVE_FAULT" 16 "EHB_MOTOR_POSITION_FAILURE" ;
+VAL_ 513 ChassisBackEpsErrorCode 1 "BATTERY_UNDERVOLTAGE" 2 "BATTERY_OVERVOLTAGE" 4 "OVERTEMPERATURE" 8 "OVERCURRENT" 16 "EEPROM_COMMUNICATION" 32 "CURRENT_TRACKING" 64 "CURRENT_SENSOR" 128 "OTHER_FAULTS";
+VAL_ 513 ChassisFrontEpsErrorCode 1 "BATTERY_UNDERVOLTAGE" 2 "BATTERY_OVERVOLTAGE" 4 "OVERTEMPERATURE" 8 "OVERCURRENT" 16 "EEPROM_COMMUNICATION" 32 "CURRENT_TRACKING" 64 "CURRENT_SENSOR" 128 "OTHER_FAULTS";
+VAL_ 513 ChassisEbsErrorCode2  1 "ABNORMAL_LOW_POWER_SUPPLY_VOLTAGE" 2 "ABNORMAL_HIGH_POWER_SUPPLY_VOLTAGE" 4 "SEVERE_ABNORMALITY_IN_EHB_HYDRAULIC_PRESSURE_TRACKING" 8 "SEVERE_OSCILLATION_IN_EHB_HYDRAULIC_PRESSURE" 16 "LOAD_MISMATCH_FAULT" 32 "CAN_COMMUNICATION_FAULT" 64 "NOT_USED" 128 "EHB_OVERCURRENT_FAULT" ;
+VAL_ 513 ChassisEbsErrorCode1 1 "ABNORMAL_BRAKE_COMMAND" 2 "SLIGHT_DEVIATION_IN_EHB_HYDRAULIC_PRESSURE_TRACKING" 4 "SLIGHT_OSCILLATION_IN_EHB_HYDRAULIC_PRESSURE" 8 "PARTIAL_TEMPERATURE_SENSOR_MALFUNCTION" 16 "NOT_USED" 32 "COMPLETE_FAILURE_OF_TEMPERATURE_SENSOR" 64 "HYDRAULIC_PRESSURE_SENSOR_MALFUNCTION" 128 "CONTROLLER_TEMPERATURE_TOO_HIGH";
+VAL_ 513 ChassisEbsErrorlv 0 "NO_FAULT" 1 "LEVEL_1_FAULT" 2 "LEVEL_2_FAULT" 3 "LEVEL_3_FAULT" 4 "LEVEL_4_FAULT";
+VAL_ 514 ChassisRrEdsErrorCode2 4 "MOSTFET_FAULT" 2 "PRE_CHARGE_ERROR" 1 "MCU_CHIP_ERROR";
+VAL_ 514 ChassisRfEdsErrorCode2 4 "MOSTFET_FAULT" 2 "PRE_CHARGE_ERROR" 1 "MCU_CHIP_ERROR";
+VAL_ 514 ChassisLrEdsErrorCode2 4 "MOSTFET_FAULT" 2 "PRE_CHARGE_ERROR" 1 "MCU_CHIP_ERROR";
+VAL_ 514 ChassisLfEdsErrorCode2 4 "MOSTFET_FAULT" 2 "PRE_CHARGE_ERROR" 1 "MCU_CHIP_ERROR";
+VAL_ 514 ChassisRrEdsErrorCode 1 "OVER_CURRENT" 2 "UNDER_VOLTAGE" 4 "HALL_SENSOR_ERROR" 8 "OVER_VOLTAGE" 16 "MOTOR_BLOCK" 32 "SPEED_FEEDBACK" 64 "MCU_EEPROM_WRITE_ERROR" 128 "OVERHEAT";
+VAL_ 514 ChassisRfEdsErrorCode 1 "OVER_CURRENT" 2 "UNDER_VOLTAGE" 4 "HALL_SENSOR_ERROR" 8 "OVER_VOLTAGE" 16 "MOTOR_BLOCK" 32 "SPEED_FEEDBACK" 64 "MCU_EEPROM_WRITE_ERROR" 128 "OVERHEAT";
+VAL_ 514 ChassisLrEdsErrorCode 1 "OVER_CURRENT" 2 "UNDER_VOLTAGE" 4 "HALL_SENSOR_ERROR" 8 "OVER_VOLTAGE" 16 "MOTOR_BLOCK" 32 "SPEED_FEEDBACK" 64 "MCU_EEPROM_WRITE_ERROR" 128 "OVERHEAT";
+VAL_ 514 ChassisLfEdsErrorCode 1 "OVER_CURRENT" 2 "UNDER_VOLTAGE" 4 "HALL_SENSOR_ERROR" 8 "OVER_VOLTAGE" 16 "MOTOR_BLOCK" 32 "SPEED_FEEDBACK" 64 "MCU_EEPROM_WRITE_ERROR" 128 "OVERHEAT";

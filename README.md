@@ -17,7 +17,7 @@ There are three main functions for Pix Chasssis Interface:
 - **Conversion of vehicle status in pix_hooke_driver_msgs to Autoware messages**
 
 ## Software Design
-![PixChassisInterfaceDesign](./imgs/pix_chassis_interface_design.jpg)
+![PixChassisInterfaceDesign](./resources/pix_chassis_interface_design.jpg)
 
 ## Control Command Node
 

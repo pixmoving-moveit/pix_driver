@@ -1,0 +1,10 @@
+dbc_file: sweeping-fix.dbc
+protocol_conf: sweeping.yml
+car_type: sweeping 
+sender_list: [AcuSweepCtrlCmd, VehicleModeCommand, ParkCommand, GearCommand, SteeringCommand, BrakeCommand, ThrottleCommand]
+sender: AUTO
+black_list: []
+
+output_dir: output
+config_dir: config/
+
