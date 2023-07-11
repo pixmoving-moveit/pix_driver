@@ -41,115 +41,115 @@ void Vcu2AcuChassisErrCode1::Parse() {
 }
 
 
-// config detail: {'bit': 7, 'is_signed_var': False, 'len': 1, 'name': 'bms_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::bmscommunicationfault() {
+// config detail: {'bit': 7, 'description': 'BMS通讯故', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'bms_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::bmscommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(7, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 10, 'is_signed_var': False, 'len': 1, 'name': 'chassis_emergency_sta', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::chassisemergencysta() {
+// config detail: {'bit': 10, 'description': '底盘急停', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'chassis_emergency_sta', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::chassisemergencysta() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(2, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 11, 'is_signed_var': False, 'len': 1, 'name': 'leadacid_battery_low', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::leadacidbatterylow() {
+// config detail: {'bit': 11, 'description': '铅酸电池电量低', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'leadacid_battery_low', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::leadacidbatterylow() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(3, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 8, 'is_signed_var': False, 'len': 1, 'name': 'controler_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::controlercommunicationfault() {
+// config detail: {'bit': 8, 'description': '控制器通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'controler_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::controlercommunicationfault() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 9, 'is_signed_var': False, 'len': 1, 'name': 'chassis_crash_sta', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::chassiscrashsta() {
+// config detail: {'bit': 9, 'description': '防撞条触发状态', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'chassis_crash_sta', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::chassiscrashsta() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(1, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 6, 'is_signed_var': False, 'len': 1, 'name': 'eps_rear_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::epsrearcommunicationfault() {
+// config detail: {'bit': 6, 'description': '后EPS通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eps_rear_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::epsrearcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(6, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 5, 'is_signed_var': False, 'len': 1, 'name': 'eps_front_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::epsfrontcommunicationfault() {
+// config detail: {'bit': 5, 'description': '前EPS通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eps_front_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::epsfrontcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(5, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 3, 'is_signed_var': False, 'len': 1, 'name': 'eds_rr_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::edsrrcommunicationfault() {
+// config detail: {'bit': 3, 'description': '右后电控通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eds_rr_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::edsrrcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(3, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 2, 'is_signed_var': False, 'len': 1, 'name': 'eds_rf_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::edsrfcommunicationfault() {
+// config detail: {'bit': 2, 'description': '右前电控通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eds_rf_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::edsrfcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(2, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 1, 'is_signed_var': False, 'len': 1, 'name': 'eds_lr_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::edslrcommunicationfault() {
+// config detail: {'bit': 1, 'description': '左后电控通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eds_lr_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::edslrcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(1, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 0, 'is_signed_var': False, 'len': 1, 'name': 'eds_lf_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::edslfcommunicationfault() {
+// config detail: {'bit': 0, 'description': '左前电控通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'eds_lf_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::edslfcommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 4, 'is_signed_var': False, 'len': 1, 'name': 'ebs_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool Vcu2AcuChassisErrCode1::ebscommunicationfault() {
+// config detail: {'bit': 4, 'description': 'EHB通讯故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 1, 'name': 'ebs_communication_fault', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int Vcu2AcuChassisErrCode1::ebscommunicationfault() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(4, 1);
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 16, 'is_signed_var': False, 'len': 8, 'name': 'chassis_vcu_other_err', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 16, 'description': 'VCU其他故障', 'enum': {0: 'TRUE', 1: 'FALSE'}, 'is_signed_var': False, 'len': 8, 'name': 'chassis_vcu_other_err', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::chassisvcuothererr() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 1);
@@ -159,38 +159,38 @@ int Vcu2AcuChassisErrCode1::chassisvcuothererr() {
   x <<= 7;
   x |= t;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 26, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 26, 'description': '单体过压故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault1() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(1, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 28, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 28, 'description': '单体低压故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault2() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(3, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 30, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault3', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 30, 'description': '单体压差过大故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault3', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault3() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(5, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 32, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault4', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 32, 'description': '放电高温故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault4', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault4() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(0, 1);
@@ -200,38 +200,38 @@ int Vcu2AcuChassisErrCode1::bmsfault4() {
   x <<= 1;
   x |= t;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 34, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault5', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 34, 'description': '放电低温故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault5', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault5() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(1, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 36, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault6', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 36, 'description': '充电高温故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault6', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault6() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(3, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 38, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault7', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 38, 'description': '充电低温故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault7', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault7() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(5, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 40, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault8', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 40, 'description': '单体温差过大故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault8', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault8() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(0, 1);
@@ -241,38 +241,38 @@ int Vcu2AcuChassisErrCode1::bmsfault8() {
   x <<= 1;
   x |= t;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 42, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault9', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 42, 'description': '总压过低故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault9', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault9() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(1, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 44, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault10', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 44, 'description': '充电过流故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault10', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault10() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(3, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 46, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault11', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 46, 'description': '放电过流故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault11', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault11() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(5, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 48, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault12', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 48, 'description': 'SOC过低故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault12', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault12() {
   Byte t0(*(bytes + 6));
   int32_t x = t0.get_byte(0, 1);
@@ -282,16 +282,16 @@ int Vcu2AcuChassisErrCode1::bmsfault12() {
   x <<= 1;
   x |= t;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 50, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault13', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 50, 'description': '总压过低故障', 'enum': {0: 'NORMAL', 1: 'LEVEL_1_ALARM', 2: 'LEVEL_2_ALARM', 3: 'LEVEL_3_ALARM'}, 'is_signed_var': False, 'len': 2, 'name': 'bms_fault13', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|17]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuChassisErrCode1::bmsfault13() {
   Byte t0(*(bytes + 6));
   int32_t x = t0.get_byte(1, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

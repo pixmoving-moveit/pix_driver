@@ -19,7 +19,7 @@ void ThrottleReport::Parse() {
 }
 
 
-// config detail: {'bit': 31, 'is_signed_var': True, 'len': 16, 'name': 'dirve_throttle_pedal_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|100]', 'physical_unit': '%', 'precision': 0.1, 'type': 'double'}
+// config detail: {'bit': 31, 'description': '行驶油门实际值', 'is_signed_var': True, 'len': 16, 'name': 'dirve_throttle_pedal_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|100]', 'physical_unit': '%', 'precision': 0.1, 'type': 'double'}
 double ThrottleReport::dirvethrottlepedalactual() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(0, 8);
@@ -36,7 +36,7 @@ double ThrottleReport::dirvethrottlepedalactual() {
   return ret;
 }
 
-// config detail: {'bit': 23, 'is_signed_var': False, 'len': 8, 'name': 'dirve_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 23, 'description': '行驶故障码2', 'is_signed_var': False, 'len': 8, 'name': 'dirve_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int ThrottleReport::dirveflt2() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 8);
@@ -45,7 +45,7 @@ int ThrottleReport::dirveflt2() {
   return ret;
 }
 
-// config detail: {'bit': 15, 'is_signed_var': False, 'len': 8, 'name': 'dirve_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '行驶故障码1', 'is_signed_var': False, 'len': 8, 'name': 'dirve_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int ThrottleReport::dirveflt1() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 8);
@@ -54,12 +54,12 @@ int ThrottleReport::dirveflt1() {
   return ret;
 }
 
-// config detail: {'bit': 1, 'is_signed_var': False, 'len': 2, 'name': 'dirve_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 1, 'description': '行驶使能状态', 'enum': {0: 'MANUAL', 1: 'AUTO', 2: 'TAKEOVER', 3: 'STANDBY'}, 'is_signed_var': False, 'len': 2, 'name': 'dirve_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int ThrottleReport::dirveenstate() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 2);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

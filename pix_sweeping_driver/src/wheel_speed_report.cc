@@ -19,7 +19,7 @@ void WheelSpeedReport::Parse() {
 }
 
 
-// config detail: {'bit': 55, 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_r_r', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
+// config detail: {'bit': 55, 'description': '右后轮速', 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_r_r', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
 double WheelSpeedReport::wheelspeedrr() {
   Byte t0(*(bytes + 6));
   int32_t x = t0.get_byte(0, 8);
@@ -36,7 +36,7 @@ double WheelSpeedReport::wheelspeedrr() {
   return ret;
 }
 
-// config detail: {'bit': 39, 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_r_l', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
+// config detail: {'bit': 39, 'description': '左后轮速', 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_r_l', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
 double WheelSpeedReport::wheelspeedrl() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(0, 8);
@@ -53,7 +53,7 @@ double WheelSpeedReport::wheelspeedrl() {
   return ret;
 }
 
-// config detail: {'bit': 23, 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_f_r', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
+// config detail: {'bit': 23, 'description': '右前轮速', 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_f_r', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
 double WheelSpeedReport::wheelspeedfr() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 8);
@@ -70,7 +70,7 @@ double WheelSpeedReport::wheelspeedfr() {
   return ret;
 }
 
-// config detail: {'bit': 7, 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_f_l', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
+// config detail: {'bit': 7, 'description': '左前轮速', 'is_signed_var': True, 'len': 16, 'name': 'wheel_speed_f_l', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65.535]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
 double WheelSpeedReport::wheelspeedfl() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 8);

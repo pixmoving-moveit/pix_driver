@@ -17,7 +17,7 @@ void ParkReport::Parse() {
 }
 
 
-// config detail: {'bit': 15, 'is_signed_var': True, 'len': 8, 'name': 'park_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '驻车故障', 'is_signed_var': True, 'len': 8, 'name': 'park_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int ParkReport::parkflt() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 8);
@@ -29,15 +29,15 @@ int ParkReport::parkflt() {
   return ret;
 }
 
-// config detail: {'bit': 0, 'is_signed_var': True, 'len': 1, 'name': 'parking_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-bool ParkReport::parkingactual() {
+// config detail: {'bit': 0, 'description': '实际驻车状态', 'enum': {0: 'RELEASE', 1: 'PARKINGTRIGGER'}, 'is_signed_var': True, 'len': 1, 'name': 'parking_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+int ParkReport::parkingactual() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 1);
 
   x <<= 31;
   x >>= 31;
 
-  bool ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

@@ -17,7 +17,7 @@ void GearReport::Parse() {
 }
 
 
-// config detail: {'bit': 15, 'is_signed_var': True, 'len': 8, 'name': 'gear_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '挡位故障', 'is_signed_var': True, 'len': 8, 'name': 'gear_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int GearReport::gearflt() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 8);
@@ -29,7 +29,7 @@ int GearReport::gearflt() {
   return ret;
 }
 
-// config detail: {'bit': 2, 'is_signed_var': True, 'len': 3, 'name': 'gear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 2, 'description': '实际挡位', 'enum': {0: 'INVALID', 1: 'PARK', 2: 'REVERSE', 3: 'NEUTRAL', 4: 'DRIVE'}, 'is_signed_var': True, 'len': 3, 'name': 'gear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int GearReport::gearactual() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 3);
@@ -37,7 +37,7 @@ int GearReport::gearactual() {
   x <<= 29;
   x >>= 29;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

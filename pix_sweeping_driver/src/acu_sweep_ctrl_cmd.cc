@@ -5,7 +5,7 @@ int32_t AcuSweepCtrlCmd::ID = 0x107;
 // public
 AcuSweepCtrlCmd::AcuSweepCtrlCmd() { Reset(); }
 
-void AcuSweepCtrlCmd::UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, bool fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl) {
+void AcuSweepCtrlCmd::UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, int fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl) {
   set_p_fan_speed_ctrl(fan_speed_ctrl);
   set_p_mowing_speed_ctrl(mowing_speed_ctrl);
   set_p_sweep_mode_ctrl(sweep_mode_ctrl);
@@ -34,7 +34,7 @@ uint8_t * AcuSweepCtrlCmd::get_data()
 
 
 
-// config detail: {'bit': 47, 'is_signed_var': True, 'len': 16, 'name': 'fan_speed_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65535]', 'physical_unit': 'rpm', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 47, 'description': '风机速度控制', 'is_signed_var': True, 'len': 16, 'name': 'fan_speed_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|65535]', 'physical_unit': 'rpm', 'precision': 1.0, 'type': 'int'}
 void AcuSweepCtrlCmd::set_p_fan_speed_ctrl(int fan_speed_ctrl) {
   // fan_speed_ctrl = ProtocolData::BoundedValue(0, 65535, fan_speed_ctrl);
   int x = fan_speed_ctrl;
@@ -53,9 +53,8 @@ void AcuSweepCtrlCmd::set_p_fan_speed_ctrl(int fan_speed_ctrl) {
   data[5] += to_set1.return_byte_t();
 }
 
-// config detail: {'bit': 25, 'is_signed_var': False, 'len': 2, 'name': 'mowing_speed_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 25, 'description': '割草转速挡位控制', 'enum': {0: 'OFF', 1: 'LOW', 2: 'MID', 3: 'HIGH'}, 'is_signed_var': False, 'len': 2, 'name': 'mowing_speed_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_mowing_speed_ctrl(int mowing_speed_ctrl) {
-  // mowing_speed_ctrl = ProtocolData::BoundedValue(0, 3, mowing_speed_ctrl);
   int x = mowing_speed_ctrl;
   uint8_t a = 0;
 
@@ -65,9 +64,8 @@ void AcuSweepCtrlCmd::set_p_mowing_speed_ctrl(int mowing_speed_ctrl) {
   
 }
 
-// config detail: {'bit': 21, 'is_signed_var': False, 'len': 2, 'name': 'sweep_mode_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 21, 'description': '扫盘转速挡位控制', 'enum': {0: 'OFF', 1: 'LOW', 2: 'MID', 3: 'HIGH'}, 'is_signed_var': False, 'len': 2, 'name': 'sweep_mode_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_sweep_mode_ctrl(int sweep_mode_ctrl) {
-  // sweep_mode_ctrl = ProtocolData::BoundedValue(0, 3, sweep_mode_ctrl);
   int x = sweep_mode_ctrl;
   uint8_t a = 0;
 
@@ -77,8 +75,8 @@ void AcuSweepCtrlCmd::set_p_sweep_mode_ctrl(int sweep_mode_ctrl) {
   
 }
 
-// config detail: {'bit': 19, 'is_signed_var': False, 'len': 1, 'name': 'fan_speed_mode', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
-void AcuSweepCtrlCmd::set_p_fan_speed_mode(bool fan_speed_mode) {
+// config detail: {'bit': 19, 'description': '风机速度模式', 'enum': {0: 'DEFAULT', 1: 'SPEED'}, 'is_signed_var': False, 'len': 1, 'name': 'fan_speed_mode', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
+void AcuSweepCtrlCmd::set_p_fan_speed_mode(int fan_speed_mode) {
   int x = fan_speed_mode;
   uint8_t a = 0;
 
@@ -88,9 +86,8 @@ void AcuSweepCtrlCmd::set_p_fan_speed_mode(bool fan_speed_mode) {
   
 }
 
-// config detail: {'bit': 17, 'is_signed_var': False, 'len': 2, 'name': 'fan_mode_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 17, 'description': '风机工作模式', 'enum': {0: 'OFF', 1: 'LOW', 2: 'MID', 3: 'HIGH'}, 'is_signed_var': False, 'len': 2, 'name': 'fan_mode_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_fan_mode_ctrl(int fan_mode_ctrl) {
-  // fan_mode_ctrl = ProtocolData::BoundedValue(0, 3, fan_mode_ctrl);
   int x = fan_mode_ctrl;
   uint8_t a = 0;
 
@@ -100,9 +97,8 @@ void AcuSweepCtrlCmd::set_p_fan_mode_ctrl(int fan_mode_ctrl) {
   
 }
 
-// config detail: {'bit': 15, 'is_signed_var': False, 'len': 2, 'name': 'sweep_plate_up_down', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '扫盘升降', 'enum': {0: 'NO', 1: 'UP', 2: 'DOWN'}, 'is_signed_var': False, 'len': 2, 'name': 'sweep_plate_up_down', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_sweep_plate_up_down(int sweep_plate_up_down) {
-  // sweep_plate_up_down = ProtocolData::BoundedValue(0, 3, sweep_plate_up_down);
   int x = sweep_plate_up_down;
   uint8_t a = 0;
 
@@ -112,9 +108,8 @@ void AcuSweepCtrlCmd::set_p_sweep_plate_up_down(int sweep_plate_up_down) {
   
 }
 
-// config detail: {'bit': 13, 'is_signed_var': False, 'len': 2, 'name': 'mouthpiece_up_down_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 13, 'description': '吸盘升降控制', 'enum': {0: 'NO', 1: 'UP', 2: 'DOWN'}, 'is_signed_var': False, 'len': 2, 'name': 'mouthpiece_up_down_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_mouthpiece_up_down_ctrl(int mouthpiece_up_down_ctrl) {
-  // mouthpiece_up_down_ctrl = ProtocolData::BoundedValue(0, 3, mouthpiece_up_down_ctrl);
   int x = mouthpiece_up_down_ctrl;
   uint8_t a = 0;
 
@@ -124,7 +119,7 @@ void AcuSweepCtrlCmd::set_p_mouthpiece_up_down_ctrl(int mouthpiece_up_down_ctrl)
   
 }
 
-// config detail: {'bit': 9, 'is_signed_var': False, 'len': 1, 'name': 'shaker_duster_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 9, 'description': '振尘控制', 'is_signed_var': False, 'len': 1, 'name': 'shaker_duster_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 void AcuSweepCtrlCmd::set_p_shaker_duster_ctrl(bool shaker_duster_ctrl) {
   int x = shaker_duster_ctrl;
   uint8_t a = 0;
@@ -135,7 +130,7 @@ void AcuSweepCtrlCmd::set_p_shaker_duster_ctrl(bool shaker_duster_ctrl) {
   
 }
 
-// config detail: {'bit': 8, 'is_signed_var': False, 'len': 1, 'name': 'dedusting_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 8, 'description': '喷雾降尘控制', 'is_signed_var': False, 'len': 1, 'name': 'dedusting_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 void AcuSweepCtrlCmd::set_p_dedusting_ctrl(bool dedusting_ctrl) {
   int x = dedusting_ctrl;
   uint8_t a = 0;
@@ -146,9 +141,8 @@ void AcuSweepCtrlCmd::set_p_dedusting_ctrl(bool dedusting_ctrl) {
   
 }
 
-// config detail: {'bit': 3, 'is_signed_var': False, 'len': 2, 'name': 'auto_garbage_dump_start_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 3, 'description': '一键倾倒控制', 'enum': {0: 'NO', 1: 'START', 2: 'STOP'}, 'is_signed_var': False, 'len': 2, 'name': 'auto_garbage_dump_start_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_auto_garbage_dump_start_ctrl(int auto_garbage_dump_start_ctrl) {
-  // auto_garbage_dump_start_ctrl = ProtocolData::BoundedValue(0, 3, auto_garbage_dump_start_ctrl);
   int x = auto_garbage_dump_start_ctrl;
   uint8_t a = 0;
 
@@ -158,9 +152,8 @@ void AcuSweepCtrlCmd::set_p_auto_garbage_dump_start_ctrl(int auto_garbage_dump_s
   
 }
 
-// config detail: {'bit': 1, 'is_signed_var': False, 'len': 2, 'name': 'auto_cleaning_start_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 1, 'description': '一键清扫控制', 'enum': {0: 'NO', 1: 'START', 2: 'STOP'}, 'is_signed_var': False, 'len': 2, 'name': 'auto_cleaning_start_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void AcuSweepCtrlCmd::set_p_auto_cleaning_start_ctrl(int auto_cleaning_start_ctrl) {
-  // auto_cleaning_start_ctrl = ProtocolData::BoundedValue(0, 3, auto_cleaning_start_ctrl);
   int x = auto_cleaning_start_ctrl;
   uint8_t a = 0;
 

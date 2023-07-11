@@ -30,7 +30,7 @@ void VcuReport::Parse() {
 }
 
 
-// config detail: {'bit': 57, 'is_signed_var': True, 'len': 2, 'name': 'turn_light_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 57, 'description': '转向灯实际状态', 'enum': {0: 'TURNLAMPSTSOFF', 1: 'LEFTTURNLAMPSTSON', 2: 'RIGHTTURNLAMPSTSON', 3: 'HAZARDWARNINGLAMPSTSON'}, 'is_signed_var': True, 'len': 2, 'name': 'turn_light_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::turnlightactual() {
   Byte t0(*(bytes + 7));
   int32_t x = t0.get_byte(0, 2);
@@ -38,11 +38,11 @@ int VcuReport::turnlightactual() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 58, 'is_signed_var': True, 'len': 1, 'name': 'aeb_trigger_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 58, 'description': 'AEB触发状态', 'is_signed_var': True, 'len': 1, 'name': 'aeb_trigger_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::aebtriggerstate() {
   Byte t0(*(bytes + 7));
   int32_t x = t0.get_byte(2, 1);
@@ -54,7 +54,7 @@ bool VcuReport::aebtriggerstate() {
   return ret;
 }
 
-// config detail: {'bit': 59, 'is_signed_var': True, 'len': 1, 'name': 'headlight_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 59, 'description': '大灯实际状态', 'is_signed_var': True, 'len': 1, 'name': 'headlight_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::headlightactual() {
   Byte t0(*(bytes + 7));
   int32_t x = t0.get_byte(3, 1);
@@ -66,7 +66,7 @@ bool VcuReport::headlightactual() {
   return ret;
 }
 
-// config detail: {'bit': 53, 'is_signed_var': True, 'len': 4, 'name': 'car_work_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 53, 'description': '车辆工作状态', 'enum': {0: 'INIT', 1: 'WORK1', 2: 'WORK2', 3: 'WORK3', 4: 'WORK', 5: 'ESTOP', 6: 'ERROR', 7: 'CRASH'}, 'is_signed_var': True, 'len': 4, 'name': 'car_work_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::carworkstate() {
   Byte t0(*(bytes + 6));
   int32_t x = t0.get_byte(2, 4);
@@ -74,11 +74,11 @@ int VcuReport::carworkstate() {
   x <<= 28;
   x >>= 28;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 49, 'is_signed_var': True, 'len': 2, 'name': 'car_power_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 49, 'description': '车辆上电状态', 'enum': {0: 'OFF', 1: 'ON', 2: 'READY'}, 'is_signed_var': True, 'len': 2, 'name': 'car_power_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::carpowerstate() {
   Byte t0(*(bytes + 6));
   int32_t x = t0.get_byte(0, 2);
@@ -86,11 +86,11 @@ int VcuReport::carpowerstate() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 47, 'is_signed_var': True, 'len': 8, 'name': 'vehicle_errcode', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 47, 'description': '车辆故障码', 'is_signed_var': True, 'len': 8, 'name': 'vehicle_errcode', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int VcuReport::vehicleerrcode() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(0, 8);
@@ -102,7 +102,7 @@ int VcuReport::vehicleerrcode() {
   return ret;
 }
 
-// config detail: {'bit': 32, 'is_signed_var': True, 'len': 1, 'name': 'aeb_brake_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 32, 'description': 'AEB制动状态', 'is_signed_var': True, 'len': 1, 'name': 'aeb_brake_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::aebbrakestate() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(0, 1);
@@ -114,7 +114,7 @@ bool VcuReport::aebbrakestate() {
   return ret;
 }
 
-// config detail: {'bit': 33, 'is_signed_var': True, 'len': 1, 'name': 'front_crash_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 33, 'description': '前碰撞状态', 'is_signed_var': True, 'len': 1, 'name': 'front_crash_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::frontcrashstate() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(1, 1);
@@ -126,7 +126,7 @@ bool VcuReport::frontcrashstate() {
   return ret;
 }
 
-// config detail: {'bit': 34, 'is_signed_var': True, 'len': 1, 'name': 'back_crash_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 34, 'description': '后碰撞状态', 'is_signed_var': True, 'len': 1, 'name': 'back_crash_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::backcrashstate() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(2, 1);
@@ -138,7 +138,7 @@ bool VcuReport::backcrashstate() {
   return ret;
 }
 
-// config detail: {'bit': 36, 'is_signed_var': True, 'len': 2, 'name': 'vehicle_mode_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 36, 'description': '车辆模式状态', 'enum': {0: 'MANUAL_REMOTE_MODE', 1: 'AUTO_MODE', 2: 'EMERGENCY_MODE', 3: 'STANDBY_MODE'}, 'is_signed_var': True, 'len': 2, 'name': 'vehicle_mode_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::vehiclemodestate() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(3, 2);
@@ -146,11 +146,11 @@ int VcuReport::vehiclemodestate() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 39, 'is_signed_var': True, 'len': 3, 'name': 'drive_mode_status', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 39, 'description': '行驶模式状态', 'enum': {0: 'THROTTLE_PADDLE_DRIVE_MODE', 1: 'SPEED_DRIVE_MODE'}, 'is_signed_var': True, 'len': 3, 'name': 'drive_mode_status', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::drivemodestatus() {
   Byte t0(*(bytes + 4));
   int32_t x = t0.get_byte(5, 3);
@@ -158,11 +158,11 @@ int VcuReport::drivemodestatus() {
   x <<= 29;
   x >>= 29;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 23, 'is_signed_var': True, 'len': 16, 'name': 'vehicle_speed', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-32.768|32.767]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
+// config detail: {'bit': 23, 'description': '车辆速度', 'is_signed_var': True, 'len': 16, 'name': 'vehicle_speed', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-32.768|32.767]', 'physical_unit': 'm/s', 'precision': 0.001, 'type': 'double'}
 double VcuReport::vehiclespeed() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 8);
@@ -179,16 +179,16 @@ double VcuReport::vehiclespeed() {
   return ret;
 }
 
-// config detail: {'bit': 10, 'is_signed_var': False, 'len': 3, 'name': 'steer_mode_status', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 10, 'description': '转向模式', 'enum': {0: 'STANDARD_STEER_MODE', 1: 'NON_DIRECTION_STEER_MODE', 2: 'SYNC_DIRECTION_STEER_MODE'}, 'is_signed_var': False, 'len': 3, 'name': 'steer_mode_status', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int VcuReport::steermodestatus() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 3);
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 11, 'is_signed_var': False, 'len': 1, 'name': 'brake_light_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 11, 'description': '制动灯实际状态', 'is_signed_var': False, 'len': 1, 'name': 'brake_light_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool VcuReport::brakelightactual() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(3, 1);
@@ -197,7 +197,7 @@ bool VcuReport::brakelightactual() {
   return ret;
 }
 
-// config detail: {'bit': 7, 'is_signed_var': True, 'len': 12, 'name': 'vehicle_acc', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-10|10]', 'physical_unit': 'm/s^2', 'precision': 0.01, 'type': 'double'}
+// config detail: {'bit': 7, 'description': '车辆加速度', 'is_signed_var': True, 'len': 12, 'name': 'vehicle_acc', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-10|10]', 'physical_unit': 'm/s^2', 'precision': 0.01, 'type': 'double'}
 double VcuReport::vehicleacc() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 8);

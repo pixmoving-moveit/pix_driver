@@ -1,7 +1,6 @@
+
+# variables 
 std_msgs/Header header 
-#  [] [0|255]
-int32 check_sum_101 
-#  [%] [0|100]
-float32 brake_pedal_target 
-#  [] [0|1]
-bool brake_en_ctrl 
+int32 check_sum101 	# 校验和 [] [0|255]
+float32 brake_pedal_target 	# 制动油门 [%] [0|100]
+bool brake_en_ctrl 	# 制动使能 [] [0|1]

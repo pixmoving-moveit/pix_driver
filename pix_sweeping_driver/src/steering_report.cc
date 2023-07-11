@@ -21,7 +21,7 @@ void SteeringReport::Parse() {
 }
 
 
-// config detail: {'bit': 63, 'is_signed_var': True, 'len': 8, 'name': 'steer_angle_speed_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|250]', 'physical_unit': 'deg/s', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 63, 'description': '转向实际角速度', 'is_signed_var': True, 'len': 8, 'name': 'steer_angle_speed_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|250]', 'physical_unit': 'deg/s', 'precision': 1.0, 'type': 'int'}
 int SteeringReport::steeranglespeedactual() {
   Byte t0(*(bytes + 7));
   int32_t x = t0.get_byte(0, 8);
@@ -33,7 +33,7 @@ int SteeringReport::steeranglespeedactual() {
   return ret;
 }
 
-// config detail: {'bit': 47, 'is_signed_var': True, 'len': 16, 'name': 'steer_angle_rear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-500|500]', 'physical_unit': 'deg', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 47, 'description': '后转向实际角度', 'is_signed_var': True, 'len': 16, 'name': 'steer_angle_rear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-500|500]', 'physical_unit': 'deg', 'precision': 1.0, 'type': 'int'}
 int SteeringReport::steeranglerearactual() {
   Byte t0(*(bytes + 5));
   int32_t x = t0.get_byte(0, 8);
@@ -50,7 +50,7 @@ int SteeringReport::steeranglerearactual() {
   return ret;
 }
 
-// config detail: {'bit': 31, 'is_signed_var': True, 'len': 16, 'name': 'steer_angle_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-500|500]', 'physical_unit': 'deg', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 31, 'description': '转向实际角度', 'is_signed_var': True, 'len': 16, 'name': 'steer_angle_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[-500|500]', 'physical_unit': 'deg', 'precision': 1.0, 'type': 'int'}
 int SteeringReport::steerangleactual() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(0, 8);
@@ -67,7 +67,7 @@ int SteeringReport::steerangleactual() {
   return ret;
 }
 
-// config detail: {'bit': 23, 'is_signed_var': True, 'len': 8, 'name': 'steer_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 23, 'description': '转向故障码2', 'is_signed_var': True, 'len': 8, 'name': 'steer_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int SteeringReport::steerflt2() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 8);
@@ -79,7 +79,7 @@ int SteeringReport::steerflt2() {
   return ret;
 }
 
-// config detail: {'bit': 15, 'is_signed_var': True, 'len': 8, 'name': 'steer_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '转向故障码1', 'is_signed_var': True, 'len': 8, 'name': 'steer_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int SteeringReport::steerflt1() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 8);
@@ -91,7 +91,7 @@ int SteeringReport::steerflt1() {
   return ret;
 }
 
-// config detail: {'bit': 1, 'is_signed_var': True, 'len': 2, 'name': 'steer_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 1, 'description': '转向使能状态', 'enum': {0: 'MANUAL', 1: 'AUTO', 2: 'TAKEOVER', 3: 'STANDBY'}, 'is_signed_var': True, 'len': 2, 'name': 'steer_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int SteeringReport::steerenstate() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 2);
@@ -99,7 +99,7 @@ int SteeringReport::steerenstate() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

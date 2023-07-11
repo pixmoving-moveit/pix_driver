@@ -5,8 +5,8 @@ int32_t GearCommand::ID = 0x103;
 // public
 GearCommand::GearCommand() { Reset(); }
 
-void GearCommand::UpdateData(int check_sum_103, int gear_target, bool gear_en_ctrl) {
-  set_p_check_sum_103(check_sum_103);
+void GearCommand::UpdateData(int check_sum103, int gear_target, bool gear_en_ctrl) {
+  set_p_check_sum103(check_sum103);
   set_p_gear_target(gear_target);
   set_p_gear_en_ctrl(gear_en_ctrl);
 }
@@ -26,10 +26,10 @@ uint8_t * GearCommand::get_data()
 
 
 
-// config detail: {'bit': 63, 'is_signed_var': False, 'len': 8, 'name': 'check_sum_103', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
-void GearCommand::set_p_check_sum_103(int check_sum_103) {
-  // check_sum_103 = ProtocolData::BoundedValue(0, 255, check_sum_103);
-  int x = check_sum_103;
+// config detail: {'bit': 63, 'description': '校验和', 'is_signed_var': False, 'len': 8, 'name': 'check_sum103', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+void GearCommand::set_p_check_sum103(int check_sum103) {
+  // check_sum103 = ProtocolData::BoundedValue(0, 255, check_sum103);
+  int x = check_sum103;
   uint8_t a = 0;
 
   Byte to_set(a);
@@ -38,9 +38,8 @@ void GearCommand::set_p_check_sum_103(int check_sum_103) {
   
 }
 
-// config detail: {'bit': 10, 'is_signed_var': False, 'len': 3, 'name': 'gear_target', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 10, 'description': '目标挡位', 'enum': {0: 'INVALID', 1: 'PARK', 2: 'REVERSE', 3: 'NEUTRAL', 4: 'DRIVE'}, 'is_signed_var': False, 'len': 3, 'name': 'gear_target', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 void GearCommand::set_p_gear_target(int gear_target) {
-  // gear_target = ProtocolData::BoundedValue(0, 7, gear_target);
   int x = gear_target;
   uint8_t a = 0;
 
@@ -50,7 +49,7 @@ void GearCommand::set_p_gear_target(int gear_target) {
   
 }
 
-// config detail: {'bit': 0, 'is_signed_var': False, 'len': 1, 'name': 'gear_en_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 0, 'description': '挡位使能', 'is_signed_var': False, 'len': 1, 'name': 'gear_en_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 void GearCommand::set_p_gear_en_ctrl(bool gear_en_ctrl) {
   int x = gear_en_ctrl;
   uint8_t a = 0;

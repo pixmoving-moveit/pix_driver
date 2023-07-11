@@ -17,10 +17,10 @@ public:
 private:
     uint8_t bytes[8];
     
-  // config detail: {'bit': 7, 'is_signed_var': True, 'len': 8, 'name': 'battery_voltage', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|25.4]', 'physical_unit': 'V', 'precision': 0.1, 'type': 'double'}
+  // config detail: {'bit': 7, 'description': '12V 系统电压', 'is_signed_var': True, 'len': 8, 'name': 'battery_voltage', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|25.4]', 'physical_unit': 'V', 'precision': 0.1, 'type': 'double'}
   double batteryvoltage();
 
-  // config detail: {'bit': 15, 'is_signed_var': True, 'len': 24, 'name': 'work_time', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|838860.7]', 'physical_unit': '', 'precision': 0.1, 'type': 'double'}
+  // config detail: {'bit': 15, 'description': '工作时长', 'is_signed_var': True, 'len': 24, 'name': 'work_time', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|838860.7]', 'physical_unit': '', 'precision': 0.1, 'type': 'double'}
   double worktime();
 };
 

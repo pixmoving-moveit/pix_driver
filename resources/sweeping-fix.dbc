@@ -162,17 +162,17 @@ BO_ 1303 Vcu2AcuSweepStaFb: 8 VCU
  SG_ EndOfGarbageDumping : 48|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ ScuFanSpeedFb : 16|16@1- (1,0) [0|65535] "rpm" Vector__XXX
  SG_ ScuLiquidLeve : 8|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ SCU_Heartbeat : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuHeartbeat : 7|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ ScanControllerCommunicationFault : 6|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ FanControllerCommunicationFault : 5|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ SCU_FilterClogging : 4|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ SCU_SweepLifeEnd : 3|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ SCU_DustbinFull : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuFilterClogging : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuSweepLifeEnd : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ScuDustbinFull : 2|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ ScuLiquidLeveHigh : 1|1@1+ (1,0) [0|1] ""  AUTO
  SG_ ScuLiquidLevelLow : 0|1@1+ (1,0) [0|1] "" Vector__XXX
 
 BO_ 261 VehicleModeCommand: 8 AUTO
- SG_ CheckSum__105 : 63|8@0- (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum_105 : 63|8@0- (1,0) [0|255] "" Vector__XXX
  SG_ HeadlightCtrl : 18|1@0- (1,0) [0|1] "" Vector__XXX
  SG_ TurnLightCtrl : 17|2@0- (1,0) [0|3] "" Vector__XXX
  SG_ DriveModeCtrl : 10|3@0- (1,0) [0|7] "" Vector__XXX
@@ -186,7 +186,7 @@ BO_ 1298 BmsReport: 8 VCU
  SG_ BatteryVoltage : 7|16@0- (0.01,0) [0|300] "V"  AUTO
 
 BO_ 260 ParkCommand: 8 AUTO
- SG_ CheckSum_104 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum104 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
  SG_ ParkTarget : 8|1@0+ (1,0) [0|1] "" Vector__XXX
  SG_ ParkEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
 
@@ -242,23 +242,23 @@ BO_ 1282 SteeringReport: 8 VCU
  SG_ SteerEnState : 1|2@0- (1,0) [0|3] ""  AUTO
 
 BO_ 259 GearCommand: 8 AUTO
- SG_ CheckSum_103 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum103 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
  SG_ GearTarget : 10|3@0+ (1,0) [0|7] ""  VCU
  SG_ GearEnCtrl : 0|1@0+ (1,0) [0|1] "" Vector__XXX
 
 BO_ 258 SteeringCommand: 8 AUTO
- SG_ CheckSum_102 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum102 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
  SG_ SteerAngleTarget : 23|16@0- (1,0) [-500|500] "deg" Vector__XXX
  SG_ SteerAngleSpeed : 15|8@0- (1,0) [0|250] "deg/s" Vector__XXX
  SG_ SteerEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
 
 BO_ 257 BrakeCommand: 8 AUTO
- SG_ CheckSum_101 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum101 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
  SG_ BrakePedalTarget : 23|16@0- (0.1,0) [0|100] "%" Vector__XXX
  SG_ BrakeEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
 
 BO_ 256 ThrottleCommand: 8 AUTO
- SG_ CheckSum_100 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CheckSum100 : 63|8@0+ (1,0) [0|255] "" Vector__XXX
  SG_ DirveSpeedTarget : 39|12@0- (0.01,0) [0|40.95] "m/s" Vector__XXX
  SG_ DirveThrottlePedalTarget : 23|16@0- (0.1,0) [0|100] "%" Vector__XXX
  SG_ DirveEnCtrl : 0|1@0+ (1,0) [0|1] ""  VCU
@@ -313,16 +313,16 @@ CM_ SG_ 1303 EndOfGarbageDumpingDes "一键垃圾倾倒下降结束";
 CM_ SG_ 1303 EndOfGarbageDumping "垃圾倾倒倾翻结束";
 CM_ SG_ 1303 ScuFanSpeedFb "风机电机实际转速";
 CM_ SG_ 1303 ScuLiquidLeve "清水箱液位值";
-CM_ SG_ 1303 SCU_Heartbeat "上装控制器心跳";
+CM_ SG_ 1303 ScuHeartbeat "上装控制器心跳";
 CM_ SG_ 1303 ScanControllerCommunicationFault "扫盘控制器通信故障报警";
 CM_ SG_ 1303 FanControllerCommunicationFault "风机控制器通信故障报警";
-CM_ SG_ 1303 SCU_FilterClogging "滤芯堵赛报警";
-CM_ SG_ 1303 SCU_SweepLifeEnd "扫盘磨损结束报警";
-CM_ SG_ 1303 SCU_DustbinFull "垃圾箱满溢报警";
+CM_ SG_ 1303 ScuFilterClogging "滤芯堵赛报警";
+CM_ SG_ 1303 ScuSweepLifeEnd "扫盘磨损结束报警";
+CM_ SG_ 1303 ScuDustbinFull "垃圾箱满溢报警";
 CM_ SG_ 1303 ScuLiquidLeveHigh "清水箱高液位报警";
 CM_ SG_ 1303 ScuLiquidLevelLow "清水箱低液位报警";
 CM_ BO_ 261 "车辆模式指令";
-CM_ SG_ 261 CheckSum__105 "校验和";
+CM_ SG_ 261 CheckSum_105 "校验和";
 CM_ SG_ 261 HeadlightCtrl "大灯控制";
 CM_ SG_ 261 TurnLightCtrl "转向灯控制";
 CM_ SG_ 261 DriveModeCtrl "驾驶模式控制";
@@ -334,7 +334,7 @@ CM_ SG_ 1298 BatterySoc "电池SOC";
 CM_ SG_ 1298 BatteryCurrent "电池电流";
 CM_ SG_ 1298 BatteryVoltage "电池电压";
 CM_ BO_ 260 "驻车指令";
-CM_ SG_ 260 CheckSum_104 "校验和";
+CM_ SG_ 260 CheckSum104 "校验和";
 CM_ SG_ 260 ParkTarget "驻车目标";
 CM_ SG_ 260 ParkEnCtrl "驻车使能控制";
 CM_ BO_ 1286 "轮速报告";
@@ -382,20 +382,20 @@ CM_ SG_ 1282 SteerFlt2 "转向故障码2";
 CM_ SG_ 1282 SteerFlt1 "转向故障码1";
 CM_ SG_ 1282 SteerEnState "转向使能状态";
 CM_ BO_ 259 "挡位指令";
-CM_ SG_ 259 CheckSum_103 "校验和";
+CM_ SG_ 259 CheckSum103 "校验和";
 CM_ SG_ 259 GearTarget "目标挡位";
 CM_ SG_ 259 GearEnCtrl "挡位使能";
 CM_ BO_ 258 "转向指令";
-CM_ SG_ 258 CheckSum_102 "校验和";
+CM_ SG_ 258 CheckSum102 "校验和";
 CM_ SG_ 258 SteerAngleTarget "转向角度";
 CM_ SG_ 258 SteerAngleSpeed "转向角速度";
 CM_ SG_ 258 SteerEnCtrl "转向使能";
 CM_ BO_ 257 "制动指令";
-CM_ SG_ 257 CheckSum_101 "校验和";
+CM_ SG_ 257 CheckSum101 "校验和";
 CM_ SG_ 257 BrakePedalTarget "制动油门";
 CM_ SG_ 257 BrakeEnCtrl "制动使能";
 CM_ BO_ 256 "油门指令";
-CM_ SG_ 256 CheckSum_100 "校验和";
+CM_ SG_ 256 CheckSum100 "校验和";
 CM_ SG_ 256 DirveSpeedTarget "目标速度";
 CM_ SG_ 256 DirveThrottlePedalTarget "目标油门";
 CM_ SG_ 256 DirveEnCtrl "驾驶使能";
@@ -467,19 +467,19 @@ VAL_ 263 FanSpeedMode 1 "Speed" 0 "Default" ;
 VAL_ 263 FanModeCtrl 3 "HIGH" 2 "MID" 1 "LOW" 0 "OFF" ;
 VAL_ 263 SweepPlateUpDown 2 "DOWN" 1 "UP" 0 "NO" ;
 VAL_ 263 MouthpieceUpDownCtrl 2 "DOWN" 1 "UP" 0 "NO" ;
-VAL_ 263 AutoGarbageDumpStartCtrl 3 "NO" 2 "STOP" 1 "START" 0 "NO" ;
-VAL_ 263 AutoCleaningStartCtrl 3 "NO" 2 "STOP" 1 "START" 0 "NO" ;
+VAL_ 263 AutoGarbageDumpStartCtrl 2 "STOP" 1 "START" 0 "NO" ;
+VAL_ 263 AutoCleaningStartCtrl 2 "STOP" 1 "START" 0 "NO" ;
 VAL_ 1313 VcuSweepPlateUpDownStaFb 2 "DOWN" 1 "UP" 0 "NO" ;
-VAL_ 261 TurnLightCtrl 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlamp_ON" 1 "Left_Turnlamp_ON" 0 "Turnlamp_OFF" ;
+VAL_ 261 TurnLightCtrl 3 "HazardWarningLampstsON" 2 "RightTurnlampON" 1 "LeftTurnlampON" 0 "TurnlampOFF" ;
 VAL_ 261 DriveModeCtrl 1 "Speed Drive" 0 "Throttle Paddle Drive" ;
 VAL_ 261 SteerModeCtrl 2 " Sync Direction Steer" 1 "Non Direction Steer" 0 "Standard Steer" ;
-VAL_ 1285 TurnLightActual 3 "Hazard_Warning_Lampsts_ON" 2 "Right_Turnlampsts_ON" 1 "Left_Turnlampsts_ON" 0 "Turnlampsts_OFF" ;
-VAL_ 1285 CarWorkState 7 "crash" 6 "error" 5 "E-stop" 4 " work" 3 "3" 2 "2" 1 "1" 0 "init" ;
+VAL_ 1285 TurnLightActual 3 "HazardWarningLampstsON" 2 "RightTurnlampstsON" 1 "LeftTurnlampstsON" 0 "TurnlampstsOFF" ;
+VAL_ 1285 CarWorkState 7 "crash" 6 "error" 5 "Estop" 4 " work" 3 "work3" 2 "work2" 1 "work1" 0 "init" ;
 VAL_ 1285 CarPowerState 2 "READY" 1 "ON" 0 "OFF" ;
 VAL_ 1285 VehicleModeState 3 "Standby Mode" 2 "Emergency Mode" 1 " Auto Mode" 0 "Manual Remote Mode" ;
 VAL_ 1285 DriveModeStatus 1 "Speed Drive Mode" 0 " Throttle Paddle Drive Mode" ;
 VAL_ 1285 SteerModeStatus 2 "Sync Direction Steer Mode" 1 "Non Direction Steer Mode" 0 "Standard Steer Mode" ;
-VAL_ 1284 ParkingActual 1 "Parking_trigger" 0 "Release" ;
+VAL_ 1284 ParkingActual 1 "ParkingTrigger" 0 "Release" ;
 VAL_ 1283 GearActual 4 "DRIVE" 3 "NEUTRAL" 2 "REVERSE" 1 "PARK" 0 "INVALID" ;
 VAL_ 1281 BrakeEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;
 VAL_ 1280 DirveEnState 3 "Standby" 2 "Takeover" 1 "Auto" 0 "Manual" ;

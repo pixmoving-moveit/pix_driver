@@ -83,7 +83,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         throttle_command_received_time_ = this->now();
         throttle_command_ptr_ = msg;
         throttle_command_entity_.Reset();
-        throttle_command_entity_.UpdateData(msg->check_sum_100, msg->dirve_speed_target, msg->dirve_throttle_pedal_target, msg->dirve_en_ctrl);
+        throttle_command_entity_.UpdateData(msg->check_sum100, msg->dirve_speed_target, msg->dirve_throttle_pedal_target, msg->dirve_en_ctrl);
         can_msgs::msg::Frame throttle_command_can_msg;
         throttle_command_can_msg.header.stamp = msg->header.stamp;
         throttle_command_can_msg.dlc = 8;
@@ -106,7 +106,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         brake_command_received_time_ = this->now();
         brake_command_ptr_ = msg;
         brake_command_entity_.Reset();
-        brake_command_entity_.UpdateData(msg->check_sum_101, msg->brake_pedal_target, msg->brake_en_ctrl);
+        brake_command_entity_.UpdateData(msg->check_sum101, msg->brake_pedal_target, msg->brake_en_ctrl);
         can_msgs::msg::Frame brake_command_can_msg;
         brake_command_can_msg.header.stamp = msg->header.stamp;
         brake_command_can_msg.dlc = 8;
@@ -129,7 +129,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         steering_command_received_time_ = this->now();
         steering_command_ptr_ = msg;
         steering_command_entity_.Reset();
-        steering_command_entity_.UpdateData(msg->check_sum_102, msg->steer_angle_target, msg->steer_angle_speed, msg->steer_en_ctrl);
+        steering_command_entity_.UpdateData(msg->check_sum102, msg->steer_angle_target, msg->steer_angle_speed, msg->steer_en_ctrl);
         can_msgs::msg::Frame steering_command_can_msg;
         steering_command_can_msg.header.stamp = msg->header.stamp;
         steering_command_can_msg.dlc = 8;
@@ -152,7 +152,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         gear_command_received_time_ = this->now();
         gear_command_ptr_ = msg;
         gear_command_entity_.Reset();
-        gear_command_entity_.UpdateData(msg->check_sum_103, msg->gear_target, msg->gear_en_ctrl);
+        gear_command_entity_.UpdateData(msg->check_sum103, msg->gear_target, msg->gear_en_ctrl);
         can_msgs::msg::Frame gear_command_can_msg;
         gear_command_can_msg.header.stamp = msg->header.stamp;
         gear_command_can_msg.dlc = 8;
@@ -175,7 +175,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         park_command_received_time_ = this->now();
         park_command_ptr_ = msg;
         park_command_entity_.Reset();
-        park_command_entity_.UpdateData(msg->check_sum_104, msg->park_target, msg->park_en_ctrl);
+        park_command_entity_.UpdateData(msg->check_sum104, msg->park_target, msg->park_en_ctrl);
         can_msgs::msg::Frame park_command_can_msg;
         park_command_can_msg.header.stamp = msg->header.stamp;
         park_command_can_msg.dlc = 8;
@@ -198,7 +198,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         vehicle_mode_command_received_time_ = this->now();
         vehicle_mode_command_ptr_ = msg;
         vehicle_mode_command_entity_.Reset();
-        vehicle_mode_command_entity_.UpdateData(msg->check_sum__105, msg->headlight_ctrl, msg->turn_light_ctrl, msg->drive_mode_ctrl, msg->steer_mode_ctrl);
+        vehicle_mode_command_entity_.UpdateData(msg->check_sum_105, msg->headlight_ctrl, msg->turn_light_ctrl, msg->drive_mode_ctrl, msg->steer_mode_ctrl);
         can_msgs::msg::Frame vehicle_mode_command_can_msg;
         vehicle_mode_command_can_msg.header.stamp = msg->header.stamp;
         vehicle_mode_command_can_msg.dlc = 8;

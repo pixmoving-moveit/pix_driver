@@ -17,10 +17,10 @@ public:
 private:
     uint8_t bytes[8];
     
-  // config detail: {'bit': 15, 'is_signed_var': True, 'len': 8, 'name': 'gear_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+  // config detail: {'bit': 15, 'description': '挡位故障', 'is_signed_var': True, 'len': 8, 'name': 'gear_flt', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|0]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
   int gearflt();
 
-  // config detail: {'bit': 2, 'is_signed_var': True, 'len': 3, 'name': 'gear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+  // config detail: {'bit': 2, 'description': '实际挡位', 'enum': {0: 'INVALID', 1: 'PARK', 2: 'REVERSE', 3: 'NEUTRAL', 4: 'DRIVE'}, 'is_signed_var': True, 'len': 3, 'name': 'gear_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|7]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
   int gearactual();
 };
 

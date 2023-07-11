@@ -19,7 +19,7 @@ void Vcu2AcuSweepWorkSta::Parse() {
 }
 
 
-// config detail: {'bit': 10, 'is_signed_var': True, 'len': 1, 'name': 'sweep_emergency_sig_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 10, 'description': '清扫系统紧急停止反馈', 'is_signed_var': True, 'len': 1, 'name': 'sweep_emergency_sig_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool Vcu2AcuSweepWorkSta::sweepemergencysigfb() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(2, 1);
@@ -31,7 +31,7 @@ bool Vcu2AcuSweepWorkSta::sweepemergencysigfb() {
   return ret;
 }
 
-// config detail: {'bit': 9, 'is_signed_var': True, 'len': 2, 'name': 'vcu_sweep_plate_up_down_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 9, 'description': '扫盘升降状态反馈', 'enum': {0: 'NO', 1: 'UP', 2: 'DOWN'}, 'is_signed_var': True, 'len': 2, 'name': 'vcu_sweep_plate_up_down_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int Vcu2AcuSweepWorkSta::vcusweepplateupdownstafb() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 2);
@@ -39,11 +39,11 @@ int Vcu2AcuSweepWorkSta::vcusweepplateupdownstafb() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 
-// config detail: {'bit': 1, 'is_signed_var': True, 'len': 1, 'name': 'vcu_auto_garbage_dump_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 1, 'description': '一键倾倒状态反馈', 'is_signed_var': True, 'len': 1, 'name': 'vcu_auto_garbage_dump_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool Vcu2AcuSweepWorkSta::vcuautogarbagedumpstafb() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(1, 1);
@@ -55,7 +55,7 @@ bool Vcu2AcuSweepWorkSta::vcuautogarbagedumpstafb() {
   return ret;
 }
 
-// config detail: {'bit': 0, 'is_signed_var': True, 'len': 1, 'name': 'vcu_auto_cleaning_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
+// config detail: {'bit': 0, 'description': '一键清扫状态反馈', 'is_signed_var': True, 'len': 1, 'name': 'vcu_auto_cleaning_sta_fb', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|1]', 'physical_unit': '', 'precision': 1.0, 'type': 'bool'}
 bool Vcu2AcuSweepWorkSta::vcuautocleaningstafb() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 1);

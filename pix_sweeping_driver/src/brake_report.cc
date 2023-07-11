@@ -19,7 +19,7 @@ void BrakeReport::Parse() {
 }
 
 
-// config detail: {'bit': 31, 'is_signed_var': True, 'len': 16, 'name': 'brake_pedal_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|100]', 'physical_unit': '%', 'precision': 0.1, 'type': 'double'}
+// config detail: {'bit': 31, 'description': '制动踏板实际值', 'is_signed_var': True, 'len': 16, 'name': 'brake_pedal_actual', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|100]', 'physical_unit': '%', 'precision': 0.1, 'type': 'double'}
 double BrakeReport::brakepedalactual() {
   Byte t0(*(bytes + 3));
   int32_t x = t0.get_byte(0, 8);
@@ -36,7 +36,7 @@ double BrakeReport::brakepedalactual() {
   return ret;
 }
 
-// config detail: {'bit': 23, 'is_signed_var': False, 'len': 8, 'name': 'brake_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 23, 'description': '制动故障码2', 'is_signed_var': False, 'len': 8, 'name': 'brake_flt2', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int BrakeReport::brakeflt2() {
   Byte t0(*(bytes + 2));
   int32_t x = t0.get_byte(0, 8);
@@ -45,7 +45,7 @@ int BrakeReport::brakeflt2() {
   return ret;
 }
 
-// config detail: {'bit': 15, 'is_signed_var': True, 'len': 8, 'name': 'brake_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 15, 'description': '制动故障码1', 'is_signed_var': True, 'len': 8, 'name': 'brake_flt1', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|255]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
 int BrakeReport::brakeflt1() {
   Byte t0(*(bytes + 1));
   int32_t x = t0.get_byte(0, 8);
@@ -57,7 +57,7 @@ int BrakeReport::brakeflt1() {
   return ret;
 }
 
-// config detail: {'bit': 1, 'is_signed_var': True, 'len': 2, 'name': 'brake_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'int'}
+// config detail: {'bit': 1, 'description': '制动使能状态', 'enum': {0: 'MANUAL', 1: 'AUTO', 2: 'TAKEOVER', 3: 'STANDBY'}, 'is_signed_var': True, 'len': 2, 'name': 'brake_en_state', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
 int BrakeReport::brakeenstate() {
   Byte t0(*(bytes + 0));
   int32_t x = t0.get_byte(0, 2);
@@ -65,7 +65,7 @@ int BrakeReport::brakeenstate() {
   x <<= 30;
   x >>= 30;
 
-  int ret = x;
+  int ret =  static_cast<int>(x);
   return ret;
 }
 

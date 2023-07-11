@@ -6,12 +6,12 @@
   <arg name="loop_rate" default="50.0" />
   <arg name="base_frame_id" default="base_link" />
 
-  <node pkg="pix_hooke_driver" name="pix_hooke_driver_control_converter_node" exec="pix_hooke_driver_control_converter_node" output="screen">
+  <node pkg="pix_sweeping_driver" name="pix_sweeping_driver_control_converter_node" exec="pix_sweeping_driver_control_converter_node" output="screen">
     <param name="autoware_control_command_timeout" value="$(var autoware_control_command_timeout)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
     <param name="max_steering_angle" value="$(var max_steering_angle)"/>
   </node>
-  <node pkg="pix_hooke_driver" name="pix_hooke_driver_report_converter_node" exec="pix_hooke_driver_report_converter_node" output="screen">
+  <node pkg="pix_sweeping_driver" name="pix_sweeping_driver_report_converter_node" exec="pix_sweeping_driver_report_converter_node" output="screen">
     <param name="base_frame_id" value="$(var base_frame_id)"/>
     <param name="report_msg_timeout_ms" value="$(var report_msg_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
