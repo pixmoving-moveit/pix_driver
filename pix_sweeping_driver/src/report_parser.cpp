@@ -55,22 +55,22 @@ vehicle_mileage_fb_received_time_ = this->now();
       create_publisher<V2aBrakeStaFb>("/pix_hooke/v2a_brakestafb", rclcpp::QoS{1});
     **/
     vcu2_acu_chassis_err_code1_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuChassisErrCode1>("/pix_sweeping/vcu2_acu_chassis_err_code1", rclcpp::QoS{1});
-vcu2_acu_chassis_err_code2_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuChassisErrCode2>("/pix_sweeping/vcu2_acu_chassis_err_code2", rclcpp::QoS{1});
-vcu2_acu_chassis_err_code3_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuChassisErrCode3>("/pix_sweeping/vcu2_acu_chassis_err_code3", rclcpp::QoS{1});
-throttle_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ThrottleReport>("/pix_sweeping/throttle_report", rclcpp::QoS{1});
-brake_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::BrakeReport>("/pix_sweeping/brake_report", rclcpp::QoS{1});
-steering_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::SteeringReport>("/pix_sweeping/steering_report", rclcpp::QoS{1});
-gear_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::GearReport>("/pix_sweeping/gear_report", rclcpp::QoS{1});
-park_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ParkReport>("/pix_sweeping/park_report", rclcpp::QoS{1});
-vcu_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::VcuReport>("/pix_sweeping/vcu_report", rclcpp::QoS{1});
-wheel_speed_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::WheelSpeedReport>("/pix_sweeping/wheel_speed_report", rclcpp::QoS{1});
-bms_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::BmsReport>("/pix_sweeping/bms_report", rclcpp::QoS{1});
-vcu2_acu_sweep_sta_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepStaFb>("/pix_sweeping/vcu2_acu_sweep_sta_fb", rclcpp::QoS{1});
-vcu2_acu_sweep_fan_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepFanSta>("/pix_sweeping/vcu2_acu_sweep_fan_sta", rclcpp::QoS{1});
-vcu2_acu_sweep_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepSta>("/pix_sweeping/vcu2_acu_sweep_sta", rclcpp::QoS{1});
-scu_work_time_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ScuWorkTimeFb>("/pix_sweeping/scu_work_time_fb", rclcpp::QoS{1});
-vcu2_acu_sweep_work_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepWorkSta>("/pix_sweeping/vcu2_acu_sweep_work_sta", rclcpp::QoS{1});
-vehicle_mileage_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::VehicleMileageFb>("/pix_sweeping/vehicle_mileage_fb", rclcpp::QoS{1});
+    vcu2_acu_chassis_err_code2_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuChassisErrCode2>("/pix_sweeping/vcu2_acu_chassis_err_code2", rclcpp::QoS{1});
+    vcu2_acu_chassis_err_code3_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuChassisErrCode3>("/pix_sweeping/vcu2_acu_chassis_err_code3", rclcpp::QoS{1});
+    throttle_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ThrottleReport>("/pix_sweeping/throttle_report", rclcpp::QoS{1});
+    brake_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::BrakeReport>("/pix_sweeping/brake_report", rclcpp::QoS{1});
+    steering_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::SteeringReport>("/pix_sweeping/steering_report", rclcpp::QoS{1});
+    gear_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::GearReport>("/pix_sweeping/gear_report", rclcpp::QoS{1});
+    park_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ParkReport>("/pix_sweeping/park_report", rclcpp::QoS{1});
+    vcu_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::VcuReport>("/pix_sweeping/vcu_report", rclcpp::QoS{1});
+    wheel_speed_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::WheelSpeedReport>("/pix_sweeping/wheel_speed_report", rclcpp::QoS{1});
+    bms_report_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::BmsReport>("/pix_sweeping/bms_report", rclcpp::QoS{1});
+    vcu2_acu_sweep_sta_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepStaFb>("/pix_sweeping/vcu2_acu_sweep_sta_fb", rclcpp::QoS{1});
+    vcu2_acu_sweep_fan_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepFanSta>("/pix_sweeping/vcu2_acu_sweep_fan_sta", rclcpp::QoS{1});
+    vcu2_acu_sweep_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepSta>("/pix_sweeping/vcu2_acu_sweep_sta", rclcpp::QoS{1});
+    scu_work_time_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::ScuWorkTimeFb>("/pix_sweeping/scu_work_time_fb", rclcpp::QoS{1});
+    vcu2_acu_sweep_work_sta_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::Vcu2AcuSweepWorkSta>("/pix_sweeping/vcu2_acu_sweep_work_sta", rclcpp::QoS{1});
+    vehicle_mileage_fb_pub_ = create_publisher<pix_sweeping_driver_msgs::msg::VehicleMileageFb>("/pix_sweeping/vehicle_mileage_fb", rclcpp::QoS{1});
  
   }
   {
