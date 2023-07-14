@@ -67,10 +67,10 @@ protocols["name"].split("_",1)[0]_enable, ...
 protocols["name"].split("_",1)[0]_prev_t=0, ...
 */
 static bool vhiclemodecommand_100_enable, throttlecommand_101_enable, gearcommand_104_enable, steeringcomand_314_enable, brakecommand_364_enable;
-static uint64_t vhiclemodecommand_100_prev_t=0, throttlecommand_101_prev_t=0, gearcommand_104_prev_t=0, steeringcomand_314_prev_t=0, brakecommand_364_prev_t=0;
+static int vhiclemodecommand_100_prev_t=0, throttlecommand_101_prev_t=0, gearcommand_104_prev_t=0, steeringcomand_314_prev_t=0, brakecommand_364_prev_t=0;
 
 
-static int time_diff = 10000000;
+static int time_diff = 100000000;
 static ros::Publisher pub_can;
 
 
@@ -97,7 +97,7 @@ static void vhiclemodecommand_100_callback(const pix_hongguang_mini_ev_driver_ms
         can_vhiclemodecommand_100.data[i] = *A;
         A += 1;
     }
-    uint64_t t_nsec = 0;
+    int t_nsec = 0;
     t_nsec = can_vhiclemodecommand_100.header.stamp.toNSec();
     vhiclemodecommand_100_prev_t = t_nsec;
 }
@@ -127,7 +127,7 @@ static void throttlecommand_101_callback(const pix_hongguang_mini_ev_driver_msgs
         can_throttlecommand_101.data[i] = *A;
         A += 1;
     }
-    uint64_t t_nsec = 0;
+    int t_nsec = 0;
     t_nsec = can_throttlecommand_101.header.stamp.toNSec();
     throttlecommand_101_prev_t = t_nsec;
 }
@@ -159,7 +159,7 @@ static void gearcommand_104_callback(const pix_hongguang_mini_ev_driver_msgs::ge
         can_gearcommand_104.data[i] = *A;
         A += 1;
     }
-    uint64_t t_nsec = 0;
+    int t_nsec = 0;
     t_nsec = can_gearcommand_104.header.stamp.toNSec();
     gearcommand_104_prev_t = t_nsec;
 }
@@ -186,7 +186,7 @@ static void steeringcomand_314_callback(const pix_hongguang_mini_ev_driver_msgs:
         can_steeringcomand_314.data[i] = *A;
         A += 1;
     }
-    uint64_t t_nsec = 0;
+    int t_nsec = 0;
     t_nsec = can_steeringcomand_314.header.stamp.toNSec();
     steeringcomand_314_prev_t = t_nsec;
 }
@@ -218,7 +218,7 @@ static void brakecommand_364_callback(const pix_hongguang_mini_ev_driver_msgs::b
         can_brakecommand_364.data[i] = *A;
         A += 1;
     }
-    uint64_t t_nsec = 0;
+    int t_nsec = 0;
     t_nsec = can_brakecommand_364.header.stamp.toNSec();
     brakecommand_364_prev_t = t_nsec;
 }
@@ -229,7 +229,7 @@ static void brakecommand_364_callback(const pix_hongguang_mini_ev_driver_msgs::b
 //  define timer callback function
 void timer_callback(const ros::TimerEvent &te)
 {
-    uint64_t now;
+    int now;
     now = ros::Time::now().toNSec();
     /*Example: 
     // brake
@@ -250,90 +250,71 @@ void timer_callback(const ros::TimerEvent &te)
     // vhiclemodecommand_100
     if(now - vhiclemodecommand_100_prev_t>time_diff)
     {
-        can_vhiclemodecommand_100.dlc = 8;
         for(uint i=0; i<8; i++)
         {   
             can_vhiclemodecommand_100.id = vhiclemodecommand_100_entity.ID;
-            can_vhiclemodecommand_100.data[0] = 0;
+            can_vhiclemodecommand_100.data[0] = 1;
         }
         pub_can.publish(can_vhiclemodecommand_100);
-        ROS_ERROR_DELAYED_THROTTLE(5, "vhiclemodecommand - time out");
     }
     else{
         pub_can.publish(can_vhiclemodecommand_100);
-        ROS_INFO_DELAYED_THROTTLE(5, "vhiclemodecommand - OK");
     }
     
     // throttlecommand_101
     if(now - throttlecommand_101_prev_t>time_diff)
     {
-        can_throttlecommand_101.dlc = 8;
         for(uint i=0; i<8; i++)
         {   
             can_throttlecommand_101.id = throttlecommand_101_entity.ID;
             can_throttlecommand_101.data[i] = 0;
         }
         pub_can.publish(can_throttlecommand_101);
-        ROS_ERROR_DELAYED_THROTTLE(5, "throttlecommand - time out");
     }
     else{
         pub_can.publish(can_throttlecommand_101);
-        ROS_INFO_DELAYED_THROTTLE(5, "throttlecommand - OK");
-
     }
     
     // gearcommand_104
     if(now - gearcommand_104_prev_t>time_diff)
     {
-        can_gearcommand_104.dlc = 8;
         for(uint i=0; i<8; i++)
         {   
             can_gearcommand_104.id = gearcommand_104_entity.ID;
             can_gearcommand_104.data[i] = 0;
         }
         pub_can.publish(can_gearcommand_104);
-        ROS_ERROR_DELAYED_THROTTLE(5, "gearcommand - time out");
-
     }
     else{
         pub_can.publish(can_gearcommand_104);
-        ROS_INFO_DELAYED_THROTTLE(5, "gearcommand - OK");
-
     }
     
     // steeringcomand_314
     if(now - steeringcomand_314_prev_t>time_diff)
     {
-        can_steeringcomand_314.dlc = 8;
         for(uint i=0; i<8; i++)
         {   
             can_steeringcomand_314.id = steeringcomand_314_entity.ID;
             can_steeringcomand_314.data[i] = 0;
         }
         pub_can.publish(can_steeringcomand_314);
-        ROS_ERROR_DELAYED_THROTTLE(5, "steeringcomand - time out");
     }
     else{
         pub_can.publish(can_steeringcomand_314);
-        ROS_INFO_DELAYED_THROTTLE(5, "steeringcomand - ok");
-
     }
     
     // brakecommand_364
     if(now - brakecommand_364_prev_t>time_diff)
     {
-        // can_brakecommand_364.dlc = 8;
-        // for(uint i=0; i<8; i++)
-        // {   
-        //     can_brakecommand_364.id = brakecommand_364_entity.ID;
-        //     can_brakecommand_364.data[i] = 0;
-        // }
-        // pub_can.publish(can_brakecommand_364);
-        ROS_ERROR_DELAYED_THROTTLE(5, "brakecommand - time out");
+        for(uint i=0; i<8; i++)
+        {   
+            can_brakecommand_364.id = brakecommand_364_entity.ID;
+            can_brakecommand_364.data[i] = 0;
+        }
+        pub_can.publish(can_brakecommand_364);
     }
     else{
         pub_can.publish(can_brakecommand_364);
-        ROS_INFO_DELAYED_THROTTLE(5, "brakecommand - ok");
     }
     
 }
@@ -347,7 +328,7 @@ int main(int argc, char* argv[])
 
     // creat ros Subscriber
     // Example: ros::Subscriber sub_brake = nh.subscribe("/pix/brake_command", 1, brake_callback);
-    ros::Subscriber sub_vhiclemodecommand_100 = nh.subscribe("/pix/vhicle_mode_command_100", 1, vhiclemodecommand_100_callback);
+    ros::Subscriber sub_vhiclemodecommand_100 = nh.subscribe("/pix/vhiclemode_command_100", 1, vhiclemodecommand_100_callback);
 	ros::Subscriber sub_throttlecommand_101 = nh.subscribe("/pix/throttle_command_101", 1, throttlecommand_101_callback);
 	ros::Subscriber sub_gearcommand_104 = nh.subscribe("/pix/gear_command_104", 1, gearcommand_104_callback);
 	ros::Subscriber sub_steeringcomand_314 = nh.subscribe("/pix/steering_comand_314", 1, steeringcomand_314_callback);

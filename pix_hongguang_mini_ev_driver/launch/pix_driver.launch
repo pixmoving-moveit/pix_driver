@@ -1,7 +1,10 @@
 <launch>
-    <node pkg="pix_mini_ev_driver" name="report_node" type="pix_mini_ev_driver_report_node"  output="screen"/>
-    <node pkg="pix_mini_ev_driver" name="command_node" type="pix_mini_ev_driver_command_node" output="screen"/> 
+    <node pkg="pix_hongguang_mini_ev_driver" name="report_node" type="pix_hongguang_mini_ev_driver_report_node"  output="screen"/>
+    <node pkg="pix_hongguang_mini_ev_driver" name="command_node" type="pix_hongguang_mini_ev_driver_command_node" output="screen"/> 
 
-    <!-- <node pkg="pix_mini_ev_driver" name="read_converter" type="report_converter_imu.py" output="screen"/>
-    <node pkg="pix_mini_ev_driver" name="control_converter" type="control_converter.py"  output="screen"/> -->
+    <node pkg="pix_hongguang_mini_ev_driver" name="read_converter" type="report_converter_imu.py" output="screen"/>
+    <node pkg="pix_hongguang_mini_ev_driver" name="control_converter" type="control_converter.py"  output="screen"/>
+
+    <!-- <node pkg="pix_hongguang_mini_ev_driver" name="read_auto_control_steer_report" type="out_auto_control.py"  output="screen"/> -->
+
 </launch>

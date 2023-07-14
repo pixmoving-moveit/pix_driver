@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(pix_hongguang_mini_ev_driver)
-
+set(CMAKE_BUILD_TYPE "Debug")
 find_package(catkin REQUIRED COMPONENTS
   can_msgs
   roscpp
@@ -53,7 +53,8 @@ src/command_node.cc
 src/Byte.cc
 )
 
-catkin_install_python(PROGRAMS src/control_converter.py src/report_converter_imu.py
+catkin_install_python(PROGRAMS src/control_converter.py src/report_converter_imu.py src/control_converter_test.py
+src/out_auto_control.py src/control_converter_ok.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -82,3 +83,7 @@ install(TARGETS ${PROJECT_NAME}_command_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+install(DIRECTORY
+  launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  )

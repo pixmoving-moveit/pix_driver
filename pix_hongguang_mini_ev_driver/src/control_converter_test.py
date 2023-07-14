@@ -17,15 +17,15 @@ class ControlConverter:
         self.sub_brake_report = rospy.Subscriber('/pix/brake_report', brakereport_289, self.brake_report_callback)
         self.sub_gear_report = rospy.Subscriber('/pix/gear_report', gearreport_204, self.gear_report_callback)
         
-        # self.su_steer_report = rospy.Subscriber('/pix/steering_report', steeringreport_18f, self.steer_report_callback)
+        self.su_steer_report = rospy.Subscriber('/pix/steering_report', steeringreport_18f, self.steer_report_callback)
 
         self.sub_vehicle_engage = rospy.Subscriber('/pix/vehicle_engage', Bool, self.vehicle_engage_mode, queue_size=10)
         
         self.vehicle_mode_ = False
         self.gear_msg_data_ = 0
         self.brake_msg_data_ = False
-        self.vehicle_msg_data_ = True 
-        # self.steer_msg_data_ = steeringreport_18f()
+        self.vehicle_msg_data_ = False 
+        self.steer_msg_data_ = False
 
         self.pub_throttle = rospy.Publisher('/pix/throttle_command_101', throttlecommand_101, queue_size=10)
         self.pub_brake = rospy.Publisher('/pix/brake_command_364', brakecommand_364, queue_size=10)
@@ -41,14 +41,14 @@ class ControlConverter:
         self.gear_msg = gearcommand_104()
         self.vehicle_msg = vhiclemodecommand_100() 
 
-    # def steer_report_callback(self,msg):
-    #     if(msg.ECU_state == 1):
-    #         self.vehicle_mode_ = True
-    #     else:
-    #         self.vehicle_msg_data_ = False
+    def steer_report_callback(self,msg):
+        if(msg.ECU_state == 1):
+            self.steer_msg_data_ = True
+        else:
+            self.steer_msg_data_ = False
 
     def vehicle_mode_report_callback(self,msg):
-        if (msg.AutoCtrlStat==1):
+        if (msg.AutoCtrlStat == 1):
             self.vehicle_msg_data_ = True
         else:
             self.vehicle_msg_data_ = False
@@ -99,30 +99,26 @@ class ControlConverter:
         self.throttle_msg.AccPedCmd = self.throttle
         self.throttle_msg.AccPedInv = self.throttle
 
+
         # 使得车辆进入自动驾驶模式
         if(self.vehicle_mode_ and (not self.vehicle_msg_data_)):
-          self.throttle_msg.AccPedCmd = 0
-          self.throttle_msg.AccPedInv = 0
-          self.steer_msg.tar_angle = 0
-          self.gear_msg.GearCmd = 3
-          self.brake_msg.VCU_ExtBrkpressure = (125.0 * 0.2)
-        # else:
-        #   # 当档位不一致时 - 需要切换档位
-        #   if(self.gear != self.gear_msg_data_):
-        #     self.throttle_msg.AccPedCmd = 0
-        #     self.throttle_msg.AccPedInv = 0
-        #     self.steer_msg.tar_angle = 0
-        #     self.gear_msg.GearCmd = self.gear_msg_data_
-        #     self.brake_msg.VCU_ExtBrkpressure = (125.0 * 0.5)
-          
-            # 有刹车切换档位
-        if(self.brake_msg_data_):
-          self.gear_msg.GearCmd = self.gear
+            self.throttle_msg.AccPedCmd = 0
+            self.throttle_msg.AccPedInv = 0
+            self.steer_msg.tar_angle = 0
+            self.gear_msg.GearCmd = 3
+            self.brake_msg.VCU_ExtBrkpressure = (125.0 * 0.2)        
+        
+        # 有刹车切换档位
+            if(self.brake_msg_data_):
+              self.gear_msg.GearCmd = self.gear
+
 
         self.pub_steer.publish(self.steer_msg)        #314
         self.pub_gear.publish(self.gear_msg)          #104
         self.pub_throttle.publish(self.throttle_msg)  #101
         self.pub_brake.publish(self.brake_msg)        #364
+
+      
 
 
 if __name__ == '__main__':

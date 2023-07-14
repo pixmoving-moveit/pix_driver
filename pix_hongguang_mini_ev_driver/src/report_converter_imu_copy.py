@@ -25,7 +25,7 @@ class ReportConverter:
 
         self.sub_steer = rospy.Subscriber("/pix/steering_report", steeringreport_18f, self.steer_callback)
         self.sub_gear = rospy.Subscriber("/pix/gear_report", gearreport_204, self.shift_callback)
-        self.sub_vcu = rospy.Subscriber("/pix/vhicle_mode_report", vhiclemodereport_200, self.vcu_callback)
+        self.sub_vcu = rospy.Subscriber("/pix/vcu_report", vhiclemodereport_200, self.vcu_callback)
         self.sub_imu = rospy.Subscriber("/sensing/camera/zed2i/zed_node/imu/data", Imu, self.imu_callback)
 
         self.pub_steer = rospy.Publisher("/vehicle/status/steering", Steering, queue_size=1)
@@ -58,16 +58,26 @@ class ReportConverter:
         self.pub_steer.publish(self.steer_msg)
     
     def vcu_callback(self, msg):
+        self.linear_velocity = msg.VehSpd
         status = msg.AutoCtrlStat
         if(status==0):
             self.mode = 0
         elif(status==1):
             self.mode = 1
+        self.turn_signal = msg.TurnLightCmd
+
+        self.velocity_msg.data = self.linear_velocity
+        self.pub_velocity.publish(self.velocity_msg)
 
         self.control_mode_msg.header.stamp = msg.header.stamp
         self.control_mode_msg.data = self.mode
         self.pub_control_mode.publish(self.control_mode_msg)
-  
+
+        # self.turn_signal_msg.header.frame_id = "base_link"
+        # self.turn_signal_msg.header.stamp = msg.header.stamp
+        # self.turn_signal_msg.data = self.turn_signal
+        # self.pub_turn_signal.publish(self.turn_signal_msg)
+    
     def imu_callback(self, msg):
         self.angular_velocity = msg.angular_velocity.z
         if(self.seq == 0):
@@ -91,20 +101,26 @@ class ReportConverter:
     
     def shift_callback(self, msg):
         self.shift = msg.GearCmd
+        
         self.shift_msg.header.frame_id = "base_link"
         self.shift_msg.header.stamp = msg.header.stamp
         self.shift_msg.shift.data = self.shift
         self.pub_shift.publish(self.shift_msg)
 
         self.linear_velocity = msg.VehSpd
+        # status = msg.AutoCtrlStat
+        # if(status==0):
+        #     self.mode = 0
+        # elif(status==1):
+        #     self.mode = 1
+        # self.turn_signal = msg.TurnLightCmd
+
         self.velocity_msg.data = self.linear_velocity
         self.pub_velocity.publish(self.velocity_msg)
 
-        self.turn_signal = msg.TurnLightAct
-        self.turn_signal_msg.header.frame_id = "base_link"
-        self.turn_signal_msg.header.stamp = msg.header.stamp
-        self.turn_signal_msg.data = self.turn_signal
-        self.pub_turn_signal.publish(self.turn_signal_msg)
+        # self.control_mode_msg.header.stamp = msg.header.stamp
+        # self.control_mode_msg.data = self.mode
+        # self.pub_control_mode.publish(self.control_mode_msg)
 
 
 if __name__ == '__main__':
