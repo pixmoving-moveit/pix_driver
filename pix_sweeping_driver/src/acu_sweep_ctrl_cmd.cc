@@ -5,7 +5,7 @@ int32_t AcuSweepCtrlCmd::ID = 0x107;
 // public
 AcuSweepCtrlCmd::AcuSweepCtrlCmd() { Reset(); }
 
-void AcuSweepCtrlCmd::UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, int fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl) {
+void AcuSweepCtrlCmd::UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, int fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl, bool charge_alignment_state_feedback) {
   set_p_fan_speed_ctrl(fan_speed_ctrl);
   set_p_mowing_speed_ctrl(mowing_speed_ctrl);
   set_p_sweep_mode_ctrl(sweep_mode_ctrl);
@@ -17,6 +17,7 @@ void AcuSweepCtrlCmd::UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int 
   set_p_dedusting_ctrl(dedusting_ctrl);
   set_p_auto_garbage_dump_start_ctrl(auto_garbage_dump_start_ctrl);
   set_p_auto_cleaning_start_ctrl(auto_cleaning_start_ctrl);
+  set_p_charge_alignment_state_feedback(charge_alignment_state_feedback);
 }
 
 void AcuSweepCtrlCmd::Reset() {
@@ -162,5 +163,16 @@ void AcuSweepCtrlCmd::set_p_auto_cleaning_start_ctrl(int auto_cleaning_start_ctr
   data[0] += to_set.return_byte_t();
   
 }
+
+void AcuSweepCtrlCmd::set_p_charge_alignment_state_feedback(bool charge_alignment_state_feedback)
+{
+  int x = charge_alignment_state_feedback;
+  uint8_t a = 0;
+
+  Byte to_set(a);
+  to_set.set_value(x, 0, 1);
+  data[4] += to_set.return_byte_t();
+}
+
 
 

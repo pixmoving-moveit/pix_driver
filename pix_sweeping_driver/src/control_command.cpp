@@ -221,7 +221,7 @@ void ControlCommand::callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg)
         acu_sweep_ctrl_cmd_received_time_ = this->now();
         acu_sweep_ctrl_cmd_ptr_ = msg;
         acu_sweep_ctrl_cmd_entity_.Reset();
-        acu_sweep_ctrl_cmd_entity_.UpdateData(msg->fan_speed_ctrl, msg->mowing_speed_ctrl, msg->sweep_mode_ctrl, msg->fan_speed_mode, msg->fan_mode_ctrl, msg->sweep_plate_up_down, msg->mouthpiece_up_down_ctrl, msg->shaker_duster_ctrl, msg->dedusting_ctrl, msg->auto_garbage_dump_start_ctrl, msg->auto_cleaning_start_ctrl);
+        acu_sweep_ctrl_cmd_entity_.UpdateData(msg->fan_speed_ctrl, msg->mowing_speed_ctrl, msg->sweep_mode_ctrl, msg->fan_speed_mode, msg->fan_mode_ctrl, msg->sweep_plate_up_down, msg->mouthpiece_up_down_ctrl, msg->shaker_duster_ctrl, msg->dedusting_ctrl, msg->auto_garbage_dump_start_ctrl, msg->auto_cleaning_start_ctrl,msg->charge_alignment_state_feedback);
         can_msgs::msg::Frame acu_sweep_ctrl_cmd_can_msg;
         acu_sweep_ctrl_cmd_can_msg.header.stamp = msg->header.stamp;
         acu_sweep_ctrl_cmd_can_msg.dlc = 8;

@@ -32,3 +32,5 @@ bool shaker_duster_ctrl 	# 振尘控制 [] [0|1]
 bool dedusting_ctrl 	# 喷雾降尘控制 [] [0|1]
 int8 auto_garbage_dump_start_ctrl 	# 一键倾倒控制 [] [0|3]
 int8 auto_cleaning_start_ctrl 	# 一键清扫控制 [] [0|3]
+bool charge_alignment_state_feedback # 充电桩是否对准状态反馈 [0|1]
+ 

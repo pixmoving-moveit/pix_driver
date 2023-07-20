@@ -7,7 +7,7 @@ public:
 
 	AcuSweepCtrlCmd();
 
-  	void UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, int fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl);
+  	void UpdateData(int fan_speed_ctrl, int mowing_speed_ctrl, int sweep_mode_ctrl, int fan_speed_mode, int fan_mode_ctrl, int sweep_plate_up_down, int mouthpiece_up_down_ctrl, bool shaker_duster_ctrl, bool dedusting_ctrl, int auto_garbage_dump_start_ctrl, int auto_cleaning_start_ctrl, bool charge_alignment_state_feedback);
 
   	void Reset();
   
@@ -49,6 +49,8 @@ private:
   // config detail: {'bit': 1, 'description': '一键清扫控制', 'enum': {0: 'NO', 1: 'START', 2: 'STOP'}, 'is_signed_var': False, 'len': 2, 'name': 'auto_cleaning_start_ctrl', 'offset': 0.0, 'order': 'motorola', 'physical_range': '[0|3]', 'physical_unit': '', 'precision': 1.0, 'type': 'enum'}
   void set_p_auto_cleaning_start_ctrl(int auto_cleaning_start_ctrl);
 
+  // 充电桩是否对准状态反馈
+  void set_p_charge_alignment_state_feedback(bool charge_alignment_state_feedback);
 private:
 	uint8_t data[8];
 };
