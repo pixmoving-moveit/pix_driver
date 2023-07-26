@@ -15,11 +15,11 @@ endif()
 
 ament_auto_add_executable(${PROJECT_NAME}_control_command_node
   src/throttle_command.cc
-src/brake_command.cc
-src/steering_command.cc
-src/gear_command.cc
-src/park_command.cc
-src/vehicle_mode_command.cc
+  src/brake_command.cc
+  src/steering_command.cc
+  src/gear_command.cc
+  src/park_command.cc
+  src/vehicle_mode_command.cc
 
   src/Byte.cc
   src/control_command.cpp
@@ -28,18 +28,19 @@ src/vehicle_mode_command.cc
 
 ament_auto_add_executable(${PROJECT_NAME}_report_parser_node
   src/chassis_sta_to_mobileye.cc
-src/auto_ctrl_msg.cc
-src/auto_remote_ctrl_msg.cc
-src/throttle_report.cc
-src/brake_report.cc
-src/steering_report.cc
-src/gear_report.cc
-src/park_report.cc
-src/vcu_report.cc
-src/wheel_speed_report.cc
-src/bms_report.cc
-src/vehicle_door_report.cc
-src/vehicle_mileage_fb.cc
+  src/auto_ctrl_msg.cc
+  src/auto_remote_ctrl_msg.cc
+  src/throttle_report.cc
+  src/brake_report.cc
+  src/steering_report.cc
+  src/gear_report.cc
+  src/park_report.cc
+  src/vcu_report.cc
+  src/wheel_speed_report.cc
+  src/bms_report.cc
+  src/vehicle_door_report.cc
+  src/vehicle_mileage_fb.cc
+  src/vcu_pad_transfer.cc
 
   src/Byte.cc
   src/report_parser.cpp

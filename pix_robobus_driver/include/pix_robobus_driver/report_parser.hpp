@@ -47,6 +47,7 @@
 #include <pix_robobus_driver/bms_report.hpp>
 #include <pix_robobus_driver/vehicle_door_report.hpp>
 #include <pix_robobus_driver/vehicle_mileage_fb.hpp>
+#include <pix_robobus_driver/vcu_pad_transfer.hpp>
 
 
 namespace pix_robobus_driver
@@ -85,18 +86,19 @@ private:
   rclcpp::Publisher<V2aBrakeStaFb>::SharedPtr brake_sta_fb_pub_;
   **/
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::ChassisStaToMobileye>::SharedPtr chassis_sta_to_mobileye_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>::SharedPtr auto_ctrl_msg_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>::SharedPtr auto_remote_ctrl_msg_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::ThrottleReport>::SharedPtr throttle_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::BrakeReport>::SharedPtr brake_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::SteeringReport>::SharedPtr steering_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::GearReport>::SharedPtr gear_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::ParkReport>::SharedPtr park_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::VcuReport>::SharedPtr vcu_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::WheelSpeedReport>::SharedPtr wheel_speed_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::BmsReport>::SharedPtr bms_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleDoorReport>::SharedPtr vehicle_door_report_pub_;
-rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>::SharedPtr vehicle_mileage_fb_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>::SharedPtr auto_ctrl_msg_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>::SharedPtr auto_remote_ctrl_msg_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::ThrottleReport>::SharedPtr throttle_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::BrakeReport>::SharedPtr brake_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::SteeringReport>::SharedPtr steering_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::GearReport>::SharedPtr gear_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::ParkReport>::SharedPtr park_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::VcuReport>::SharedPtr vcu_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::WheelSpeedReport>::SharedPtr wheel_speed_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::BmsReport>::SharedPtr bms_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleDoorReport>::SharedPtr vehicle_door_report_pub_;
+  rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>::SharedPtr vehicle_mileage_fb_pub_;
+  rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr vcu_pad_transfer_pub_;
 
 
   // publish msgs
@@ -104,18 +106,19 @@ rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>::SharedPtr veh
   V2aBrakeStaFb::ConstSharedPtr brake_sta_fb_ptr_;
   **/
   pix_robobus_driver_msgs::msg::ChassisStaToMobileye::ConstSharedPtr chassis_sta_to_mobileye_ptr_;
-pix_robobus_driver_msgs::msg::AutoCtrlMsg::ConstSharedPtr auto_ctrl_msg_ptr_;
-pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg::ConstSharedPtr auto_remote_ctrl_msg_ptr_;
-pix_robobus_driver_msgs::msg::ThrottleReport::ConstSharedPtr throttle_report_ptr_;
-pix_robobus_driver_msgs::msg::BrakeReport::ConstSharedPtr brake_report_ptr_;
-pix_robobus_driver_msgs::msg::SteeringReport::ConstSharedPtr steering_report_ptr_;
-pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr gear_report_ptr_;
-pix_robobus_driver_msgs::msg::ParkReport::ConstSharedPtr park_report_ptr_;
-pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr vcu_report_ptr_;
-pix_robobus_driver_msgs::msg::WheelSpeedReport::ConstSharedPtr wheel_speed_report_ptr_;
-pix_robobus_driver_msgs::msg::BmsReport::ConstSharedPtr bms_report_ptr_;
-pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr vehicle_door_report_ptr_;
-pix_robobus_driver_msgs::msg::VehicleMileageFb::ConstSharedPtr vehicle_mileage_fb_ptr_;
+  pix_robobus_driver_msgs::msg::AutoCtrlMsg::ConstSharedPtr auto_ctrl_msg_ptr_;
+  pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg::ConstSharedPtr auto_remote_ctrl_msg_ptr_;
+  pix_robobus_driver_msgs::msg::ThrottleReport::ConstSharedPtr throttle_report_ptr_;
+  pix_robobus_driver_msgs::msg::BrakeReport::ConstSharedPtr brake_report_ptr_;
+  pix_robobus_driver_msgs::msg::SteeringReport::ConstSharedPtr steering_report_ptr_;
+  pix_robobus_driver_msgs::msg::GearReport::ConstSharedPtr gear_report_ptr_;
+  pix_robobus_driver_msgs::msg::ParkReport::ConstSharedPtr park_report_ptr_;
+  pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr vcu_report_ptr_;
+  pix_robobus_driver_msgs::msg::WheelSpeedReport::ConstSharedPtr wheel_speed_report_ptr_;
+  pix_robobus_driver_msgs::msg::BmsReport::ConstSharedPtr bms_report_ptr_;
+  pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr vehicle_door_report_ptr_;
+  pix_robobus_driver_msgs::msg::VehicleMileageFb::ConstSharedPtr vehicle_mileage_fb_ptr_;
+  std_msgs::msg::Bool::ConstSharedPtr vcu_pad_transfer_ptr_;
 
 
   // can frame entities
@@ -123,37 +126,38 @@ pix_robobus_driver_msgs::msg::VehicleMileageFb::ConstSharedPtr vehicle_mileage_f
   V2adrivestafb530  v2a_drivestafb_530_entity_;
   **/
   ChassisStaToMobileye chassis_sta_to_mobileye_entity_;
-AutoCtrlMsg auto_ctrl_msg_entity_;
-AutoRemoteCtrlMsg auto_remote_ctrl_msg_entity_;
-ThrottleReport throttle_report_entity_;
-BrakeReport brake_report_entity_;
-SteeringReport steering_report_entity_;
-GearReport gear_report_entity_;
-ParkReport park_report_entity_;
-VcuReport vcu_report_entity_;
-WheelSpeedReport wheel_speed_report_entity_;
-BmsReport bms_report_entity_;
-VehicleDoorReport vehicle_door_report_entity_;
-VehicleMileageFb vehicle_mileage_fb_entity_;
-
+  AutoCtrlMsg auto_ctrl_msg_entity_;
+  AutoRemoteCtrlMsg auto_remote_ctrl_msg_entity_;
+  ThrottleReport throttle_report_entity_;
+  BrakeReport brake_report_entity_;
+  SteeringReport steering_report_entity_;
+  GearReport gear_report_entity_;
+  ParkReport park_report_entity_;
+  VcuReport vcu_report_entity_;
+  WheelSpeedReport wheel_speed_report_entity_;
+  BmsReport bms_report_entity_;
+  VehicleDoorReport vehicle_door_report_entity_;
+  VehicleMileageFb vehicle_mileage_fb_entity_;
+  VCUPadTransfer vcu_pad_transfer_entity_;
 
   // msg reveived time
   /** example
   rclcpp::Time brake_sta_fb_received_time_;
   **/
   rclcpp::Time chassis_sta_to_mobileye_received_time_;
-rclcpp::Time auto_ctrl_msg_received_time_;
-rclcpp::Time auto_remote_ctrl_msg_received_time_;
-rclcpp::Time throttle_report_received_time_;
-rclcpp::Time brake_report_received_time_;
-rclcpp::Time steering_report_received_time_;
-rclcpp::Time gear_report_received_time_;
-rclcpp::Time park_report_received_time_;
-rclcpp::Time vcu_report_received_time_;
-rclcpp::Time wheel_speed_report_received_time_;
-rclcpp::Time bms_report_received_time_;
-rclcpp::Time vehicle_door_report_received_time_;
-rclcpp::Time vehicle_mileage_fb_received_time_;
+  rclcpp::Time auto_ctrl_msg_received_time_;
+  rclcpp::Time auto_remote_ctrl_msg_received_time_;
+  rclcpp::Time throttle_report_received_time_;
+  rclcpp::Time brake_report_received_time_;
+  rclcpp::Time steering_report_received_time_;
+  rclcpp::Time gear_report_received_time_;
+  rclcpp::Time park_report_received_time_;
+  rclcpp::Time vcu_report_received_time_;
+  rclcpp::Time wheel_speed_report_received_time_;
+  rclcpp::Time bms_report_received_time_;
+  rclcpp::Time vehicle_door_report_received_time_;
+  rclcpp::Time vehicle_mileage_fb_received_time_;
+  rclcpp::Time vcu_pad_transfer_received_time_;
 
 
   // timer

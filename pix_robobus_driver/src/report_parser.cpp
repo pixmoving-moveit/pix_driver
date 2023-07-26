@@ -16,18 +16,19 @@ ReportParser::ReportParser() : Node("report_parser")
   brake_command_received_time_ = this->now();
   **/
   chassis_sta_to_mobileye_received_time_ = this->now();
-auto_ctrl_msg_received_time_ = this->now();
-auto_remote_ctrl_msg_received_time_ = this->now();
-throttle_report_received_time_ = this->now();
-brake_report_received_time_ = this->now();
-steering_report_received_time_ = this->now();
-gear_report_received_time_ = this->now();
-park_report_received_time_ = this->now();
-vcu_report_received_time_ = this->now();
-wheel_speed_report_received_time_ = this->now();
-bms_report_received_time_ = this->now();
-vehicle_door_report_received_time_ = this->now();
-vehicle_mileage_fb_received_time_ = this->now();
+  auto_ctrl_msg_received_time_ = this->now();
+  auto_remote_ctrl_msg_received_time_ = this->now();
+  throttle_report_received_time_ = this->now();
+  brake_report_received_time_ = this->now();
+  steering_report_received_time_ = this->now();
+  gear_report_received_time_ = this->now();
+  park_report_received_time_ = this->now();
+  vcu_report_received_time_ = this->now();
+  wheel_speed_report_received_time_ = this->now();
+  bms_report_received_time_ = this->now();
+  vehicle_door_report_received_time_ = this->now();
+  vehicle_mileage_fb_received_time_ = this->now();
+  vcu_pad_transfer_received_time_ = this->now();
 
 
   is_publish_ = true;
@@ -51,18 +52,19 @@ vehicle_mileage_fb_received_time_ = this->now();
       create_publisher<V2aBrakeStaFb>("/pix_robobus/v2a_brakestafb", rclcpp::QoS{1});
     **/
     chassis_sta_to_mobileye_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ChassisStaToMobileye>("/pix_robobus/chassis_sta_to_mobileye", rclcpp::QoS{1});
-auto_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>("/pix_robobus/auto_ctrl_msg", rclcpp::QoS{1});
-auto_remote_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", rclcpp::QoS{1});
-throttle_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ThrottleReport>("/pix_robobus/throttle_report", rclcpp::QoS{1});
-brake_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::BrakeReport>("/pix_robobus/brake_report", rclcpp::QoS{1});
-steering_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::SteeringReport>("/pix_robobus/steering_report", rclcpp::QoS{1});
-gear_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::GearReport>("/pix_robobus/gear_report", rclcpp::QoS{1});
-park_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ParkReport>("/pix_robobus/park_report", rclcpp::QoS{1});
-vcu_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VcuReport>("/pix_robobus/vcu_report", rclcpp::QoS{1});
-wheel_speed_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::WheelSpeedReport>("/pix_robobus/wheel_speed_report", rclcpp::QoS{1});
-bms_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::BmsReport>("/pix_robobus/bms_report", rclcpp::QoS{1});
-vehicle_door_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VehicleDoorReport>("/pix_robobus/vehicle_door_report", rclcpp::QoS{1});
-vehicle_mileage_fb_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>("/pix_robobus/vehicle_mileage_fb", rclcpp::QoS{1});
+    auto_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>("/pix_robobus/auto_ctrl_msg", rclcpp::QoS{1});
+    auto_remote_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", rclcpp::QoS{1});
+    throttle_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ThrottleReport>("/pix_robobus/throttle_report", rclcpp::QoS{1});
+    brake_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::BrakeReport>("/pix_robobus/brake_report", rclcpp::QoS{1});
+    steering_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::SteeringReport>("/pix_robobus/steering_report", rclcpp::QoS{1});
+    gear_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::GearReport>("/pix_robobus/gear_report", rclcpp::QoS{1});
+    park_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ParkReport>("/pix_robobus/park_report", rclcpp::QoS{1});
+    vcu_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VcuReport>("/pix_robobus/vcu_report", rclcpp::QoS{1});
+    wheel_speed_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::WheelSpeedReport>("/pix_robobus/wheel_speed_report", rclcpp::QoS{1});
+    bms_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::BmsReport>("/pix_robobus/bms_report", rclcpp::QoS{1});
+    vehicle_door_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VehicleDoorReport>("/pix_robobus/vehicle_door_report", rclcpp::QoS{1});
+    vehicle_mileage_fb_pub_ = create_publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>("/pix_robobus/vehicle_mileage_fb", rclcpp::QoS{1});
+    vcu_pad_transfer_pub_ = create_publisher<std_msgs::msg::Bool>("/pix_robobus/vcu_pad_transfer", rclcpp::QoS{1});
  
   }
   {
@@ -90,18 +92,19 @@ void ReportParser::callbackCan(const can_msgs::msg::Frame::ConstSharedPtr & msg)
   V2aBrakeStaFb brake_sta_fb_msg;
   **/
   pix_robobus_driver_msgs::msg::ChassisStaToMobileye chassis_sta_to_mobileye_msg;
-pix_robobus_driver_msgs::msg::AutoCtrlMsg auto_ctrl_msg_msg;
-pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg auto_remote_ctrl_msg_msg;
-pix_robobus_driver_msgs::msg::ThrottleReport throttle_report_msg;
-pix_robobus_driver_msgs::msg::BrakeReport brake_report_msg;
-pix_robobus_driver_msgs::msg::SteeringReport steering_report_msg;
-pix_robobus_driver_msgs::msg::GearReport gear_report_msg;
-pix_robobus_driver_msgs::msg::ParkReport park_report_msg;
-pix_robobus_driver_msgs::msg::VcuReport vcu_report_msg;
-pix_robobus_driver_msgs::msg::WheelSpeedReport wheel_speed_report_msg;
-pix_robobus_driver_msgs::msg::BmsReport bms_report_msg;
-pix_robobus_driver_msgs::msg::VehicleDoorReport vehicle_door_report_msg;
-pix_robobus_driver_msgs::msg::VehicleMileageFb vehicle_mileage_fb_msg;
+  pix_robobus_driver_msgs::msg::AutoCtrlMsg auto_ctrl_msg_msg;
+  pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg auto_remote_ctrl_msg_msg;
+  pix_robobus_driver_msgs::msg::ThrottleReport throttle_report_msg;
+  pix_robobus_driver_msgs::msg::BrakeReport brake_report_msg;
+  pix_robobus_driver_msgs::msg::SteeringReport steering_report_msg;
+  pix_robobus_driver_msgs::msg::GearReport gear_report_msg;
+  pix_robobus_driver_msgs::msg::ParkReport park_report_msg;
+  pix_robobus_driver_msgs::msg::VcuReport vcu_report_msg;
+  pix_robobus_driver_msgs::msg::WheelSpeedReport wheel_speed_report_msg;
+  pix_robobus_driver_msgs::msg::BmsReport bms_report_msg;
+  pix_robobus_driver_msgs::msg::VehicleDoorReport vehicle_door_report_msg;
+  pix_robobus_driver_msgs::msg::VehicleMileageFb vehicle_mileage_fb_msg;
+  std_msgs::msg::Bool vcu_pad_transfer_msg;
 
 
   uint8_t byte_temp[8];
@@ -387,24 +390,36 @@ vehicle_door_report_msg.door_button_enable = vehicle_door_report_entity_.door_bu
     
 
     case VehicleMileageFb::ID:
-    vehicle_mileage_fb_received_time_ = this->now();
+      vehicle_mileage_fb_received_time_ = this->now();
+      
+      for(uint i=0;i<8;i++)
+      {
+        byte_temp[i] = msg->data[i];
+      }
+      vehicle_mileage_fb_entity_.update_bytes(byte_temp);
+      vehicle_mileage_fb_entity_.Parse();
+
+      vehicle_mileage_fb_msg.header = header;
+      vehicle_mileage_fb_msg.vehicle_sub_mileage = vehicle_mileage_fb_entity_.vehicle_sub_mileage_;
+      vehicle_mileage_fb_msg.vehicle_odo = vehicle_mileage_fb_entity_.vehicle_odo_;
+
+      vehicle_mileage_fb_ptr_ = std::make_shared<pix_robobus_driver_msgs::msg::VehicleMileageFb>(vehicle_mileage_fb_msg);
+      break;
     
-    for(uint i=0;i<8;i++)
-    {
-    byte_temp[i] = msg->data[i];
-    }
-    vehicle_mileage_fb_entity_.update_bytes(byte_temp);
-    vehicle_mileage_fb_entity_.Parse();
+    case VCUPadTransfer::ID:
+      vcu_pad_transfer_received_time_ = this->now();
+      for(uint i=0;i<8;i++)
+      {
+        byte_temp[i] = msg->data[i];
+      }
+      vcu_pad_transfer_entity_.update_bytes(byte_temp);
+      vcu_pad_transfer_entity_.Parse();
+      vcu_pad_transfer_msg.data = vcu_pad_transfer_entity_.v_c_u__pad_auto_start_;
+      vcu_pad_transfer_ptr_ = std::make_shared<std_msgs::msg::Bool>(vcu_pad_transfer_msg);
+      break;
 
-    vehicle_mileage_fb_msg.header = header;
-    vehicle_mileage_fb_msg.vehicle_sub_mileage = vehicle_mileage_fb_entity_.vehicle_sub_mileage_;
-vehicle_mileage_fb_msg.vehicle_odo = vehicle_mileage_fb_entity_.vehicle_odo_;
 
-    vehicle_mileage_fb_ptr_ = std::make_shared<pix_robobus_driver_msgs::msg::VehicleMileageFb>(vehicle_mileage_fb_msg);
-    break;
-    
-
-  default:
+    default:
     break;
   }
 }
@@ -572,7 +587,16 @@ void ReportParser::timerCallback()
         vehicle_mileage_fb_pub_->publish(*vehicle_mileage_fb_ptr_);
     }
     
-  
+    const double vcu_pad_transfer_report_delta_time_ms =
+    (current_time - vcu_pad_transfer_received_time_).seconds() * 1000.0;
+    if(vcu_pad_transfer_report_delta_time_ms>param_.report_timeout_ms || vcu_pad_transfer_ptr_==nullptr)
+    {
+        RCLCPP_ERROR_THROTTLE(
+        get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
+        "vcu_pad_transfer report timeout = %f ms.", vehicle_mileage_fb_report_delta_time_ms);
+    }else{
+        vcu_pad_transfer_pub_->publish(*vcu_pad_transfer_ptr_);
+    }
 }
 
 } // namespace report_parser
