@@ -33,6 +33,7 @@
 #include <pix_robobus_driver_msgs/msg/brake_command.hpp>
 #include <pix_robobus_driver_msgs/msg/park_command.hpp>
 #include <pix_robobus_driver_msgs/msg/vehicle_mode_command.hpp>
+#include <pix_robobus_driver_msgs/msg/auto_remote_ctrl_msg.hpp>
 // #include <pix_robobus_driver_msgs/msg/a2v_wheel_ctrl.hpp>
 // pix report
 #include <pix_robobus_driver_msgs/msg/gear_report.hpp>
@@ -48,6 +49,7 @@ using BrakeCommand = pix_robobus_driver_msgs::msg::BrakeCommand;
 using ParkCommand = pix_robobus_driver_msgs::msg::ParkCommand;
 using VehicleModeCommand = pix_robobus_driver_msgs::msg::VehicleModeCommand;
 using GearReport = pix_robobus_driver_msgs::msg::GearReport;
+using AutoRemote = pix_robobus_driver::msg::AutoRemoteCtrlMsg;
 // using A2vWheelCtrl = pix_robobus_driver_msgs::msg::A2vWheelCtrl;
 
 //chassis = enable control
@@ -114,6 +116,8 @@ private:
     gear_command_sub_;
   rclcpp::Subscription<pix_robobus_driver_msgs::msg::GearReport>::ConstSharedPtr
     gear_feedback_sub_;
+  rclcpp::Subscription<AutoRemote>::ConstSharedPtr auto_remote_ctrl_command_sub_;
+
   // need to be done
   // emergency command
   // hazard lights command
@@ -135,6 +139,10 @@ private:
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;
+
+  //remote control flag
+  int remote_require;
+  int current_velocity;
 
 public:
   /**
@@ -181,6 +189,9 @@ public:
    * 
    */
   void timerCallback();
+
+  void callbackVcuReport(const pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr & msg);
+  void callbackRemoteDriveRequire(const pix_robobus_driver_msgs::msg::RemoteDriveRequire::ConstSharedPtr & msg);
 };
 
 } // namespace control_converter

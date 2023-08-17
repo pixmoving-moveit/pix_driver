@@ -100,7 +100,6 @@ private:
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::VehicleMileageFb>::SharedPtr vehicle_mileage_fb_pub_;
   rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr vcu_pad_transfer_pub_;
 
-
   // publish msgs
   /** example
   V2aBrakeStaFb::ConstSharedPtr brake_sta_fb_ptr_;
@@ -119,7 +118,6 @@ private:
   pix_robobus_driver_msgs::msg::VehicleDoorReport::ConstSharedPtr vehicle_door_report_ptr_;
   pix_robobus_driver_msgs::msg::VehicleMileageFb::ConstSharedPtr vehicle_mileage_fb_ptr_;
   std_msgs::msg::Bool::ConstSharedPtr vcu_pad_transfer_ptr_;
-
 
   // can frame entities
   /** example
@@ -158,6 +156,7 @@ private:
   rclcpp::Time vehicle_door_report_received_time_;
   rclcpp::Time vehicle_mileage_fb_received_time_;
   rclcpp::Time vcu_pad_transfer_received_time_;
+
 
 
   // timer
