@@ -446,7 +446,7 @@ void ReportParser::timerCallback()
     (current_time - chassis_sta_to_mobileye_received_time_).seconds() * 1000.0;
     if(chassis_sta_to_mobileye_report_delta_time_ms>param_.report_timeout_ms || chassis_sta_to_mobileye_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "chassis_sta_to_mobileye report timeout = %f ms.", chassis_sta_to_mobileye_report_delta_time_ms);
     }else{
@@ -468,7 +468,7 @@ void ReportParser::timerCallback()
     (current_time - auto_remote_ctrl_msg_received_time_).seconds() * 1000.0;
     if(auto_remote_ctrl_msg_report_delta_time_ms>param_.report_timeout_ms || auto_remote_ctrl_msg_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "auto_remote_ctrl_msg report timeout = %f ms.", auto_remote_ctrl_msg_report_delta_time_ms);
     }else{
@@ -479,7 +479,7 @@ void ReportParser::timerCallback()
     (current_time - throttle_report_received_time_).seconds() * 1000.0;
     if(throttle_report_report_delta_time_ms>param_.report_timeout_ms || throttle_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "throttle_report report timeout = %f ms.", throttle_report_report_delta_time_ms);
     }else{
@@ -490,7 +490,7 @@ void ReportParser::timerCallback()
     (current_time - brake_report_received_time_).seconds() * 1000.0;
     if(brake_report_report_delta_time_ms>param_.report_timeout_ms || brake_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "brake_report report timeout = %f ms.", brake_report_report_delta_time_ms);
     }else{
@@ -501,7 +501,7 @@ void ReportParser::timerCallback()
     (current_time - steering_report_received_time_).seconds() * 1000.0;
     if(steering_report_report_delta_time_ms>param_.report_timeout_ms || steering_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "steering_report report timeout = %f ms.", steering_report_report_delta_time_ms);
     }else{
@@ -512,7 +512,7 @@ void ReportParser::timerCallback()
     (current_time - gear_report_received_time_).seconds() * 1000.0;
     if(gear_report_report_delta_time_ms>param_.report_timeout_ms || gear_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "gear_report report timeout = %f ms.", gear_report_report_delta_time_ms);
     }else{
@@ -523,7 +523,7 @@ void ReportParser::timerCallback()
     (current_time - park_report_received_time_).seconds() * 1000.0;
     if(park_report_report_delta_time_ms>param_.report_timeout_ms || park_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "park_report report timeout = %f ms.", park_report_report_delta_time_ms);
     }else{
@@ -534,7 +534,7 @@ void ReportParser::timerCallback()
     (current_time - vcu_report_received_time_).seconds() * 1000.0;
     if(vcu_report_report_delta_time_ms>param_.report_timeout_ms || vcu_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "vcu_report report timeout = %f ms.", vcu_report_report_delta_time_ms);
     }else{
@@ -545,7 +545,7 @@ void ReportParser::timerCallback()
     (current_time - wheel_speed_report_received_time_).seconds() * 1000.0;
     if(wheel_speed_report_report_delta_time_ms>param_.report_timeout_ms || wheel_speed_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "wheel_speed_report report timeout = %f ms.", wheel_speed_report_report_delta_time_ms);
     }else{
@@ -556,7 +556,7 @@ void ReportParser::timerCallback()
     (current_time - bms_report_received_time_).seconds() * 1000.0;
     if(bms_report_report_delta_time_ms>param_.report_timeout_ms || bms_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "bms_report report timeout = %f ms.", bms_report_report_delta_time_ms);
     }else{
@@ -567,7 +567,7 @@ void ReportParser::timerCallback()
     (current_time - vehicle_door_report_received_time_).seconds() * 1000.0;
     if(vehicle_door_report_report_delta_time_ms>param_.report_timeout_ms || vehicle_door_report_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "vehicle_door_report report timeout = %f ms.", vehicle_door_report_report_delta_time_ms);
     }else{
@@ -578,7 +578,7 @@ void ReportParser::timerCallback()
     (current_time - vehicle_mileage_fb_received_time_).seconds() * 1000.0;
     if(vehicle_mileage_fb_report_delta_time_ms>param_.report_timeout_ms || vehicle_mileage_fb_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "vehicle_mileage_fb report timeout = %f ms.", vehicle_mileage_fb_report_delta_time_ms);
     }else{
@@ -589,7 +589,7 @@ void ReportParser::timerCallback()
     (current_time - vcu_pad_transfer_received_time_).seconds() * 1000.0;
     if(vcu_pad_transfer_report_delta_time_ms>param_.report_timeout_ms || vcu_pad_transfer_ptr_==nullptr)
     {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "vcu_pad_transfer report timeout = %f ms.", vcu_pad_transfer_report_delta_time_ms);
     }else{

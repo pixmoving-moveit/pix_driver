@@ -11,6 +11,14 @@ void AutoCtrlMsg::update_bytes(uint8_t bytes_data[8])
   }
 }
 
+void AutoCtrlMsg::Reset() {
+  // TODO(All) :  you should check this manually
+  for(uint8_t i=0;i<8;i++)
+  {
+    bytes[i] = 0;
+  }
+}
+
 uint8_t * AutoCtrlMsg::get_data()
 {
   return bytes;

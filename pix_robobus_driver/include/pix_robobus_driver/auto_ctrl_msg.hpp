@@ -16,7 +16,7 @@ class AutoCtrlMsg {
         void set_auto_drive_ctrl_mode(int mode);
 
         uint8_t *get_data();
-    
+        void Reset();
 
     private:
         uint8_t bytes[8];

@@ -7,14 +7,14 @@
   <arg name="PROJECT_NAME" default="pix_robobus_driver" />
   
 
-  <node pkg="$(var PROJECT_NAME)" name="$(var PROJECT_NAME)_command_node" exec="$(var PROJECT_NAME)_control_command_node" output="screen">
+  <node pkg="$(var PROJECT_NAME)" name="$(var PROJECT_NAME)_command_node" exec="$(var PROJECT_NAME)_control_command_node" output="log">
     <param name="base_frame_id" value="$(var base_frame_id)"/>
     <param name="command_timeout_ms" value="$(var command_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
     <remap from="output/can_tx" to="/to_can_bus" />
     <remap from="input/engage" to="/$(var PROJECT_NAME)/control_command/engage" />
   </node>
-  <node pkg="$(var PROJECT_NAME)" name="$(var PROJECT_NAME)_report_node" exec="$(var PROJECT_NAME)_report_parser_node" output="screen">
+  <node pkg="$(var PROJECT_NAME)" name="$(var PROJECT_NAME)_report_node" exec="$(var PROJECT_NAME)_report_parser_node" output="log">
     <param name="base_frame_id" value="$(var base_frame_id)"/>
     <param name="report_timeout_ms" value="$(var report_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>

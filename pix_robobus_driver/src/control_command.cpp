@@ -13,7 +13,13 @@ ControlCommand::ControlCommand() : Node("control_command")
 
   // initialize msg received time, make reservation of data size
   // example brake_command_received_time_ = this->now();
-  throttle_command_received_time_ = this->now();brake_command_received_time_ = this->now();steering_command_received_time_ = this->now();gear_command_received_time_ = this->now();park_command_received_time_ = this->now();vehicle_mode_command_received_time_ = this->now();
+  throttle_command_received_time_ = this->now();
+  brake_command_received_time_ = this->now();
+  steering_command_received_time_ = this->now();
+  gear_command_received_time_ = this->now();
+  park_command_received_time_ = this->now();
+  vehicle_mode_command_received_time_ = this->now();
+  auto_remote_ctrl_received_time_ = this->now();
 
   is_engage_ = true;
 
@@ -56,7 +62,8 @@ void ControlCommand::callbackAutoRemoteControlCommand(const pix_robobus_driver_m
     auto_remote_ctrl_received_time_ = this->now();
     auto_remote_ctrl_command_ptr_ = msg;
     remote_status = auto_remote_ctrl_command_ptr_->auto_remote_drive_ctrl_mode;
-    RCLCPP_DEBUG(get_logger(), "remote_require_flag: %d", remote_status);
+    // RCLCPP_INFO(get_logger(), "remote_require_flag: %d", remote_status);
+    auto_ctrl_command_entity_.Reset();
     auto_ctrl_command_entity_.set_auto_drive_ctrl_mode(remote_status);
 
     can_msgs::msg::Frame auto_control_can_msg;
@@ -143,6 +150,8 @@ void ControlCommand::callbackBrakeCommand(const pix_robobus_driver_msgs::msg::Br
         signal_bits += 1;
     }
     brake_command_can_ptr_ = std::make_shared<can_msgs::msg::Frame>(brake_command_can_msg);
+
+    
 }
 
 
@@ -263,13 +272,13 @@ void ControlCommand::timerCallback()
   }
   **/
     // when remote control engage, control message will stop
-    if (remote_status == 2)
+    if (remote_status != 2)
     {
         // throttle_command
         const double throttle_command_delta_time_ms =
             (current_time - throttle_command_received_time_).seconds() * 1000.0;
         if (throttle_command_delta_time_ms > param_.command_timeout_ms || throttle_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "throttle_command timeout = %f ms.", throttle_command_delta_time_ms);
         } else {
@@ -282,7 +291,7 @@ void ControlCommand::timerCallback()
         const double brake_command_delta_time_ms =
             (current_time - brake_command_received_time_).seconds() * 1000.0;
         if (brake_command_delta_time_ms > param_.command_timeout_ms || brake_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "brake_command timeout = %f ms.", brake_command_delta_time_ms);
         } else {
@@ -295,7 +304,7 @@ void ControlCommand::timerCallback()
         const double steering_command_delta_time_ms =
             (current_time - steering_command_received_time_).seconds() * 1000.0;
         if (steering_command_delta_time_ms > param_.command_timeout_ms || steering_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "steering_command timeout = %f ms.", steering_command_delta_time_ms);
         } else {
@@ -308,7 +317,7 @@ void ControlCommand::timerCallback()
         const double gear_command_delta_time_ms =
             (current_time - gear_command_received_time_).seconds() * 1000.0;
         if (gear_command_delta_time_ms > param_.command_timeout_ms || gear_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "gear_command timeout = %f ms.", gear_command_delta_time_ms);
         } else {
@@ -321,7 +330,7 @@ void ControlCommand::timerCallback()
         const double park_command_delta_time_ms =
             (current_time - park_command_received_time_).seconds() * 1000.0;
         if (park_command_delta_time_ms > param_.command_timeout_ms || park_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "park_command timeout = %f ms.", park_command_delta_time_ms);
         } else {
@@ -334,7 +343,7 @@ void ControlCommand::timerCallback()
         const double vehicle_mode_command_delta_time_ms =
             (current_time - vehicle_mode_command_received_time_).seconds() * 1000.0;
         if (vehicle_mode_command_delta_time_ms > param_.command_timeout_ms || vehicle_mode_command_can_ptr_==nullptr) {
-            RCLCPP_ERROR_THROTTLE(
+            RCLCPP_WARN_THROTTLE(
             get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
             "vehicle_mode_command timeout = %f ms.", vehicle_mode_command_delta_time_ms);
         } else {
@@ -346,7 +355,7 @@ void ControlCommand::timerCallback()
     const double auto_ctrl_delta_time_ms =
         (current_time - auto_remote_ctrl_received_time_).seconds() * 1000.0;
     if (auto_ctrl_delta_time_ms > param_.command_timeout_ms || auto_control_command_can_ptr_==nullptr) {
-        RCLCPP_ERROR_THROTTLE(
+        RCLCPP_WARN_THROTTLE(
         get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
         "remote_control_require timeout = %f ms.", auto_ctrl_delta_time_ms);
     } else {

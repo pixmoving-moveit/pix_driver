@@ -86,7 +86,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
     std::bind(&ControlConverter::timerCallback, this));
 
   //remote control require
-  auto_remote_ctrl_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_ctrl_msg", 1, std::bind(&ControlConverter::callbackAutoRemoteControlCommand, this, std::placeholders::_1));
+  auto_remote_ctrl_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", 1, std::bind(&ControlConverter::callbackAutoRemoteControlCommand, this, std::placeholders::_1));
   vcu_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::VcuReport>( "/pix_robobus/vcu_report", 1, std::bind(&ControlConverter::callbackVcuReport, this, std::placeholders::_1));
 }
 
@@ -108,6 +108,7 @@ void ControlConverter::callbackActuationCommand(
 {
   actuation_command_received_time_ = this->now();
   actuation_command_ptr_ = msg;
+  RCLCPP_INFO(get_logger(), "callbackActuationCommand: %f", actuation_command_received_time_.seconds() * 1000.0);
 }
 
 void ControlConverter::callbackGearCommand(
