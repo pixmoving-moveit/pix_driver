@@ -32,11 +32,11 @@ ControlCommand::ControlCommand() : Node("control_command")
     gear_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::GearCommand>("/pix_robobus/gear_command", 1, std::bind(&ControlCommand::callbackGearCommand, this, _1));
     park_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::ParkCommand>("/pix_robobus/park_command", 1, std::bind(&ControlCommand::callbackParkCommand, this, _1));
     vehicle_mode_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::VehicleModeCommand>("/pix_robobus/vehicle_mode_command", 1, std::bind(&ControlCommand::callbackVehicleModeCommand, this, _1));
-    auto_remote_ctrl_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_ctrl_msg", 1, std::bind(&ControlCommand::callbackAutoRemoteControlCommand, this, _1));
+    auto_remote_ctrl_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", 1, std::bind(&ControlCommand::callbackAutoRemoteControlCommand, this, _1));
 
     // engage
-    engage_ctrl_sub_ = create_subscription<std_msgs::msg::Bool>(
-      "input/engage", 1, std::bind(&ControlCommand::callbackEngage, this, _1));
+    // engage_ctrl_sub_ = create_subscription<std_msgs::msg::Bool>(
+    //   "input/engage", 1, std::bind(&ControlCommand::callbackEngage, this, _1));
   }
   /* publisher */
   {
@@ -62,7 +62,7 @@ void ControlCommand::callbackAutoRemoteControlCommand(const pix_robobus_driver_m
     can_msgs::msg::Frame auto_control_can_msg;
     auto_control_can_msg.header.stamp = msg->header.stamp;
     auto_control_can_msg.dlc = 8;
-    auto_control_can_msg.id = 0x3a0;
+    auto_control_can_msg.id = auto_ctrl_command_entity_.ID;
     auto_control_can_msg.is_extended = false;
     uint8_t *signal_bits;
     signal_bits = auto_ctrl_command_entity_.get_data();

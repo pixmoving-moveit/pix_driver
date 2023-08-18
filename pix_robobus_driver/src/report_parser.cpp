@@ -52,7 +52,7 @@ ReportParser::ReportParser() : Node("report_parser")
       create_publisher<V2aBrakeStaFb>("/pix_robobus/v2a_brakestafb", rclcpp::QoS{1});
     **/
     chassis_sta_to_mobileye_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ChassisStaToMobileye>("/pix_robobus/chassis_sta_to_mobileye", rclcpp::QoS{1});
-    auto_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>("/pix_robobus/auto_ctrl_msg", rclcpp::QoS{1});
+    // auto_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>("/pix_robobus/auto_ctrl_msg", rclcpp::QoS{1});
     auto_remote_ctrl_msg_pub_ = create_publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", rclcpp::QoS{1});
     throttle_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::ThrottleReport>("/pix_robobus/throttle_report", rclcpp::QoS{1});
     brake_report_pub_ = create_publisher<pix_robobus_driver_msgs::msg::BrakeReport>("/pix_robobus/brake_report", rclcpp::QoS{1});
@@ -453,16 +453,16 @@ void ReportParser::timerCallback()
         chassis_sta_to_mobileye_pub_->publish(*chassis_sta_to_mobileye_ptr_);
     }
     
-    const double auto_ctrl_msg_report_delta_time_ms =
-    (current_time - auto_ctrl_msg_received_time_).seconds() * 1000.0;
-    if(auto_ctrl_msg_report_delta_time_ms>param_.report_timeout_ms || auto_ctrl_msg_ptr_==nullptr)
-    {
-        RCLCPP_ERROR_THROTTLE(
-        get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
-        "auto_ctrl_msg report timeout = %f ms.", auto_ctrl_msg_report_delta_time_ms);
-    }else{
-        auto_ctrl_msg_pub_->publish(*auto_ctrl_msg_ptr_);
-    }
+    // const double auto_ctrl_msg_report_delta_time_ms =
+    // (current_time - auto_ctrl_msg_received_time_).seconds() * 1000.0;
+    // if(auto_ctrl_msg_report_delta_time_ms>param_.report_timeout_ms || auto_ctrl_msg_ptr_==nullptr)
+    // {
+    //     RCLCPP_ERROR_THROTTLE(
+    //     get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
+    //     "auto_ctrl_msg report timeout = %f ms.", auto_ctrl_msg_report_delta_time_ms);
+    // }else{
+    //     auto_ctrl_msg_pub_->publish(*auto_ctrl_msg_ptr_);
+    // }
     
     const double auto_remote_ctrl_msg_report_delta_time_ms =
     (current_time - auto_remote_ctrl_msg_received_time_).seconds() * 1000.0;

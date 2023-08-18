@@ -86,7 +86,7 @@ private:
   rclcpp::Publisher<V2aBrakeStaFb>::SharedPtr brake_sta_fb_pub_;
   **/
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::ChassisStaToMobileye>::SharedPtr chassis_sta_to_mobileye_pub_;
-  rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>::SharedPtr auto_ctrl_msg_pub_;
+  // rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoCtrlMsg>::SharedPtr auto_ctrl_msg_pub_;
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>::SharedPtr auto_remote_ctrl_msg_pub_;
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::ThrottleReport>::SharedPtr throttle_report_pub_;
   rclcpp::Publisher<pix_robobus_driver_msgs::msg::BrakeReport>::SharedPtr brake_report_pub_;
