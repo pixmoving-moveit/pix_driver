@@ -35,6 +35,7 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
   gear_report_received_timestamp_ = this->now();
   vcu_report_received_timestamp_ = this->now();
   vehicle_door_report_received_timestamp_ = this->now();
+  
 
   // topic name 
   std::string throttle_report_sub_topic_name = "/pix_robobus/throttle_report";
