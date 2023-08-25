@@ -108,7 +108,7 @@ void ControlConverter::callbackActuationCommand(
 {
   actuation_command_received_time_ = this->now();
   actuation_command_ptr_ = msg;
-  RCLCPP_INFO(get_logger(), "callbackActuationCommand: %f", actuation_command_received_time_.seconds() * 1000.0);
+  // RCLCPP_INFO(get_logger(), "callbackActuationCommand: %f", actuation_command_received_time_.seconds() * 1000.0);
 }
 
 void ControlConverter::callbackGearCommand(
@@ -252,6 +252,7 @@ void ControlConverter::timerCallback()
     } else{
       park_ctrl_msg.park_target = false;
     }
+    RCLCPP_INFO(get_logger(), "remote_control mode 0");
   }
   else if (remote_require == 1)
   {
@@ -290,6 +291,7 @@ void ControlConverter::timerCallback()
     } else{
       park_ctrl_msg.park_target = false;
     }
+    RCLCPP_INFO(get_logger(), "remote_control mode 1");
   }
 
   // publishing msgs

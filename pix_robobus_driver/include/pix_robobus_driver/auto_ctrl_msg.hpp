@@ -12,8 +12,10 @@ class AutoCtrlMsg {
         // singal
         int auto_heartbeat_;
         int auto_drive_ctrl_mode_;
+        uint8_t count;
 
         void set_auto_drive_ctrl_mode(int mode);
+        void set_hearbeat();
 
         uint8_t *get_data();
         void Reset();

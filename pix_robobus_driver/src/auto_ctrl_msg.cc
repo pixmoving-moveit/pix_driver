@@ -21,6 +21,7 @@ void AutoCtrlMsg::Reset() {
 
 uint8_t * AutoCtrlMsg::get_data()
 {
+  set_hearbeat();
   return bytes;
 }
 
@@ -29,6 +30,12 @@ void AutoCtrlMsg::set_auto_drive_ctrl_mode(int mode)
   Byte to_set(0);
   to_set.set_value((uint8_t)mode, 0, 8);
   bytes[0] += to_set.return_byte_t();
+}
+
+void AutoCtrlMsg::set_hearbeat()
+{
+  count++;
+  bytes[7] = count;
 }
 
 void AutoCtrlMsg::Parse() {
