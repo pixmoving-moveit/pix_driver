@@ -84,6 +84,23 @@ ControlConverter::ControlConverter() : Node("control_converter")
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
     std::bind(&ControlConverter::timerCallback, this));
+
+  //remote control require
+  auto_remote_ctrl_command_sub_ = create_subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>("/pix_robobus/auto_remote_ctrl_msg", 1, std::bind(&ControlConverter::callbackAutoRemoteControlCommand, this, std::placeholders::_1));
+  vcu_report_sub_ = create_subscription<pix_robobus_driver_msgs::msg::VcuReport>( "/pix_robobus/vcu_report", 1, std::bind(&ControlConverter::callbackVcuReport, this, std::placeholders::_1));
+}
+
+void ControlConverter::callbackVcuReport(
+  const pix_robobus_driver_msgs::msg::VcuReport::ConstSharedPtr & msg)
+{
+  current_velocity = msg->vehicle_speed;
+}
+
+
+void ControlConverter::callbackAutoRemoteControlCommand(
+  const pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg::ConstSharedPtr & msg)
+{
+  remote_require = msg->auto_remote_drive_ctrl_mode;
 }
 
 void ControlConverter::callbackActuationCommand(
@@ -91,6 +108,7 @@ void ControlConverter::callbackActuationCommand(
 {
   actuation_command_received_time_ = this->now();
   actuation_command_ptr_ = msg;
+  // RCLCPP_INFO(get_logger(), "callbackActuationCommand: %f", actuation_command_received_time_.seconds() * 1000.0);
 }
 
 void ControlConverter::callbackGearCommand(
@@ -170,67 +188,110 @@ void ControlConverter::timerCallback()
   GearCommand gear_ctrl_msg;
   ParkCommand park_ctrl_msg;
 
-  // brake
-  brake_ctrl_msg.header.stamp = current_time;
-  brake_ctrl_msg.brake_pedal_target = actuation_command_ptr_->actuation.brake_cmd * 100.0;
-  brake_ctrl_msg.brake_en_ctrl = 1;
+  if (remote_require == 0)
+  {
+    // brake
+    brake_ctrl_msg.header.stamp = current_time;
+    brake_ctrl_msg.brake_pedal_target = actuation_command_ptr_->actuation.brake_cmd * 100.0;
+    brake_ctrl_msg.brake_en_ctrl = 1;
 
-  // steer
-  steer_ctrl_msg.header.stamp = current_time;
-  steer_ctrl_msg.steer_angle_speed = 250;
-  steer_ctrl_msg.steer_angle_target =
+    // steer
+    steer_ctrl_msg.header.stamp = current_time;
+    steer_ctrl_msg.steer_angle_speed = 250;
+    steer_ctrl_msg.steer_angle_target =
     actuation_command_ptr_->actuation.steer_cmd * param_.steering_factor;
-  steer_ctrl_msg.steer_en_ctrl = 1;
+    steer_ctrl_msg.steer_en_ctrl = 1;
 
-  
+    
 
-  // gear
-  gear_ctrl_msg.header.stamp = current_time;
-  gear_ctrl_msg.gear_en_ctrl = 1;
-  switch (gear_command_ptr_->command) {
-    case autoware_auto_vehicle_msgs::msg::GearCommand::DRIVE:
-      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_DRIVE);
-      break;
-    case autoware_auto_vehicle_msgs::msg::GearCommand::NEUTRAL:
-      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
-      break;
-    case autoware_auto_vehicle_msgs::msg::GearCommand::REVERSE:
-      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_REVERSE);
-      break;
-    case autoware_auto_vehicle_msgs::msg::GearCommand::PARK:
-      gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_PARK);
-      break;
-    case autoware_auto_vehicle_msgs::msg::GearCommand::NONE :
-      gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_INVALID);
-      break;
-    default:
-      gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
-      break;
+    // gear
+    gear_ctrl_msg.header.stamp = current_time;
+    gear_ctrl_msg.gear_en_ctrl = 1;
+    switch (gear_command_ptr_->command) {
+      case autoware_auto_vehicle_msgs::msg::GearCommand::DRIVE:
+        gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_DRIVE);
+        break;
+      case autoware_auto_vehicle_msgs::msg::GearCommand::NEUTRAL:
+        gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
+        break;
+      case autoware_auto_vehicle_msgs::msg::GearCommand::REVERSE:
+        gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_REVERSE);
+        break;
+      case autoware_auto_vehicle_msgs::msg::GearCommand::PARK:
+        gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_PARK);
+        break;
+      case autoware_auto_vehicle_msgs::msg::GearCommand::NONE :
+        gear_ctrl_msg.gear_target = static_cast<int8_t>(GEAR_INVALID);
+        break;
+      default:
+        gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
+        break;
+    }
+    // throttle
+    throttle_ctrl_msg.header.stamp = current_time;
+    throttle_ctrl_msg.dirve_en_ctrl = 1;
+    throttle_ctrl_msg.dirve_throttle_pedal_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
+
+    // vehicle
+    vehicle_ctrl_msg.header.stamp = current_time;
+    vehicle_ctrl_msg.steer_mode_ctrl = static_cast<int8_t>(STEER_NON_DIRECTION);
+    vehicle_ctrl_msg.drive_mode_ctrl = DIRVE_ENCTRL_THROTTLE_PADDLE;
+    
+
+    // keep shifting and braking when target gear is different from actual gear
+    if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
+      brake_ctrl_msg.brake_pedal_target = 20.0;
+      throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
+    }
+
+    // parking
+    park_ctrl_msg.header.stamp = current_time;
+    park_ctrl_msg.park_en_ctrl = true;
+    if(operation_mode_ptr_->mode == operation_mode_ptr_->STOP){
+      park_ctrl_msg.park_target = true;
+    } else{
+      park_ctrl_msg.park_target = false;
+    }
+    RCLCPP_INFO(get_logger(), "remote_control mode 0");
   }
-  // throttle
-  throttle_ctrl_msg.header.stamp = current_time;
-  throttle_ctrl_msg.dirve_en_ctrl = 1;
-  throttle_ctrl_msg.dirve_throttle_pedal_target = actuation_command_ptr_->actuation.accel_cmd * 100.0;
+  else if (remote_require == 1)
+  {
+    // brake
+    brake_ctrl_msg.header.stamp = current_time;
+    brake_ctrl_msg.brake_pedal_target = 20;
+    brake_ctrl_msg.brake_en_ctrl = 1;
 
-  // vehicle
-  vehicle_ctrl_msg.header.stamp = current_time;
-  vehicle_ctrl_msg.steer_mode_ctrl = static_cast<int8_t>(STEER_NON_DIRECTION);
-  vehicle_ctrl_msg.drive_mode_ctrl = DIRVE_ENCTRL_THROTTLE_PADDLE;
-  
+    // steer
+    steer_ctrl_msg.header.stamp = current_time;
+    steer_ctrl_msg.steer_angle_speed = 250;
+    steer_ctrl_msg.steer_angle_target = 0;
+    steer_ctrl_msg.steer_en_ctrl = 1;
 
-  // keep shifting and braking when target gear is different from actual gear
-  if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
-    brake_ctrl_msg.brake_pedal_target = 20.0;
-    throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
-  }
+    // gear
+    gear_ctrl_msg.header.stamp = current_time;
+    gear_ctrl_msg.gear_en_ctrl = 1;
+    gear_ctrl_msg.gear_target  = static_cast<int8_t>(GEAR_NEUTRAL);
 
-  // parking
-  park_ctrl_msg.header.stamp = current_time;
-  park_ctrl_msg.park_en_ctrl = true;
-  if(operation_mode_ptr_->mode == operation_mode_ptr_->STOP){
-    park_ctrl_msg.park_target = true;
-  } else{
-    park_ctrl_msg.park_target = false;
+    // throttle
+    throttle_ctrl_msg.header.stamp = current_time;
+    throttle_ctrl_msg.dirve_en_ctrl = 1;
+    throttle_ctrl_msg.dirve_throttle_pedal_target = 0;
+
+    // vehicle
+    vehicle_ctrl_msg.header.stamp = current_time;
+    vehicle_ctrl_msg.steer_mode_ctrl = static_cast<int8_t>(STEER_NON_DIRECTION);
+    vehicle_ctrl_msg.drive_mode_ctrl = DIRVE_ENCTRL_THROTTLE_PADDLE;
+    
+
+    // parking
+    park_ctrl_msg.header.stamp = current_time;
+    park_ctrl_msg.park_en_ctrl = true;
+    if(current_velocity == 0){
+      park_ctrl_msg.park_target = true;
+    } else{
+      park_ctrl_msg.park_target = false;
+    }
+    RCLCPP_INFO(get_logger(), "remote_control mode 1");
   }
 
   // publishing msgs

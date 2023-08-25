@@ -20,8 +20,8 @@
 #include <pix_robobus_driver_msgs/msg/gear_command.hpp>
 #include <pix_robobus_driver_msgs/msg/park_command.hpp>
 #include <pix_robobus_driver_msgs/msg/vehicle_mode_command.hpp>
-
-
+#include <pix_robobus_driver_msgs/msg/auto_ctrl_msg.hpp>
+#include <pix_robobus_driver_msgs/msg/auto_remote_ctrl_msg.hpp>
 
 // include- Parse header file
 // Example: #include "brake_command_101.hpp"
@@ -32,6 +32,7 @@
 #include <pix_robobus_driver/gear_command.hpp>
 #include <pix_robobus_driver/park_command.hpp>
 #include <pix_robobus_driver/vehicle_mode_command.hpp>
+#include <pix_robobus_driver/auto_ctrl_msg.hpp>
 
 
 namespace pix_robobus_driver
@@ -57,45 +58,50 @@ class ControlCommand : public rclcpp::Node
 private:
   // parameters of node
   Param param_;
-
+  int remote_status;
+  uint8_t count;
   // subscribers
   // example rclcpp::Subscription<A2vBrakeCtrl>::SharedPtr a2v_brake_ctrl_sub_;
   rclcpp::Subscription<pix_robobus_driver_msgs::msg::ThrottleCommand>::SharedPtr throttle_command_sub_;
-rclcpp::Subscription<pix_robobus_driver_msgs::msg::BrakeCommand>::SharedPtr brake_command_sub_;
-rclcpp::Subscription<pix_robobus_driver_msgs::msg::SteeringCommand>::SharedPtr steering_command_sub_;
-rclcpp::Subscription<pix_robobus_driver_msgs::msg::GearCommand>::SharedPtr gear_command_sub_;
-rclcpp::Subscription<pix_robobus_driver_msgs::msg::ParkCommand>::SharedPtr park_command_sub_;
-rclcpp::Subscription<pix_robobus_driver_msgs::msg::VehicleModeCommand>::SharedPtr vehicle_mode_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::BrakeCommand>::SharedPtr brake_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::SteeringCommand>::SharedPtr steering_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::GearCommand>::SharedPtr gear_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::ParkCommand>::SharedPtr park_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::VehicleModeCommand>::SharedPtr vehicle_mode_command_sub_;
+  rclcpp::Subscription<pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg>::SharedPtr auto_remote_ctrl_command_sub_;
 
 
   // msgs
   // example A2vBrakeCtrl::ConstSharedPtr brake_ctrl_ptr_;
   pix_robobus_driver_msgs::msg::ThrottleCommand::ConstSharedPtr throttle_command_ptr_;
-pix_robobus_driver_msgs::msg::BrakeCommand::ConstSharedPtr brake_command_ptr_;
-pix_robobus_driver_msgs::msg::SteeringCommand::ConstSharedPtr steering_command_ptr_;
-pix_robobus_driver_msgs::msg::GearCommand::ConstSharedPtr gear_command_ptr_;
-pix_robobus_driver_msgs::msg::ParkCommand::ConstSharedPtr park_command_ptr_;
-pix_robobus_driver_msgs::msg::VehicleModeCommand::ConstSharedPtr vehicle_mode_command_ptr_;
+  pix_robobus_driver_msgs::msg::BrakeCommand::ConstSharedPtr brake_command_ptr_;
+  pix_robobus_driver_msgs::msg::SteeringCommand::ConstSharedPtr steering_command_ptr_;
+  pix_robobus_driver_msgs::msg::GearCommand::ConstSharedPtr gear_command_ptr_;
+  pix_robobus_driver_msgs::msg::ParkCommand::ConstSharedPtr park_command_ptr_;
+  pix_robobus_driver_msgs::msg::VehicleModeCommand::ConstSharedPtr vehicle_mode_command_ptr_;
+  pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg::ConstSharedPtr auto_remote_ctrl_command_ptr_;
 
 
   // control command structures
   // example A2vdrivectrl130 a2v_drivectrl_130_entity_;
   ThrottleCommand throttle_command_entity_;
-BrakeCommand brake_command_entity_;
-SteeringCommand steering_command_entity_;
-GearCommand gear_command_entity_;
-ParkCommand park_command_entity_;
-VehicleModeCommand vehicle_mode_command_entity_;
+  BrakeCommand brake_command_entity_;
+  SteeringCommand steering_command_entity_;
+  GearCommand gear_command_entity_;
+  ParkCommand park_command_entity_;
+  VehicleModeCommand vehicle_mode_command_entity_;
+  AutoCtrlMsg auto_ctrl_command_entity_;
 
 
   // msg received timestamp
   // example rclcpp::Time drive_command_received_time_;
   rclcpp::Time throttle_command_received_time_;
-rclcpp::Time brake_command_received_time_;
-rclcpp::Time steering_command_received_time_;
-rclcpp::Time gear_command_received_time_;
-rclcpp::Time park_command_received_time_;
-rclcpp::Time vehicle_mode_command_received_time_;
+  rclcpp::Time brake_command_received_time_;
+  rclcpp::Time steering_command_received_time_;
+  rclcpp::Time gear_command_received_time_;
+  rclcpp::Time park_command_received_time_;
+  rclcpp::Time vehicle_mode_command_received_time_;
+  rclcpp::Time auto_remote_ctrl_received_time_;
 
 
   // state control
@@ -108,11 +114,12 @@ rclcpp::Time vehicle_mode_command_received_time_;
   // publishing can msgs
   // example can_msgs::msg::Frame::ConstSharedPtr brake_ctrl_can_ptr_;
   can_msgs::msg::Frame::ConstSharedPtr throttle_command_can_ptr_;
-can_msgs::msg::Frame::ConstSharedPtr brake_command_can_ptr_;
-can_msgs::msg::Frame::ConstSharedPtr steering_command_can_ptr_;
-can_msgs::msg::Frame::ConstSharedPtr gear_command_can_ptr_;
-can_msgs::msg::Frame::ConstSharedPtr park_command_can_ptr_;
-can_msgs::msg::Frame::ConstSharedPtr vehicle_mode_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr brake_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr steering_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr gear_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr park_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr vehicle_mode_command_can_ptr_;
+  can_msgs::msg::Frame::ConstSharedPtr auto_control_command_can_ptr_;
 
 
   // timer
@@ -125,16 +132,17 @@ public:
   // void callbackBrakeCtrl(const A2vBrakeCtrl::ConstSharedPtr & msg);
   void callbackThrottleCommand(const pix_robobus_driver_msgs::msg::ThrottleCommand::ConstSharedPtr & msg);
 
-void callbackBrakeCommand(const pix_robobus_driver_msgs::msg::BrakeCommand::ConstSharedPtr & msg);
+  void callbackBrakeCommand(const pix_robobus_driver_msgs::msg::BrakeCommand::ConstSharedPtr & msg);
 
-void callbackSteeringCommand(const pix_robobus_driver_msgs::msg::SteeringCommand::ConstSharedPtr & msg);
+  void callbackSteeringCommand(const pix_robobus_driver_msgs::msg::SteeringCommand::ConstSharedPtr & msg);
 
-void callbackGearCommand(const pix_robobus_driver_msgs::msg::GearCommand::ConstSharedPtr & msg);
+  void callbackGearCommand(const pix_robobus_driver_msgs::msg::GearCommand::ConstSharedPtr & msg);
 
-void callbackParkCommand(const pix_robobus_driver_msgs::msg::ParkCommand::ConstSharedPtr & msg);
+  void callbackParkCommand(const pix_robobus_driver_msgs::msg::ParkCommand::ConstSharedPtr & msg);
 
-void callbackVehicleModeCommand(const pix_robobus_driver_msgs::msg::VehicleModeCommand::ConstSharedPtr & msg);
+  void callbackVehicleModeCommand(const pix_robobus_driver_msgs::msg::VehicleModeCommand::ConstSharedPtr & msg);
 
+  void callbackAutoRemoteControlCommand(const pix_robobus_driver_msgs::msg::AutoRemoteCtrlMsg::ConstSharedPtr & msg);
 
   void callbackEngage(const std_msgs::msg::Bool::ConstSharedPtr & msg);
   void timerCallback();

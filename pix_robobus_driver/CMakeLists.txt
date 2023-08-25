@@ -24,6 +24,9 @@ ament_auto_add_executable(${PROJECT_NAME}_control_command_node
   src/Byte.cc
   src/control_command.cpp
   src/control_command_node.cpp
+
+  src/auto_ctrl_msg.cc
+  src/auto_remote_ctrl_msg.cc
 )
 
 ament_auto_add_executable(${PROJECT_NAME}_report_parser_node

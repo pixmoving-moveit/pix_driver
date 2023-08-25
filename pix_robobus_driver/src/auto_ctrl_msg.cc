@@ -11,6 +11,33 @@ void AutoCtrlMsg::update_bytes(uint8_t bytes_data[8])
   }
 }
 
+void AutoCtrlMsg::Reset() {
+  // TODO(All) :  you should check this manually
+  for(uint8_t i=0;i<8;i++)
+  {
+    bytes[i] = 0;
+  }
+}
+
+uint8_t * AutoCtrlMsg::get_data()
+{
+  set_hearbeat();
+  return bytes;
+}
+
+void AutoCtrlMsg::set_auto_drive_ctrl_mode(int mode)
+{
+  Byte to_set(0);
+  to_set.set_value((uint8_t)mode, 0, 8);
+  bytes[0] += to_set.return_byte_t();
+}
+
+void AutoCtrlMsg::set_hearbeat()
+{
+  count++;
+  bytes[7] = count;
+}
+
 void AutoCtrlMsg::Parse() {
   auto_heartbeat_ = autoheartbeat();
   auto_drive_ctrl_mode_ = autodrivectrlmode();
