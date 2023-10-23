@@ -146,6 +146,8 @@ private:
   int remote_require;
   int current_velocity;
 
+  double parking_brake;
+
 public:
   /**
    * @brief Construct a new Control Converter object

@@ -240,7 +240,7 @@ void ControlConverter::timerCallback()
 
     // keep shifting and braking when target gear is different from actual gear
     if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
-      brake_ctrl_msg.brake_pedal_target = 20.0;
+      brake_ctrl_msg.brake_pedal_target = 5.0;
       throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
     }
 
@@ -252,14 +252,14 @@ void ControlConverter::timerCallback()
     } else{
       park_ctrl_msg.park_target = false;
     }
+    parking_brake = 0;
     RCLCPP_INFO(get_logger(), "remote_control mode 0");
   }
   else if (remote_require == 1)
   {
-    // brake
-    brake_ctrl_msg.header.stamp = current_time;
-    brake_ctrl_msg.brake_pedal_target = 20;
-    brake_ctrl_msg.brake_en_ctrl = 1;
+    if (parking_brake < 20)
+      parking_brake += 0.1;
+
 
     // steer
     steer_ctrl_msg.header.stamp = current_time;
@@ -288,8 +288,17 @@ void ControlConverter::timerCallback()
     park_ctrl_msg.park_en_ctrl = true;
     if(current_velocity == 0){
       park_ctrl_msg.park_target = true;
+      // brake
+      parking_brake = 0;
+      brake_ctrl_msg.header.stamp = current_time;
+      brake_ctrl_msg.brake_pedal_target = parking_brake;
+      brake_ctrl_msg.brake_en_ctrl = 1;
     } else{
       park_ctrl_msg.park_target = false;
+      // brake
+      brake_ctrl_msg.header.stamp = current_time;
+      brake_ctrl_msg.brake_pedal_target = parking_brake;
+      brake_ctrl_msg.brake_en_ctrl = 1;
     }
     RCLCPP_INFO(get_logger(), "remote_control mode 1");
   }
