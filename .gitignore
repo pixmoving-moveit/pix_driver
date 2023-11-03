@@ -1,2 +1,5 @@
 /pix_hooke_driver/
 /pix_hooke_driver_msgs
+/build
+/install
+/log
