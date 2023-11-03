@@ -240,7 +240,7 @@ void ControlConverter::timerCallback()
 
     // keep shifting and braking when target gear is different from actual gear
     if (gear_report_ptr_->gear_actual != gear_ctrl_msg.gear_target ) {
-      brake_ctrl_msg.brake_pedal_target = 5.0;
+      brake_ctrl_msg.brake_pedal_target = 20.0;
       throttle_ctrl_msg.dirve_throttle_pedal_target = 0.0;
     }
 
@@ -263,7 +263,7 @@ void ControlConverter::timerCallback()
 
     // steer
     steer_ctrl_msg.header.stamp = current_time;
-    steer_ctrl_msg.steer_angle_speed = 250;
+    steer_ctrl_msg.steer_angle_speed = 500;
     steer_ctrl_msg.steer_angle_target = 0;
     steer_ctrl_msg.steer_en_ctrl = 1;
 
