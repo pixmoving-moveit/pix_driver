@@ -62,7 +62,7 @@ void ControlCommand::callbackAutoRemoteControlCommand(const pix_robobus_driver_m
     auto_remote_ctrl_received_time_ = this->now();
     auto_remote_ctrl_command_ptr_ = msg;
     remote_status = auto_remote_ctrl_command_ptr_->auto_remote_drive_ctrl_mode;
-    // RCLCPP_INFO(get_logger(), "remote_require_flag: %d", remote_status);
+    RCLCPP_INFO(get_logger(), "remote_require_flag: %d", remote_status);
     auto_ctrl_command_entity_.Reset();
     auto_ctrl_command_entity_.set_auto_drive_ctrl_mode(remote_status);
 
