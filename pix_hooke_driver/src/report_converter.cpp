@@ -25,7 +25,7 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
     declare_parameter("report_msg_timeout_ms", 1000);
   param_.loop_rate = declare_parameter("loop_rate", 50.0);
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
-  param_.steering_factor = param_.max_steering_angle / 360.0;
+  param_.steering_factor = param_.max_steering_angle / 500.0;
   param_.base_frame_id = declare_parameter("base_frame_id", "base_link");
 
   // initialize msg received timestamps
