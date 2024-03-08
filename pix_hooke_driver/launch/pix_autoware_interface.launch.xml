@@ -2,9 +2,10 @@
 <launch>
   <arg name="autoware_control_command_timeout" default="100" />
   <arg name="report_msg_timeout_ms" default="1000" />
-  <arg name="max_steering_angle" default="0.5236" />
+  <arg name="max_steering_angle" default="0.48" />
   <arg name="loop_rate" default="50.0" />
   <arg name="base_frame_id" default="base_link" />
+  <arg name="use_steer_mode_correct" default="true" />
 
   <node pkg="pix_hooke_driver" name="pix_hooke_driver_control_converter_node" exec="pix_hooke_driver_control_converter_node" output="screen">
     <param name="autoware_control_command_timeout" value="$(var autoware_control_command_timeout)"/>
@@ -16,6 +17,7 @@
     <param name="report_msg_timeout_ms" value="$(var report_msg_timeout_ms)"/>
     <param name="loop_rate" value="$(var loop_rate)"/>
     <param name="max_steering_angle" value="$(var max_steering_angle)"/>
+    <param name="use_steer_mode_correct" value="$(var use_steer_mode_correct)"/>
   </node>
 
 </launch>

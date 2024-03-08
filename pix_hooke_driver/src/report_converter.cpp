@@ -25,7 +25,8 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
     declare_parameter("report_msg_timeout_ms", 1000);
   param_.loop_rate = declare_parameter("loop_rate", 50.0);
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
-  param_.steering_factor = param_.max_steering_angle / 360.0;
+  param_.steering_factor = param_.max_steering_angle / 450.0;
+  param_.use_steer_mode_correct = declare_parameter("use_steer_mode_correct", false);
   param_.base_frame_id = declare_parameter("base_frame_id", "base_link");
 
   // initialize msg received timestamps
@@ -71,6 +72,8 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
   steering_wheel_status_pub_ =
     create_publisher<tier4_vehicle_msgs::msg::SteeringWheelStatusStamped>(
       "/vehicle/status/steering_wheel_status", 1);
+  slip_angle_pub_ = create_publisher<geometry_msgs::msg::Vector3Stamped>(
+    "/localization/slip_angle", 1);
   door_status_pub_ =
     create_publisher<tier4_api_msgs::msg::DoorStatus>("/vehicle/status/door_status", 1);
   
@@ -183,6 +186,24 @@ void ReportConverter::timerCallback()
   steer_report_msg.stamp = current_time;
   steer_report_msg.steering_tire_angle = -1.0 * steer_sta_fb_ptr_->vcu_chassis_steer_angle_fb * param_.steering_factor;
   steering_status_pub_->publish(steer_report_msg);
+  geometry_msgs::msg::Vector3Stamped slip_angle_msg;
+  slip_angle_msg.header.frame_id = param_.base_frame_id;
+  slip_angle_msg.header.stamp = current_time;
+  if(param_.use_steer_mode_correct)
+  {
+  switch (steer_sta_fb_ptr_->vcu_chassis_steer_mode_fb)
+  {
+  case VCU_CHASSISSTEERMODEFB_FRONT_ACKERMAN:
+    slip_angle_msg.vector.z = atan(0.5 * tan(steer_report_msg.steering_tire_angle));
+    break;
+  case VCU_CHASSISSTEERMODEFB_SAME_FRONT_AND_BACK:
+    slip_angle_msg.vector.z = steer_report_msg.steering_tire_angle;
+    break;
+  default:
+    break;
+  }
+  }
+  slip_angle_pub_->publish(slip_angle_msg);
 
   // make control mode
   control_mode_report_msg.stamp = current_time;

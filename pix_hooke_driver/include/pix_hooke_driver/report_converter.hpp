@@ -18,6 +18,7 @@
 
 // geometry_msgs
 #include <geometry_msgs/msg/twist_with_covariance.hpp>
+#include <geometry_msgs/msg/vector3_stamped.hpp>
 
 // autoware_msgs
 #include <autoware_auto_vehicle_msgs/msg/control_mode_report.hpp>
@@ -59,6 +60,13 @@ enum {
 enum { VCU_VEHICLEHAZARDWARLAMPFB_OFF, VCU_VEHICLEHAZARDWARLAMPFB_ON };
 enum { VCU_VEHICLELEFTLAMPFB_OFF, VCU_VEHICLELEFTLAMPFB_ON };
 enum { VCU_VEHICLERIGHTLAMPFB_OFF, VCU_VEHICLERIGHTLAMPFB_ON };
+enum {
+  VCU_CHASSISSTEERMODEFB_FRONT_ACKERMAN,
+  VCU_CHASSISSTEERMODEFB_SAME_FRONT_AND_BACK,
+  VCU_CHASSISSTEERMODEFB_FRONT_DIFFERENT_BACK,
+  VCU_CHASSISSTEERMODEFB_BACK_ACKRMAN,
+  VCU_CHASSISSTEERMODEFB_FRONT_BACK
+};
 
 /**
  * @brief param structure of report converter node
@@ -75,6 +83,7 @@ struct Param
   int report_msg_timeout_ms;  // ms
   std::string base_frame_id;  // vehicle frame id
   double steering_factor;
+  bool use_steer_mode_correct;
 };
 
 class ReportConverter : public rclcpp::Node
@@ -94,6 +103,7 @@ private:
     turn_indicators_status_pub_;
   rclcpp::Publisher<autoware_auto_vehicle_msgs::msg::HazardLightsReport>::SharedPtr
     hazard_lights_status_pub_;
+   rclcpp::Publisher<geometry_msgs::msg::Vector3Stamped>::SharedPtr slip_angle_pub_;
   
   rclcpp::Publisher<tier4_vehicle_msgs::msg::ActuationStatusStamped>::SharedPtr actuation_status_pub_;
   rclcpp::Publisher<tier4_vehicle_msgs::msg::SteeringWheelStatusStamped>::SharedPtr steering_wheel_status_pub_;
