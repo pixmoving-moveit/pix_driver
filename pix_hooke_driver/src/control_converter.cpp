@@ -28,7 +28,7 @@ ControlConverter::ControlConverter() : Node("control_converter")
     declare_parameter("autoware_control_command_timeout", 100);
   param_.loop_rate = declare_parameter("loop_rate", 50.0);
   param_.max_steering_angle = declare_parameter("max_steering_angle", 0.5236);
-  param_.steering_factor = 500.0 / param_.max_steering_angle;
+  param_.steering_factor = 450.0 / param_.max_steering_angle;
 
   // initialization engage
   engage_cmd_ = false;
