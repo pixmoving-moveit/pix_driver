@@ -76,7 +76,9 @@ ReportConverter::ReportConverter() : rclcpp::Node("report_converter")
     "/localization/slip_angle", 1);
   door_status_pub_ =
     create_publisher<tier4_api_msgs::msg::DoorStatus>("/vehicle/status/door_status", 1);
-  
+  fixposition_speed_pub_ =
+    create_publisher<fixposition_driver_ros2::msg::Speed>("/fixposition/speed", 100);
+
   // initialize of timer
   timer_ = rclcpp::create_timer(
     this, get_clock(), rclcpp::Rate(param_.loop_rate).period(),
@@ -187,23 +189,35 @@ void ReportConverter::timerCallback()
   steer_report_msg.steering_tire_angle = -1.0 * steer_sta_fb_ptr_->vcu_chassis_steer_angle_fb * param_.steering_factor;
   steering_status_pub_->publish(steer_report_msg);
   geometry_msgs::msg::Vector3Stamped slip_angle_msg;
+  fixposition_driver_ros2::msg::Speed fixposition_speed_msg;
+  fixposition_driver_ros2::msg::WheelSensor fixposition_wheel_speed_msg;
+
   slip_angle_msg.header.frame_id = param_.base_frame_id;
   slip_angle_msg.header.stamp = current_time;
-  if(param_.use_steer_mode_correct)
-  {
-  switch (steer_sta_fb_ptr_->vcu_chassis_steer_mode_fb)
-  {
-  case VCU_CHASSISSTEERMODEFB_FRONT_ACKERMAN:
-    slip_angle_msg.vector.z = atan(0.5 * tan(steer_report_msg.steering_tire_angle));
-    break;
-  case VCU_CHASSISSTEERMODEFB_SAME_FRONT_AND_BACK:
-    slip_angle_msg.vector.z = steer_report_msg.steering_tire_angle;
-    break;
-  default:
-    break;
+  fixposition_wheel_speed_msg.header.frame_id = param_.base_frame_id;
+  fixposition_wheel_speed_msg.header.stamp = current_time;
+  fixposition_wheel_speed_msg.location = "RC";
+  if (param_.use_steer_mode_correct) {
+    switch (steer_sta_fb_ptr_->vcu_chassis_steer_mode_fb) {
+      case VCU_CHASSISSTEERMODEFB_FRONT_ACKERMAN:
+        slip_angle_msg.vector.z = atan(0.5 * tan(steer_report_msg.steering_tire_angle));
+        
+        break;
+      case VCU_CHASSISSTEERMODEFB_SAME_FRONT_AND_BACK:
+        slip_angle_msg.vector.z = steer_report_msg.steering_tire_angle;
+        break;
+      default:
+        break;
+    }
   }
-  }
+  fixposition_wheel_speed_msg.vx =
+    int(velocity_report_msg.longitudinal_velocity * 1000) * cos(slip_angle_msg.vector.z);
+  fixposition_wheel_speed_msg.vx_valid = true;
+  fixposition_wheel_speed_msg.vy =
+    int(velocity_report_msg.longitudinal_velocity * 1000) * sin(slip_angle_msg.vector.z);
+  fixposition_wheel_speed_msg.vy_valid = true;
   slip_angle_pub_->publish(slip_angle_msg);
+  fixposition_speed_msg.sensors.push_back(fixposition_wheel_speed_msg);
 
   // make control mode
   control_mode_report_msg.stamp = current_time;

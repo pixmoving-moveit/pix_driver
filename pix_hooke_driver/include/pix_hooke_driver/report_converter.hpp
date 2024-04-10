@@ -45,6 +45,10 @@
 #include <pix_hooke_driver_msgs/msg/v2a_vehicle_sta_fb.hpp>
 #include <pix_hooke_driver_msgs/msg/v2a_vehicle_work_sta_fb.hpp>
 
+// fixposition msgs
+#include <fixposition_driver_ros2/msg/speed.hpp>
+#include <fixposition_driver_ros2/msg/wheel_sensor.hpp>
+
 namespace pix_hooke_driver
 {
 namespace report_converter
@@ -108,7 +112,9 @@ private:
   rclcpp::Publisher<tier4_vehicle_msgs::msg::ActuationStatusStamped>::SharedPtr actuation_status_pub_;
   rclcpp::Publisher<tier4_vehicle_msgs::msg::SteeringWheelStatusStamped>::SharedPtr steering_wheel_status_pub_;
   rclcpp::Publisher<tier4_api_msgs::msg::DoorStatus>::SharedPtr door_status_pub_;
-  
+
+  rclcpp::Publisher<fixposition_driver_ros2::msg::Speed>::SharedPtr fixposition_speed_pub_;
+
   // subscribers from pix hooke driver
   rclcpp::Subscription<pix_hooke_driver_msgs::msg::V2aSteerStaFb>::SharedPtr steer_sta_fb_sub_;
   rclcpp::Subscription<pix_hooke_driver_msgs::msg::V2aBrakeStaFb>::SharedPtr brake_sta_fb_sub_;
