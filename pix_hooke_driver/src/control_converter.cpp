@@ -208,10 +208,11 @@ void ControlConverter::timerCallback()
   }
 
   // check the opeartion mode, if the operation mode is STOP, it should triger the parking brake
+  // 0: 'ACU_CHASSISEPBCTRL_DEFAULT', 1: 'ACU_CHASSISEPBCTRL_BRAKE', 2: 'ACU_CHASSISEPBCTRL_RELEASE'
   if(operation_mode_ptr_->mode == operation_mode_ptr_->STOP){
-    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = true;
+    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = 1;
   }else{
-    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = false;
+    a2v_brake_ctrl_msg.acu_chassis_epb_ctrl = 2;
   }
   // publishing msgs
   a2v_brake_ctrl_pub_->publish(a2v_brake_ctrl_msg);
