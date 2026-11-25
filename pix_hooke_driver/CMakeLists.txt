@@ -52,6 +52,20 @@ ament_auto_add_executable(${PROJECT_NAME}_report_converter_node
   src/report_converter_node.cpp
 )
 
+if(BUILD_TESTING)
+  ament_auto_add_gtest(test_actuation_timeout
+    test/test_actuation_timeout.cpp
+    src/a2v_drivectrl_130.cc
+    src/a2v_brakectrl_131.cc
+    src/a2v_steerctrl_132.cc
+    src/a2v_vehiclectrl_133.cc
+    src/a2v_wheelctrl_135.cc
+    src/Byte.cc
+    src/control_command.cpp
+    src/control_converter.cpp
+  )
+endif()
+
 # install
 ament_auto_package(
   INSTALL_TO_SHARE
