@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <algorithm>
 #include <memory>
 #include <string>
 
@@ -140,6 +141,34 @@ void ControlConverter::timerCallback()
       get_logger(), *this->get_clock(), std::chrono::milliseconds(5000).count(),
       "actuation command timeout = %f ms, gear command timeout = %f",
       actuation_command_delta_time_ms, gear_command_delta_time_ms);
+    // If actuation commands stop after they had started, send zero throttle and a brake command
+    // instead of going quiet. Otherwise control_command keeps re-sending the last throttle frame
+    // until its own command_timeout_ms. 300 ms leaves room for vehicle_cmd_gate's 10 Hz emergency
+    // stream. The hold ends when Autoware no longer controls the vehicle, or after 3000 ms.
+    constexpr double stop_timeout_ms = 300.0;
+    constexpr double stop_hold_max_ms = 3000.0;
+    if (actuation_command_delta_time_ms > stop_timeout_ms &&
+      actuation_command_delta_time_ms <= stop_hold_max_ms &&
+      actuation_command_ptr_ != nullptr && gear_command_ptr_ != nullptr && operation_mode_ptr_ != nullptr &&
+      operation_mode_ptr_->is_autoware_control_enabled) {
+      A2vBrakeCtrl stop_brake_msg;
+      stop_brake_msg.header.stamp = current_time;
+      stop_brake_msg.acu_chassis_brake_en = 1;
+      // never lower a brake Autoware already commanded (e.g. its emergency brake); at least the 20% used while shifting
+      stop_brake_msg.acu_chassis_brake_pdl_target =
+        std::max(20.0, actuation_command_ptr_->actuation.brake_cmd * 100.0);
+      // parking brake field as in the normal path below
+      stop_brake_msg.acu_chassis_epb_ctrl = (operation_mode_ptr_->mode == operation_mode_ptr_->STOP) ? 1 : 2;
+      A2vDriveCtrl stop_drive_msg;
+      stop_drive_msg.header.stamp = current_time;
+      stop_drive_msg.acu_chassis_driver_en_ctrl = 1;
+      stop_drive_msg.acu_chassis_driver_mode_ctrl = ACU_CHASSISDRIVERMODECTRL_THROTTLE_CTRL_MODE;
+      stop_drive_msg.acu_chassis_gear_ctrl =
+        drive_sta_fb_ptr_ ? drive_sta_fb_ptr_->vcu_chassis_gear_fb : static_cast<int8_t>(ACU_CHASSISGEARCTRL_N);
+      stop_drive_msg.acu_chassis_throttle_pdl_target = 0.0;
+      a2v_brake_ctrl_pub_->publish(stop_brake_msg);
+      a2v_drive_ctrl_pub_->publish(stop_drive_msg);
+    }
     return;
   }
   if(drive_sta_fb_delta_time_ms > param_.autoware_control_command_timeout || drive_sta_fb_ptr_ == nullptr)
